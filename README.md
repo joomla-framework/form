@@ -12,22 +12,20 @@ at the top of your PHP class.
 
 ## Installation via Composer
 
-Add `"joomla/form": "dev-master"` to the require block in your composer.json, make sure you have `"minimum-stability": "dev"` and then run `composer install`.
+Add `"joomla/form": "~1.0"` to the require block in your composer.json and then run `composer install`.
 
 ```json
 {
 	"require": {
-		"joomla/form": "dev-master"
-	},
-	"minimum-stability": "dev"
+		"joomla/form": "~1.0"
+	}
 }
 ```
 
 Alternatively, you can simply run the following from the command line:
 
 ```sh
-composer init --stability="dev"
-composer require joomla/form "dev-master"
+composer require joomla/form "~1.0"
 ```
 
 ## Creating a Form & Loading Data ##
@@ -147,7 +145,7 @@ Each element in the form can also be assigned attributes class and labelclass.  
 
 The Joomla Form object allows easy validation of fields.  The Form object provides a validate method that tests the supplied user input against validation rules defined in the XML.
 
-Before you can validate form data it is necessary to load the form again. (See Loading a Form above).  
+Before you can validate form data it is necessary to load the form again. (See Loading a Form above).
 
 Once the form has been reloaded, don't bind data to it.  This time call the Form::validate() method passing in an array containing the data you wish to validate.  For example:
 
@@ -166,7 +164,7 @@ Validation rules are defined using the *validate* attribute in XML. The followin
 * Boolean - tests whether a field is true or false
 * Color - tests whether a field contains a valid hexadecimal colour value. (ie. #00000 to #fffff).  Does not require input of the '#'.
 * Email - tests whether a field contains an email value.
-* Equals - tests if two values are equal. 
+* Equals - tests if two values are equal.
 * Options - endures that the value entered is one of the options given in a list.
 * Tel - validates a field as a telephone number.  An optional attribute *plan* can also be specified to define the phone pattern.  Current options are: northamerica, us, International, int, missdn, IETF.
 * Url - validates a field as a URL.
