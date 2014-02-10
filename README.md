@@ -1,4 +1,4 @@
-# The Form Package
+# The Form Package [![Build Status](https://travis-ci.org/joomla-framework/form.png?branch=master)](https://travis-ci.org/joomla-framework/form)
 
 ## Introduction ##
 
