@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Tel;
+use Joomla\Form\Field\TelField;
 
 /**
  * Test class for JFormFieldTel.
@@ -47,7 +47,7 @@ class JFormFieldTelTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Tel($form);
+		$field = new TelField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

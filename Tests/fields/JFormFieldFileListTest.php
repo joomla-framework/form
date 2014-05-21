@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_FileList;
+use Joomla\Form\Field\FileListField;
 
 /**
  * Test class for JFormFieldFileList.
@@ -47,7 +47,7 @@ class JFormFieldFileListTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_FileList($form);
+		$field = new FileListField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Radio;
+use Joomla\Form\Field\RadioField;
 
 /**
  * Test class for JForm.
@@ -43,7 +43,7 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Radio($form);
+		$field = new RadioField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -77,7 +77,7 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Radio($form);
+		$field = new RadioField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

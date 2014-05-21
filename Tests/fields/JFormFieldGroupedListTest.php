@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_GroupedList;
+use Joomla\Form\Field\GroupedListField;
 
 /**
  * Test class for JFormFieldGroupedList.
@@ -45,7 +45,7 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_GroupedList($form);
+		$field = new GroupedListField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

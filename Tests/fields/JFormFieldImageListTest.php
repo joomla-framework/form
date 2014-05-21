@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_ImageList;
+use Joomla\Form\Field\ImageListField;
 
 /**
  * Test class for JFormFieldImageList.
@@ -47,7 +47,7 @@ class JFormFieldImageListTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_ImageList($form);
+		$field = new ImageListField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

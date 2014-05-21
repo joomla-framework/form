@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 use stdClass;
 use Joomla\Language\Text;
@@ -18,7 +18,7 @@ use Joomla\Language\Text;
  * @link   http://www.w3.org/TR/html-markup/command.radio.html#command.radio
  * @since  1.0
  */
-class Field_Radio extends Field
+class RadioField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

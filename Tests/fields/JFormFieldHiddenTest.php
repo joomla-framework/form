@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Hidden;
+use Joomla\Form\Field\HiddenField;
 
 /**
  * Test class for JForm.
@@ -45,7 +45,7 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Hidden($form);
+		$field = new HiddenField($form);
 
 		$this->assertThat(
 			$form->getLabel('hidden'),
@@ -61,7 +61,7 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Hidden($form);
+		$field = new HiddenField($form);
 
 		$this->assertThat(
 			$form->getLabel('hidden'),
@@ -77,7 +77,7 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Hidden($form);
+		$field = new HiddenField($form);
 
 		$this->assertThat(
 			$form->getLabel('hidden'),

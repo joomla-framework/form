@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Checkboxes;
+use Joomla\Form\Field\CheckboxesField;
 
 /**
  * Test class for JForm.
@@ -36,7 +36,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputNoValueNoChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -82,7 +82,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputValueNoChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -130,7 +130,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputValueArrayNoChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -177,7 +177,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputNoValueOneChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -223,7 +223,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputNoValueTwoChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -270,7 +270,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputValueChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -317,7 +317,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputValuesNoChecked()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field\\CheckboxesField', array('getOptions'));
 
 		$option1 = new \stdClass;
 		$option1->value = 'red';
@@ -363,7 +363,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetOptions()
 	{
-		$formFieldCheckboxes = new Field_Checkboxes;
+		$formFieldCheckboxes = new CheckboxesField;
 
 		$option1 = new \stdClass;
 		$option1->value = 'yellow';

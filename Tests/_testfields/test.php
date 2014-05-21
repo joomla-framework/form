@@ -4,14 +4,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
  *
  * @since  1.0
  */
-class Field_Test extends \Joomla\Form\Field
+class TestField extends \Joomla\Form\Field
 {
 	/**
 	 * The field type.

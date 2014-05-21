@@ -6,28 +6,28 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
- * Provides and input field for e-mail addresses
+ * Supports a one line text field.
  *
- * @link   http://www.w3.org/TR/html-markup/input.email.html#input.email
- * @see    JFormRuleEmail
+ * @link   http://www.w3.org/TR/html-markup/input.text.html#input.text
  * @since  1.0
  */
-class Field_Email extends Field
+class TextField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var    string
+	 *
 	 * @since  1.0
 	 */
-	protected $type = 'Email';
+	protected $type = 'Text';
 
 	/**
-	 * Method to get the field input markup for e-mail addresses.
+	 * Method to get the field input markup.
 	 *
 	 * @return  string  The field input markup.
 	 *
@@ -38,14 +38,14 @@ class Field_Email extends Field
 		// Initialize some field attributes.
 		$size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
 		$maxLength = $this->element['maxlength'] ? ' maxlength="' . (int) $this->element['maxlength'] . '"' : '';
-		$class = $this->element['class'] ? ' ' . (string) $this->element['class'] : '';
+		$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 		$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
 		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		return '<input type="text" name="' . $this->name . '" class="validate-email' . $class . '" id="' . $this->id . '"' . ' value="'
-			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $size . $disabled . $readonly . $onchange . $maxLength . '/>';
+		return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
+			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . '/>';
 	}
 }

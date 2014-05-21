@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_FolderList;
+use Joomla\Form\Field\FolderListField;
 
 /**
  * Test class for JFormFieldFolderList.
@@ -47,7 +47,7 @@ class JFormFieldFolderListTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_FolderList($form);
+		$field = new FolderListField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

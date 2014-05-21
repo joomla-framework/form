@@ -6,28 +6,28 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
- * Supports a one line text field.
+ * Supports a multi line area for entry of plain text
  *
- * @link   http://www.w3.org/TR/html-markup/input.text.html#input.text
+ * @link   http://www.w3.org/TR/html-markup/textarea.html#textarea
  * @since  1.0
  */
-class Field_Text extends Field
+class TextareaField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var    string
-	 *
 	 * @since  1.0
 	 */
-	protected $type = 'Text';
+	protected $type = 'Textarea';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the textarea field input markup.
+	 * Use the rows and columns attributes to specify the dimensions of the area.
 	 *
 	 * @return  string  The field input markup.
 	 *
@@ -36,16 +36,15 @@ class Field_Text extends Field
 	protected function getInput()
 	{
 		// Initialize some field attributes.
-		$size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
-		$maxLength = $this->element['maxlength'] ? ' maxlength="' . (int) $this->element['maxlength'] . '"' : '';
 		$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
-		$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
 		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+		$columns = $this->element['cols'] ? ' cols="' . (int) $this->element['cols'] . '"' : '';
+		$rows = $this->element['rows'] ? ' rows="' . (int) $this->element['rows'] . '"' : '';
 
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
-			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . '/>';
+		return '<textarea name="' . $this->name . '" id="' . $this->id . '"' . $columns . $rows . $class . $disabled . $onchange . '>'
+			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '</textarea>';
 	}
 }

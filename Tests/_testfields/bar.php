@@ -4,14 +4,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Foo\Form;
+namespace Foo\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
  *
  * @since  1.0
  */
-class Field_Bar extends \Joomla\Form\Field
+class BarField extends \Joomla\Form\Field
 {
 	/**
 	 * Method to get the field input.

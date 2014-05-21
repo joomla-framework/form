@@ -6,16 +6,16 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
- * Supports a multi line area for entry of plain text
+ * Provides an input field for files
  *
- * @link   http://www.w3.org/TR/html-markup/textarea.html#textarea
+ * @link   http://www.w3.org/TR/html-markup/input.file.html#input.file
  * @since  1.0
  */
-class Field_Textarea extends Field
+class FileField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.
@@ -23,28 +23,32 @@ class Field_Textarea extends Field
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $type = 'Textarea';
+	public $type = 'File';
 
 	/**
-	 * Method to get the textarea field input markup.
-	 * Use the rows and columns attributes to specify the dimensions of the area.
+	 * Method to get the field input markup for the file field.
+	 * Field attributes allow specification of a maximum file size and a string
+	 * of accepted file extensions.
 	 *
 	 * @return  string  The field input markup.
 	 *
 	 * @since   1.0
+	 *
+	 * @note    The field does not include an upload mechanism.
+	 * @see     JFormFieldMedia
 	 */
 	protected function getInput()
 	{
 		// Initialize some field attributes.
+		$accept = $this->element['accept'] ? ' accept="' . (string) $this->element['accept'] . '"' : '';
+		$size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
 		$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-		$columns = $this->element['cols'] ? ' cols="' . (int) $this->element['cols'] . '"' : '';
-		$rows = $this->element['rows'] ? ' rows="' . (int) $this->element['rows'] . '"' : '';
 
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		return '<textarea name="' . $this->name . '" id="' . $this->id . '"' . $columns . $rows . $class . $disabled . $onchange . '>'
-			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '</textarea>';
+		return '<input type="file" name="' . $this->name . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
+			. $onchange . ' />';
 	}
 }
