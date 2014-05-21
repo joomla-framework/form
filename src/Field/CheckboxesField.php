@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
 use Joomla\Language\Text;
@@ -19,7 +19,7 @@ use Joomla\Language\Text;
  * @see    JFormFieldCheckbox
  * @since  1.0
  */
-class Field_Checkboxes extends Field
+class CheckboxesField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

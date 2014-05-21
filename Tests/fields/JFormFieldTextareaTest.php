@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Textarea;
+use Joomla\Form\Field\TextareaField;
 
 /**
  * Test class for JForm.
@@ -43,7 +43,7 @@ class JFormFieldTextareaTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Textarea($form);
+		$field = new TextareaField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

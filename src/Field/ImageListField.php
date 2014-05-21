@@ -6,14 +6,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Supports an HTML select list of image
  *
  * @since  1.0
  */
-class Field_ImageList extends Field_FileList
+class ImageListField extends FileListField
 {
 	/**
 	 * The form field type.

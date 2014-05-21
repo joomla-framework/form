@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -16,7 +16,7 @@ namespace Joomla\Form;
  * @see    JFormRuleUrl for validation of full urls
  * @since  1.0
  */
-class Field_Url extends Field_Text
+class UrlField extends TextField
 {
 	/**
 	 * The form field type.

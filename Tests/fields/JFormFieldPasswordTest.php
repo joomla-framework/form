@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Password;
+use Joomla\Form\Field\PasswordField;
 
 /**
  * Test class for JForm.
@@ -41,7 +41,7 @@ class JFormFieldPasswordTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Password($form);
+		$field = new PasswordField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

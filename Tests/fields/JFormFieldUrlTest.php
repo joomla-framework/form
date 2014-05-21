@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Url;
+use Joomla\Form\Field\UrlField;
 
 /**
  * Test class for JFormFieldUrl.
@@ -47,7 +47,7 @@ class JFormFieldUrlTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Url($form);
+		$field = new UrlField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Integer;
+use Joomla\Form\Field\IntegerField;
 
 /**
  * Test class for JForm.
@@ -43,7 +43,7 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Integer($form);
+		$field = new IntegerField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -77,7 +77,7 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Integer($form);
+		$field = new IntegerField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -99,7 +99,7 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Integer($form);
+		$field = new IntegerField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -119,7 +119,7 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Integer($form);
+		$field = new IntegerField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -141,7 +141,7 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Integer($form);
+		$field = new IntegerField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

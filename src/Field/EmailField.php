@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -16,7 +16,7 @@ namespace Joomla\Form;
  * @see    JFormRuleEmail
  * @since  1.0
  */
-class Field_Email extends Field
+class EmailField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

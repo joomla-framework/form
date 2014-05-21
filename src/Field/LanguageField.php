@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 use Joomla\Language\Language;
 
@@ -17,7 +17,7 @@ use Joomla\Language\Language;
  * @see    JFormFieldContentLanguage for a select list of content languages.
  * @since  1.0
  */
-class Field_Language extends Field_List
+class LanguageField extends ListField
 {
 	/**
 	 * The form field type.

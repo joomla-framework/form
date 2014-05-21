@@ -229,15 +229,21 @@ abstract class Field
 		// Detect the field type if not set
 		if (!isset($this->type))
 		{
-			$parts = Normalise::fromCamelCase(get_called_class(), true);
+			$parts = explode('\\',get_called_class());
 
-			if ($parts[0] == 'J')
+			if ($parts[0] != 'J')
 			{
-				$this->type = String::ucfirst($parts[count($parts) - 1], '_');
+				$this->type = ucfirst($parts[0]);
 			}
 			else
 			{
-				$this->type = String::ucfirst($parts[0], '_') . String::ucfirst($parts[count($parts) - 1], '_');
+				$this->type = '';
+			}
+
+			for($i=1; $i < count($parts) && $parts[$i] != "Field"; $i++);
+
+			for(; $i < count($parts); $i++){
+				$this->type .= '\\' . String::ucfirst($parts[$i]);
 			}
 		}
 	}

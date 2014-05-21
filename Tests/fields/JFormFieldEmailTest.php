@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Email;
+use Joomla\Form\Field\EmailField;
 
 /**
  * Test class for JFormFieldEMail.
@@ -47,7 +47,7 @@ class JFormFieldEmailTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Email($form);
+		$field = new EmailField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
