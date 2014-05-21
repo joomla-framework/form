@@ -1820,55 +1820,55 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		$rulePaths = FormHelper::addRulePath();
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/field1', $fieldPaths),
+			in_array(dirname(__DIR__) . '/field1', $fieldPaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The field path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/field2', $fieldPaths),
+			in_array(dirname(__DIR__) . '/field2', $fieldPaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The field path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/field3', $fieldPaths),
+			in_array(dirname(__DIR__) . '/field3', $fieldPaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The field path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/form1', $formPaths),
+			in_array(dirname(__DIR__) . '/form1', $formPaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The form path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/form2', $formPaths),
+			in_array(dirname(__DIR__) . '/form2', $formPaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The form path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/form3', $formPaths),
+			in_array(dirname(__DIR__) . '/form3', $formPaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The form path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/rule1', $rulePaths),
+			in_array(dirname(__DIR__) . '/rule1', $rulePaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The rule path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/rule2', $rulePaths),
+			in_array(dirname(__DIR__) . '/rule2', $rulePaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The rule path from the XML file should be present.'
 		);
 
 		$this->assertThat(
-			in_array(JPATH_ROOT . '/rule3', $rulePaths),
+			in_array(dirname(__DIR__) . '/rule3', $rulePaths),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The rule path from the XML file should be present.'
 		);
