@@ -30,7 +30,7 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 
 		// The default path is the class file folder/forms
 		// use of realpath to ensure test works for on all platforms
-		$valid = JPATH_ROOT . '/src/field';
+		$valid = dirname(__DIR__) . '/src/field';
 
 		$this->assertThat(
 			in_array($valid, $paths),
@@ -63,7 +63,7 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 
 		// The default path is the class file folder/forms
 		// use of realpath to ensure test works for on all platforms
-		$valid = JPATH_ROOT . '/src/form';
+		$valid = dirname(__DIR__) . '/src/form';
 
 		$this->assertThat(
 			in_array($valid, $paths),
@@ -96,7 +96,7 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 
 		// The default path is the class file folder/rules
 		// use of realpath to ensure test works for on all platforms
-		$valid = JPATH_ROOT . '/src/rule';
+		$valid = dirname(__DIR__) . '/src/rule';
 
 		$this->assertThat(
 			in_array($valid, $paths),
