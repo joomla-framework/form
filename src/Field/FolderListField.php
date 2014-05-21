@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
 use Joomla\Language\Text;
@@ -17,7 +17,7 @@ use Joomla\Filesystem\Folder;
  *
  * @since  1.0
  */
-class Field_FolderList extends Field_List
+class FolderListField extends ListField
 {
 	/**
 	 * The form field type.

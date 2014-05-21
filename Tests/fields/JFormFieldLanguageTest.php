@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestDatabase;
-use Joomla\Form\Field_Language;
+use Joomla\Form\Field\LanguageField;
 
 /**
  * Test class for JFormFieldLanguage.
@@ -59,7 +59,7 @@ class JFormFieldLanguageTest extends TestDatabase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Language($form);
+		$field = new LanguageField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -85,7 +85,7 @@ class JFormFieldLanguageTest extends TestDatabase
 	 */
 	public function testCreateLanguageList()
 	{
-		$field = new Field_Language(new JFormInspector('form1'));
+		$field = new LanguageField(new JFormInspector('form1'));
 		$reflection = new \ReflectionClass($field);
 		$method = $reflection->getMethod('createLanguageList');
 		$method->setAccessible(true);

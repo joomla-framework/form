@@ -9,6 +9,7 @@
 namespace Joomla\Form;
 
 use Joomla\Filesystem\Path;
+use Joomla\String\String;
 
 /**
  * Helper class for the Form package.
@@ -178,13 +179,19 @@ class FormHelper
 
 		$class = ucfirst($prefix) . '\\Form\\' . ucfirst($entity);
 
-		if ($entity === 'field')
+		// If type is complex like modal\foo, do uppercase each term
+		if (strpos($type, '\\'))
 		{
-			$class .= '_' . ucfirst($type);
+			$class .=  '\\' . String::ucfirst($type,'\\');
 		}
 		else
 		{
-			$class .= '\\' . ucfirst($type);
+			$class .=  '\\' . ucfirst($type);
+		}
+
+		if ($entity === 'field')
+		{
+			$class .= ucfirst($entity);
 		}
 
 		if (class_exists($class))
@@ -196,7 +203,7 @@ class FormHelper
 		$paths = self::addPath($entity);
 
 		// If the type is complex, add the base type to the paths.
-		if ($pos = strpos($type, '_'))
+		if ($pos = strpos($type, '\\'))
 		{
 			// Add the complex type prefix to the paths.
 			for ($i = 0, $n = count($paths); $i < $n; $i++)

@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_DatabaseConnection;
+use Joomla\Form\Field\DatabaseConnectionField;
 
 /**
  * Test class for JFormFieldDatabaseConnection.
@@ -47,7 +47,7 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_DatabaseConnection($form);
+		$field = new DatabaseConnectionField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -67,7 +67,7 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_DatabaseConnection($form);
+		$field = new DatabaseConnectionField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

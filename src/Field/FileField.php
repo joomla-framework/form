@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -15,7 +15,7 @@ namespace Joomla\Form;
  * @link   http://www.w3.org/TR/html-markup/input.file.html#input.file
  * @since  1.0
  */
-class Field_File extends Field
+class FileField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

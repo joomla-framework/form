@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
 
@@ -16,7 +16,7 @@ use Joomla\Form\Html\Select as HtmlSelect;
  *
  * @since  1.0
  */
-class Field_Integer extends Field_List
+class IntegerField extends ListField
 {
 	/**
 	 * The form field type.

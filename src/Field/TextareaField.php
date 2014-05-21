@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -15,7 +15,7 @@ namespace Joomla\Form;
  * @link   http://www.w3.org/TR/html-markup/textarea.html#textarea
  * @since  1.0
  */
-class Field_Textarea extends Field
+class TextareaField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

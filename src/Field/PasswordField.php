@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -16,7 +16,7 @@ namespace Joomla\Form;
  * @note   Two password fields may be validated as matching using JFormRuleEquals
  * @since  1.0
  */
-class Field_Password extends Field
+class PasswordField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

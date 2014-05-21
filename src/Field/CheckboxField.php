@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -17,7 +17,7 @@ namespace Joomla\Form;
  * @see    JFormFieldCheckboxes
  * @since  1.0
  */
-class Field_Checkbox extends Field
+class CheckboxField extends \Joomla\Form\Field
 {
 	/**
 	 * The form field type.

@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_List;
+use Joomla\Form\Field\ListField;
 
 /**
  * Test class for JForm.
@@ -43,7 +43,7 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_List($form);
+		$field = new ListField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

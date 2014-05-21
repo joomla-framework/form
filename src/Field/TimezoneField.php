@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select;
 
@@ -15,7 +15,7 @@ use Joomla\Form\Html\Select;
  *
  * @since  1.0
  */
-class Field_Timezone extends Field_GroupedList
+class TimezoneField extends GroupedListField
 {
 	/**
 	 * The form field type.

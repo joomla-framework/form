@@ -7,7 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Timezone;
+use Joomla\Form\Field\TimezoneField;
 
 /**
  * Test class for JForm.
@@ -43,7 +43,7 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Timezone($form);
+		$field = new TimezoneField($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
