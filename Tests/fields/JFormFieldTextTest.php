@@ -6,8 +6,8 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\TextField;
+use SimpleXMLElement;
 
 /**
  * Test class for JForm.
@@ -17,46 +17,68 @@ use Joomla\Form\Field\TextField;
 class JFormFieldTextTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependancies for the test.
-	 *
-	 * @return void
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
-	}
-
-	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
 	 */
 	public function testGetInput()
 	{
-		$form = new JFormInspector('form1');
+		$field = new TextField;
 
+		$xml = new SimpleXMLElement('<field type="text" id="myId" name="myName" />');
 		$this->assertThat(
-			$form->load('<form><field name="text" type="text" /></form>'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
+			'Line:' . __LINE__ . ' The setup method should return true.'
+		);
+		
+		$this->assertRegExp(
+			'/<input[\s]+type="text"[\s]*name="myName"[\s]*id="myId"[\s]*value="aValue"[\s]*[\/]>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should return something without error.'
 		);
 
-		$field = new TextField($form);
-
+		$xml = new SimpleXMLElement('<field type="text" id="myId" name="myName" size="0" maxlength="0" class="foo bar" readonly="true" disabled="true" onchange="barFoo();" />');
 		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertRegExp(
+			'/<input[\s]+.*size="0".*\/>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return size attribute correctly.'
 		);
 
-		// TODO: Should check all the attributes have come in properly.
+		$this->assertRegExp(
+			'/<input[\s]+.*maxlength="0".*\/>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return maxlength attribute correctly.'
+		);
+
+		$this->assertRegExp(
+			'/<input[\s]+.*class="foo bar".*\/>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return class attribute correctly.'
+		);
+
+		$this->assertRegExp(
+			'/<input[\s]+.*readonly([\s]+.*|="readonly".*)\/>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return readonly attribute correctly.'
+		);
+
+		$this->assertRegExp(
+			'/<input[\s]+.*disabled([\s]+.*|="disabled".*)\/>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return disabled attribute correctly.'
+		);
+
+		$this->assertRegExp(
+			'/<input[\s]+.*onchange="barFoo\(\);".*\/>/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return onchange attribute correctly.'
+		);
 	}
 }
