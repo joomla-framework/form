@@ -6,8 +6,8 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\SpacerField;
+use SimpleXmlElement;
 
 /**
  * Test class for JForm.
@@ -35,48 +35,35 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInput()
 	{
-		$form = new JFormInspector('form1');
+		$field = new SpacerField;
 
+		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" />');
 		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new SpacerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertRegExp(
+			'/[\s]+/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should return only and atleast one space character.'
 		);
 	}
 
 	/**
 	 * Test the getLabel method.
 	 *
+	 * @covers SpacerField::getTitle
 	 * @return void
 	 */
 	public function testGetLabel()
 	{
-		$form = new JFormInspector('form1');
+		$field = new SpacerField;
 
+		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" description="spacer" />');
 		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" description="spacer" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new SpacerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'value'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
@@ -91,16 +78,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
 		);
 
+		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" class="text" />');
 		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" class="text" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new SpacerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'value'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
@@ -114,16 +94,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
 		);
 
+		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" class="text" label="MyLabel" />');
 		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" class="text" label="MyLabel" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new SpacerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'value'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
@@ -137,16 +110,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
 		);
 
+		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" hr="true" />');
 		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" hr="true" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new SpacerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'value'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
@@ -159,15 +125,5 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			$expected,
 			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
 		);
-	}
-
-	/**
-	 * Test the getTitle method.
-	 *
-	 * @return void
-	 */
-	public function testGetTitle()
-	{
-		$this->testGetLabel();
 	}
 }
