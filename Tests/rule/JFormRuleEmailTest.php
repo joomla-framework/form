@@ -10,31 +10,12 @@ use Joomla\Test\TestHelper;
 use Joomla\Form\Rule\Email as RuleEmail;
 
 /**
- * Test class for JForm.
+ * Test class for Joolma Framework Form rule Email.
  *
  * @since  1.0
  */
 class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * set up for testing
-	 *
-	 * @return void
-	 */
-	public function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Tear down test
-	 *
-	 * @return void
-	 */
-	protected function tearDown()
-	{
-	}
-
 	/**
 	 * Test the Joomla\Form\Rule\Email::test method.
 	 *
@@ -194,7 +175,8 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 		$this->assertThat(
 			$rule->test($xml->field[0], $emailAddress),
 			$this->equalTo($expectedResult),
-			$emailAddress . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
+			'Line:' . __LINE__ . ' '. $emailAddress . ' should have returned '
+				. ($expectedResult ? 'true' : 'false') . ' but did not.'
 		);
 	}
 }

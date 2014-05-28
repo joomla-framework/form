@@ -10,7 +10,7 @@ use Joomla\Test\TestHelper;
 use Joomla\Form\Rule\Url as RuleUrl;
 
 /**
- * Test class for JForm.
+ * Test class for Joolma Framework Form rule Url.
  *
  * @since  1.0
  */
@@ -84,7 +84,7 @@ class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test...
+	 * Test data for Joomla\Form\Rule\Url::test method.
 	 *
 	 * @return array
 	 */
