@@ -168,3 +168,74 @@ Validation rules are defined using the *validate* attribute in XML. The followin
 * Options - endures that the value entered is one of the options given in a list.
 * Tel - validates a field as a telephone number.  An optional attribute *plan* can also be specified to define the phone pattern.  Current options are: northamerica, us, International, int, missdn, IETF.
 * Url - validates a field as a URL.
+
+## Creating a custom field ##
+
+The Joomla Form package allows you to create your custom form fields. To do that you just need to extend \Joomla\Form\Field class.
+
+Example
+
+In file "CustomField.php" write
+
+    namespace Joomla\Form\Field
+
+	class CustomField extends \Joomla\Form\Field
+	{
+		// Override this function
+		public function getInput()
+		{
+			return 'field's html string.'
+		}
+	}
+
+To use above field in your form, write
+
+	<form type="custom" name="myName" id="myId" />
+
+### Field in a different namespace
+You can also create custom field in different namespace instead of Joomla.
+
+Example
+
+In file "FooField.php" write
+
+	namespace Bar\Form\Field
+
+	class FooField extends \Joomla\Form\Field
+	{
+		// Override this function
+		public function getInput()
+		{
+			return 'field's html string.'
+		}
+	}
+
+To use above field just write
+
+	<form type="bar.foo" name="myName" id="myId" />
+
+### Field in a sub-namespace
+To create a field in a sub-namespace of Joomla\Form\Field.
+
+Example
+
+In file "FooField.php" write
+
+	namespace Joomla\Form\Field\Bar
+
+	class FooField extends \Joomla\Form\Field
+	{
+		// Override this function
+		public function getInput()
+		{
+			return 'field's html string.'
+		}
+	}
+
+To use above field just write
+
+	<form type="bar\foo" name="myName" id="myId" />
+
+One more thing, just make sure that the directory in which field file is present, is included field path. If not, you can add the path using FormHelper
+
+	FormHelper::addFieldPath(<absolute path to the directory containg field>);
