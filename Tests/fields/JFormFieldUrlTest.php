@@ -17,68 +17,65 @@ use SimpleXMLElement;
 class JFormFieldUrlTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Test data for getInput test
+	 *
+	 * @return  array
+	 */
+	public function dataGetInput()
+	{
+		return array(
+			array(
+				'<field type="url" id="myId" name="myName" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'text',
+						'id' => 'myId',
+						'name' => 'myName',
+					)
+				),
+			),
+			array(
+				'<field type="url" id="myId" name="myName" size="0" maxlength="0" class="foo bar" readonly="true" disabled="true" onchange="barFoo();" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'text',
+						'id' => 'myId',
+						'size' => '0',
+						'maxlength' => '0',
+						'class' => 'foo bar',
+						'readonly' => 'readonly',
+						'disabled' => 'disabled',
+						'onchange' => 'barFoo();',
+					)
+				),
+			),
+		);
+	}
+
+	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @dataProvider dataGetInput
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
 		$field = new UrlField;
 
-		$xml = new SimpleXMLElement('<field type="url" id="myId" name="myName" />');
+		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
 			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 		
-		$this->assertRegExp(
-			'/<input[\s]+type="text"[\s]*name="myName"[\s]*id="myId"[\s]*value="aValue"[\s]*[\/]>/',
+		$this->assertTag(
+			$expectedTagAttr,
 			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
-		);
-
-		$xml = new SimpleXMLElement('<field type="url" id="myId" name="myName" size="0" maxlength="0" class="foo bar" readonly="true" disabled="true" onchange="barFoo();" />');
-		$this->assertThat(
-			$field->setup($xml, 'aValue'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertRegExp(
-			'/<input[\s]+.*size="0".*\/>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return size attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<input[\s]+.*maxlength="0".*\/>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return maxlength attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<input[\s]+.*class="foo bar".*\/>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return class attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<input[\s]+.*readonly([\s]+.*|="readonly".*)\/>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return readonly attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<input[\s]+.*disabled([\s]+.*|="disabled".*)\/>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return disabled attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<input[\s]+.*onchange="barFoo\(\);".*\/>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return onchange attribute correctly.'
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
 	}
 }

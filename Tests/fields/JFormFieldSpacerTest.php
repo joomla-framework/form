@@ -17,18 +17,6 @@ use SimpleXmlElement;
 class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependancies for the test.
-	 *
-	 * @return void
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
-	}
-
-	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
@@ -52,78 +40,57 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Test data for getLabel test
+	 *
+	 * @return  array
+	 */
+	public function dataGetLabel()
+	{
+		return array(
+			array(
+				'<field name="spacer" type="spacer" description="spacer" />',
+				'<span class=""><label id="spacer-lbl" class="hasTip" title="spacer::spacer">spacer</label></span>'
+			),
+			array(
+				'<field name="spacer" type="spacer" class="text" />',
+				'<span class="text"><label id="spacer-lbl" class="">spacer</label></span>'
+			),
+			array(
+				'<field name="spacer" type="spacer" class="text" label="MyLabel" />',
+				'<span class="text"><label id="spacer-lbl" class="">MyLabel</label></span>'
+			),
+			array(
+				'<field name="spacer" type="spacer" hr="true" />',
+				'<span class=""><hr class="" /></span>'
+			),
+		);
+	}
+
+	/**
 	 * Test the getLabel method.
 	 *
-	 * @covers SpacerField::getTitle
 	 * @return void
+	 *
+	 * @dataProvider dataGetLabel
 	 */
-	public function testGetLabel()
+	public function testGetLabel($xml, $expectedOutput)
 	{
 		$field = new SpacerField;
 
-		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" description="spacer" />');
+		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
-			$field->setup($xml, 'value'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$equals = '<span class="spacer"><span class="before"></span><span class="">' .
-			'<label id="spacer-lbl" class="hasTip" title="spacer::spacer">spacer</label></span>' .
-			'<span class="after"></span></span>';
-
+		$expectedOutput = '<span class="spacer"><span class="before"></span>'
+			. $expectedOutput . '<span class="after"></span></span>';
+		
 		$this->assertEquals(
+			$expectedOutput,
 			$field->label,
-			$equals,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-
-		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" class="text" />');
-		$this->assertThat(
-			$field->setup($xml, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$equals = '<span class="spacer"><span class="before"></span><span class="text">' .
-			'<label id="spacer-lbl" class="">spacer</label></span><span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$equals,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-
-		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" class="text" label="MyLabel" />');
-		$this->assertThat(
-			$field->setup($xml, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$equals = '<span class="spacer"><span class="before"></span><span class="text">' .
-			'<label id="spacer-lbl" class="">MyLabel</label></span><span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$equals,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-
-		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" hr="true" />');
-		$this->assertThat(
-			$field->setup($xml, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$expected = '<span class="spacer"><span class="before"></span><span class=""><hr class="" /></span>' .
-			'<span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$expected,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
+			'Line:' . __LINE__ . ' The getLabel method should match expected ouput.'
 		);
 	}
 }

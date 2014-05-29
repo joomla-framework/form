@@ -6,8 +6,8 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\HiddenField;
+use SimpleXMLElement;
 
 /**
  * Test class for JForm.
@@ -17,72 +17,63 @@ use Joomla\Form\Field\HiddenField;
 class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependancies for the test.
+	 * Test data for getInput test
 	 *
-	 * @return void
+	 * @return  array
 	 */
-	protected function setUp()
+	public function dataGetInput()
 	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
+		return array(
+			array(
+				'<field type="hidden" id="myId" name="myName" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'hidden',
+						'id' => 'myId',
+						'name' => 'myName',
+						'value' => 'aValue'
+					)
+				),
+			),
+			array(
+				'<field type="hidden" id="myId" name="myName" class="foo bar" disabled="true" onchange="barFoo();" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'hidden',
+						'id' => 'myId',
+						'class' => 'foo bar',
+						'disabled' => 'disabled',
+						'onchange' => 'barFoo();',
+					)
+				),
+			),
+		);
 	}
 
 	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @dataProvider dataGetInput
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
-		$form = new JFormInspector('form1');
+		$field = new HiddenField;
 
-		// Test a traditional hidden field type.
-
+		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
-			$form->load('<form><field name="hidden" type="hidden" label="foo" /></form>'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
+			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
-
-		$field = new HiddenField($form);
-
-		$this->assertThat(
-			$form->getLabel('hidden'),
-			$this->equalTo(''),
-			'Line:' . __LINE__ . ' The label of a hidden element should be nothing.'
-		);
-
-		// Test a field with attribute hidden = true.
-
-		$this->assertThat(
-			$form->load('<form><field name="hidden" type="text" label="foo" hidden="true" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new HiddenField($form);
-
-		$this->assertThat(
-			$form->getLabel('hidden'),
-			$this->equalTo(''),
-			'Line:' . __LINE__ . ' The label of a hidden element should be nothing.'
-		);
-
-		// Test a field with attribute hidden = false.
-
-		$this->assertThat(
-			$form->load('<form><field name="hidden" type="text" label="foo" hidden="false" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new HiddenField($form);
-
-		$this->assertThat(
-			$form->getLabel('hidden'),
-			$this->equalTo('<label id="hidden-lbl" for="hidden" class="">foo</label>'),
-			'Line:' . __LINE__ . ' The label of a non-hidden element should be some HTML.'
+		
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
 	}
 }

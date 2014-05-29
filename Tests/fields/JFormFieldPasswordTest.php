@@ -6,8 +6,8 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\PasswordField;
+use SimpleXMLElement;
 
 /**
  * Test class for JForm.
@@ -17,44 +17,65 @@ use Joomla\Form\Field\PasswordField;
 class JFormFieldPasswordTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependancies for the test.
+	 * Test data for getInput test
 	 *
-	 * @return void
+	 * @return  array
 	 */
-	protected function setUp()
+	public function dataGetInput()
 	{
-		include_once dirname(__DIR__) . '/inspectors.php';
+		return array(
+			array(
+				'<field type="password" id="myId" name="myName" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'password',
+						'id' => 'myId',
+						'name' => 'myName',
+					)
+				),
+			),
+			array(
+				'<field type="password" id="myId" name="myName" size="0" maxlength="0" class="foo bar" readonly="true" disabled="true" autocomplete="off" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'password',
+						'id' => 'myId',
+						'size' => '0',
+						'maxlength' => '0',
+						'class' => 'foo bar',
+						'readonly' => 'readonly',
+						'disabled' => 'disabled',
+						'autocomplete' => 'off',
+					)
+				),
+			),
+		);
 	}
 
 	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @dataProvider dataGetInput
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
-		$form = new JFormInspector('form1');
+		$field = new PasswordField;
 
+		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
-			$form->load('<form><field name="password" type="password" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new PasswordField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
-
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
-
-		// TODO: Should check all the attributes have come in properly.
 	}
 }

@@ -17,62 +17,64 @@ use SimpleXMLElement;
 class JFormFieldTextareaTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Test data for getInput test
+	 *
+	 * @return  array
+	 */
+	public function dataGetInput()
+	{
+		return array(
+			array(
+				'<field type="textarea" id="myId" name="myName" />',
+				array(
+					'tag' => 'textarea',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => 'myName',
+					)
+				),
+			),
+			array(
+				'<field type="textarea" id="myId" name="myName" rows="0" cols="0" class="foo bar" disabled="true" onchange="barFoo();" />',
+				array(
+					'tag' => 'textarea',
+					'attributes' => array(
+						'id' => 'myId',
+						'rows' => '0',
+						'cols' => '0',
+						'class' => 'foo bar',
+						'disabled' => 'disabled',
+						'onchange' => 'barFoo();',
+					)
+				),
+			),
+		);
+	}
+
+	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @dataProvider dataGetInput
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
 		$field = new TextareaField;
 
-		$xml = new SimpleXMLElement('<field type="textarea" id="myId" name="myName" />');
+		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
 			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 		
-		$this->assertRegExp(
-			'/<textarea[\s]+name="myName"[\s]*id="myId"[\s]*>aValue<\/textarea>/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
-		);
+		$expectedTagAttr['content'] = 'aValue';
 
-		$xml = new SimpleXMLElement('<field type="textarea" id="myId" name="myName" rows="0" cols="0" class="foo bar" disabled="true" onchange="barFoo();" />');
-		$this->assertThat(
-			$field->setup($xml, 'aValue'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertRegExp(
-			'/<textarea[\s]+.*class="foo bar".*/',
+		$this->assertTag(
+			$expectedTagAttr,
 			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return class attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<textarea[\s]+.*disabled([\s]+.*|="disabled".*)/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return disabled attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<textarea[\s]+.*cols="0".*/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return columns attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<textarea[\s]+.*rows="0".*/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return rows attribute correctly.'
-		);
-
-		$this->assertRegExp(
-			'/<textarea[\s]+.*onchange="barFoo\(\);".*/',
-			$field->input,
-			'Line:' . __LINE__ . ' The getInput method should compute and return onchange attribute correctly.'
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
 	}
 }
