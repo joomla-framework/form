@@ -34,24 +34,31 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The rule should fail and return false.'
 		);
 
+		// Todo isFalse
+		$this->assertThat(
+			$rule->test($xml->field[0], '0'),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
+		);
+
+		$this->assertThat(
+			$rule->test($xml->field[0], 'false'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
+		);
+
 		// Test pass conditions.
+
+		$this->assertThat(
+			$rule->test($xml->field[0], ''),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
+		);
 
 		$this->assertThat(
 			$rule->test($xml->field[0], 'me@example.com'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The basic rule should pass and return true.'
-		);
-
-		$this->markTestIncomplete('More tests required');
-
-		/*
-		 TODO: Need to test the "field" attribute which adds to the unique test where clause.
-		 TODO: Database error is prevents the following tests from working properly.
-		*/
-		$this->assertThat(
-			$rule->test($xml->field[1], 'me@example.com'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The unique rule should pass and return true.'
 		);
 	}
 
@@ -111,6 +118,8 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	{
 		return array(
 			array('test@example.com', true),
+			array('test@example.com,badaddress.com', false),
+			array('test@example.com,badaddress.com,test2@example.com,', false),
 			array('test@example.com,test2@example.com,test3@localhost', true),
 		);
 	}

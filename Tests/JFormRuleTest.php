@@ -7,6 +7,7 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Form\Rule;
+use SimpleXmlElement;
 
 /**
  * Test class for JForm.
@@ -16,33 +17,17 @@ use Joomla\Form\Rule;
 class FormRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Rule
-	 */
-	protected $object;
-
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return void
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-
-		$this->object = new Rule;
-	}
-
-	/**
 	 * Test...
 	 *
-	 * @todo Implement testTest().
-	 *
 	 * @return void
+	 *
+	 * @expectedException UnexpectedValueException
 	 */
 	public function testTest()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$rule = new Rule;
+		$element = new SimpleXmlElement('<field type="text" />');
+
+		$rule->test($element, 'val');
 	}
 }

@@ -17,7 +17,7 @@ use SimpleXmlElement;
 class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test data for Joomla\Form\Rule\Color::test method.
+	 * Test data for testing of Joomla\Form\Rule\Color::test method.
 	 *
 	 * @return array
 	 */
@@ -45,8 +45,8 @@ class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the Joomla\Form\Rule\Color::test method.
 	 *
-	 * @param   string  $color           @todo
-	 * @param   string  $expectedResult  @todo
+	 * @param   string   $color           @todo
+	 * @param   boolean  $expectedResult  @todo
 	 *
 	 * @dataProvider dataColor
 	 *
