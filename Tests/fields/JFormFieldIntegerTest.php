@@ -8,6 +8,7 @@ namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
 use Joomla\Form\Field\IntegerField;
+use SimpleXmlElement;
 
 /**
  * Test class for JForm.
@@ -16,143 +17,159 @@ use Joomla\Form\Field\IntegerField;
  */
 class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * Sets up dependancies for the test.
-	 *
-	 * @return void
-	 */
-	protected function setUp()
+	public function dataGetOptions()
 	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
-	}
-
-	/**
-	 * Test the getInput method.
-	 *
-	 * @return void
-	 */
-	public function testGetInput()
-	{
-		$form = new JFormInspector('form1');
-
-		$this->assertThat(
-			$form->load('<form><field name="integer" type="integer" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new IntegerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
-		);
-
-		// TODO: Should check all the attributes have come in properly.
+		return array(
+			array("0", "0", "0", null,
+					array( ),
+				),
+			array("0", "0", "1", null,
+					array(
+						array(
+							'value' => '0',
+							'text' => '0',
+							'disable' => false,
+						)
+					)
+				),
+			array("0", "0", "-1", null,
+					array(
+						array(
+							'value' => '0',
+							'text' => '0',
+							'disable' => false,
+						)
+					)
+				),
+			array("0", "2", "0", null,
+					array( ),
+				),
+			array("0", "2", "1", null,
+					array(
+						array(
+							'value' => '0',
+							'text' => '0',
+							'disable' => false,
+						),
+						array(
+							'value' => '1',
+							'text' => '1',
+							'disable' => false,
+						),
+						array(
+							'value' => '2',
+							'text' => '2',
+							'disable' => false,
+						)
+					)
+				),
+			array("0", "2", "-1", null,
+					array( ),
+				),
+			array("2", "0", "0", null,
+					array( ),
+				),
+			array("2", "0", "1", null,
+					array( ),
+				),
+			array("2", "0", "-1", null,
+					array(
+						array(
+							'value' => '2',
+							'text' => '2',
+							'disable' => false,
+						),
+						array(
+							'value' => '1',
+							'text' => '1',
+							'disable' => false,
+						),
+						array(
+							'value' => '0',
+							'text' => '0',
+							'disable' => false,
+						)
+					)
+				),
+			array("0", "0", "1",
+					'<option value="50">50</option>'
+					. '<option value="foo">bar</option>',
+					array(
+						
+						array(
+							'value' => '50',
+							'text' => '50',
+							'disable' => false,
+						),
+						array(
+							'value' => 'foo',
+							'text' => 'bar',
+							'disable' => false,
+						),
+						array(
+							'value' => '0',
+							'text' => '0',
+							'disable' => false,
+						)
+					)
+				),
+			);
 	}
 
 	/**
 	 * Test the getOptions method.
 	 *
+	 * @dataProvider dataGetOptions
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function testGetOptions()
+	public function testGetOptions($first, $last, $step, $options, $expected)
 	{
-		$form = new JFormInspector('form1');
+		$field = new IntegerField;
 
+		$fieldStartTag = '<field name="myName" type="integer" ';
+		$fieldAttr = 'first="' . $first . '" last="' . $last . '" step="' . $step . '"';
+
+		if ($options)
+		{
+			$fieldEndTag = '>' . $options . '</field>';
+		}
+		else
+		{
+			$fieldEndTag = ' />';
+		}
+		
+
+		$xml = new SimpleXmlElement($fieldStartTag . $fieldAttr . $fieldEndTag);
 		$this->assertThat(
-			$form->load('<form><field name="integer" type="integer" first="1" last="-5" step="1"/></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new IntegerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertThat(
-			$field->input,
-			$this->logicalNot(
-				$this->StringContains('<option')
-			),
-			'Line:' . __LINE__ . ' The field should not contain any options.'
-		);
-
-		$this->assertThat(
-			$form->load('<form><field name="integer" type="integer" first="-7" last="-5" step="1"/></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new IntegerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'value'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			$field->input,
-			$this->StringContains('<option value="-7">-7</option>'),
-			'Line:' . __LINE__ . ' The field should contain -7 through -5 as options.'
-		);
-
-		$this->assertThat(
-			$form->load('<form><field name="integer" type="integer" first="-7" last="-5" step="-1"/></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new IntegerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertThat(
-			$field->input,
-			$this->logicalNot(
-				$this->StringContains('<option')
-			),
-			'Line:' . __LINE__ . ' The field should not contain any options.'
-		);
-
-		$this->assertThat(
-			$form->load('<form><field name="integer" type="integer" first="-5" last="-7" step="-1"/></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new IntegerField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertThat(
-			$field->input,
-			$this->StringContains('<option value="-7">-7</option>'),
-			'Line:' . __LINE__ . ' The field should contain -5 through -7 as options.'
-		);
+		$options = TestHelper::invoke($field, 'getOptions');
+		
+		$i = 0;
+		if (empty($expected)){
+			$this->assertThat(
+				empty($options),
+				$this->isTrue(),
+				'Line:' . __LINE__ . ' The getOption method should compute range correctly.'
+			);
+		}
+		else
+		{
+			foreach ($expected as $expectedOption) {
+				foreach ($expectedOption as $attr => $value) {
+					$this->assertEquals(
+						$options[$i]->$attr,
+						$value,
+						'Line:' . __LINE__ . ' The getOption method should compute range correctly.'
+					);
+				}
+                ++$i;
+			}
+		}
 	}
 }

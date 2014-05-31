@@ -26,23 +26,51 @@ class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array(
 				'<field type="checkbox" id="myId" name="myName" />',
+				'',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId',
+						'name' => 'myName'
+					)
+				),
+			),
+			array(
+				'<field type="checkbox" id="myId" name="myName" checked="true" />',
+				'',
 				array(
 					'tag' => 'input',
 					'attributes' => array(
 						'type' => 'checkbox',
 						'id' => 'myId',
 						'name' => 'myName',
+						'checked' => 'checked'
 					)
 				),
 			),
 			array(
-				'<field type="checkbox" id="myId" name="myName" value="aValue" class="foo bar" disabled="true" onclick="barFoo();" />',
+				'<field type="checkbox" id="myId" name="myName" />',
+				'0',
 				array(
 					'tag' => 'input',
 					'attributes' => array(
 						'type' => 'checkbox',
 						'id' => 'myId',
-						'value' => 'aValue',
+						'name' => 'myName',
+						'checked' => 'checked'
+					)
+				),
+			),
+			array(
+				'<field type="checkbox" id="myId" name="myName" value="aVal" class="foo bar" disabled="true" onclick="barFoo();" />',
+				'aValue',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId',
+						'value' => 'aVal',
 						'class' => 'foo bar',
 						'disabled' => 'disabled',
 						'onclick' => 'barFoo();',
@@ -60,13 +88,13 @@ class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @dataProvider dataGetInput
 	 */
-	public function testGetInput($xml, $expectedTagAttr)
+	public function testGetInput($xml, $value, $expectedTagAttr)
 	{
 		$field = new CheckboxField;
 
 		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
-			$field->setup($xml, 'aValue'),
+			$field->setup($xml, $value),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);

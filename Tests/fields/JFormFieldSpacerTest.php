@@ -71,6 +71,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers \Joomla\Form\Field\SpacerField::getTitle
+	 * @covers \Joomla\Form\Field\SpacerField::getLabel
+	 *
 	 * @dataProvider dataGetLabel
 	 */
 	public function testGetLabel($xml, $expectedOutput)
@@ -90,6 +93,12 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			$expectedOutput,
 			$field->label,
+			'Line:' . __LINE__ . ' The getLabel method should match expected ouput.'
+		);
+
+		$this->assertEquals(
+			$expectedOutput,
+			$field->title,
 			'Line:' . __LINE__ . ' The getLabel method should match expected ouput.'
 		);
 	}
