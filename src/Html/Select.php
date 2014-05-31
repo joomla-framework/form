@@ -328,9 +328,37 @@ abstract class Select
 
 		$data = array();
 
-		for ($i = $start; $i <= $end; $i += $inc)
+		// Sanity checks.
+		if ($inc == 0)
 		{
-			$data[$i] = $format ? sprintf($format, $i) : $i;
+			// Step of 0 will create an endless loop.
+			return '';
+		}
+		elseif ($start < $end && $inc < 0)
+		{
+			// A negative step will never reach the last number.
+			return '';
+		}
+		elseif ($start > $end && $inc > 0)
+		{
+			// A position step will never reach the last number.
+			return '';
+		}
+		elseif ($inc < 0)
+		{
+			// Build the options array backwards.
+			for ($i = $start; $i >= $end; $i += $inc)
+			{
+				$data[$i] = $format ? sprintf($format, $i) : $i;
+			}
+		}
+		else
+		{
+			// Build the options array.
+			for ($i = $start; $i <= $end; $i += $inc)
+			{
+				$data[$i] = $format ? sprintf($format, $i) : $i;
+			}
 		}
 
 		// Tell genericlist() to use array keys
@@ -578,8 +606,8 @@ abstract class Select
 			else
 			{
 				// If no string after hyphen - take hyphen out
-				$splitText = explode(' - ', $text, 2);
-				$text = $splitText[0];
+				$splitText = preg_split('/ -[\s]*/', $text, 2, PREG_SPLIT_NO_EMPTY);
+				$text = isset($splitText[0]) ? $splitText[0] : '';
 
 				if (isset($splitText[1]))
 				{
@@ -677,7 +705,7 @@ abstract class Select
 			$id = (isset($obj->id) ? $obj->id : null);
 
 			$extra = '';
-			$extra .= $id ? ' id="' . $obj->id . '"' : '';
+			$id = $id ? $obj->id : $id_text . $k;
 
 			if (is_array($selected))
 			{
@@ -697,8 +725,8 @@ abstract class Select
 				$extra .= ((string) $k == (string) $selected ? ' checked="checked"' : '');
 			}
 
-			$html .= "\n\t" . '<input type="radio" name="' . $name . '"' . ' id="' . $id_text . $k . '" value="' . $k . '"' . ' ' . $extra . ' '
-				. $attribs . '/>' . "\n\t" . '<label for="' . $id_text . $k . '"' . ' id="' . $id_text . $k . '-lbl" class="radiobtn">' . $t
+			$html .= "\n\t" . '<input type="radio" name="' . $name . '"' . ' id="' . $id . '" value="' . $k . '"' . ' ' . $extra . ' '
+				. $attribs . '/>' . "\n\t" . '<label for="' . $id . '"' . ' id="' . $id . '-lbl" class="radiobtn">' . $t
 				. '</label>';
 		}
 
