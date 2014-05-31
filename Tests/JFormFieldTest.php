@@ -8,6 +8,7 @@ namespace Joomla\Form\Tests;
 
 use Joomla\Form\Form;
 use Joomla\Form\FormHelper;
+use Joomla\Test\TestHelper;
 
 /**
  * Test class for JFormField.
@@ -78,6 +79,25 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			$field->type,
 			'Foo\Field\BarField',
 			'Line:' . __LINE__ . ' The field type should have been guessed by the constructor.'
+		);
+
+		$field = new \Joomla\Form\Field\TextField;
+		$this->assertEquals(
+			$field->type,
+			'Text',
+			'Line:' . __LINE__ . ' The field type should have been guessed by the constructor.'
+		);
+
+		$this->assertEquals(
+			$field->formControl,
+			null,
+			'Line:' . __LINE__ . ' The internal form should be identical to the variable passed in the contructor.'
+		);
+
+		$this->assertEquals(
+			TestHelper::getValue($field, 'form'),
+			null,
+			'Line:' . __LINE__ . ' The internal form should be identical to the variable passed in the contructor.'
 		);
 
 		FormHelper::loadFieldType('foo');
@@ -310,7 +330,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 */
-	public function testSetupInvalidElement()
+	public function testSetupInvalidArgument()
 	{
 		$form = new JFormInspector('form1');
 		$field = new JFormFieldInspector($form);
@@ -320,6 +340,26 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			$field->setup($wrong, 0),
 			$this->isFalse(),
 			'Line:' . __LINE__ . ' If not a form object, setup should return false.'
+		);
+	}
+
+	/**
+	 * Test an invalid element for the Joomla\Form\Field::setup method
+	 *
+	 * @covers Joomla\Form\Field::setup
+	 *
+	 * @return void
+	 */
+	public function testSetupInvalidElement()
+	{
+		$form = new JFormInspector('form1');
+		$field = new JFormFieldInspector($form);
+
+		$wrong = new \SimpleXmlElement('<form></form>');
+		$this->assertThat(
+			$field->setup($wrong, 0),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' If not a field object, setup should return false.'
 		);
 	}
 

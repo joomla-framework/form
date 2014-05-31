@@ -11,6 +11,8 @@ use Joomla\Language\Text;
 use Joomla\Form\Form;
 use Joomla\Form\FormHelper;
 use Joomla\Form\Rule;
+use Joomla\Test\TestHelper;
+use Joomla\Registry\Registry;
 
 /**
  * Test class for JForm.
@@ -75,7 +77,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$this->fail('Error in text XML data');
 		}
 
-		JFormInspector::addNode($xml1->fields, $xml2->field);
+		TestHelper::invoke(new Form('formName'), 'addNode', $xml1->fields, $xml2->field);
 
 		$fields = $xml1->xpath('fields/field[@name="foo"]');
 		$this->assertThat(
@@ -94,16 +96,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBind()
 	{
-		$form = new JFormInspector('form1');
-
-		$xml = JFormDataHelper::$bindDocument;
-
-		// Check the test data loads ok.
-		$this->assertThat(
-			$form->load($xml),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
+		$form = new Form('formName');
 
 		$data = array(
 			'title' => 'Joomla Framework',
@@ -120,13 +113,72 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			)
 		);
 
+		$xml = JFormDataHelper::$bindDocument;
+
+		// Try to bind data with no valid xml.
+		$this->assertThat(
+			$form->bind($data),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Form should not bind data with invalid xml document.'
+		);
+
+		// Check the test data loads ok.
+		$this->assertThat(
+			$form->load($xml),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' XML string should load successfully.'
+		);
+
+		// Test invalid data format (string)
+		$this->assertThat(
+			$form->bind("title:Joomla Framework;author:Should not bind;"),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Invalid format data should not bind successfully.'
+		);
+
+		// Test invalid data format (int)
+		$this->assertThat(
+			$form->bind(1234),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Invalid format data should not bind successfully.'
+		);
+
 		$this->assertThat(
 			$form->bind($data),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The data should bind successfully.'
 		);
 
-		$data = $form->getData();
+		$data = TestHelper::getValue($form, 'data');
+
+		$this->assertThat(
+			$data->get('title'),
+			$this->equalTo('Joomla Framework'),
+			'Line:' . __LINE__ . ' The data should bind to form field elements.'
+		);
+
+		$this->assertThat(
+			$data->get('author'),
+			$this->isNull(),
+			'Line:' . __LINE__ . ' The data should not bind to unknown form field elements.'
+		);
+
+		$this->assertThat(
+			is_array($data->get('params.categories')),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The categories param should be an array.'
+		);
+
+		$registryData = new Registry($data);
+
+		$this->assertThat(
+			$form->bind($registryData),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The data should bind successfully.'
+		);
+
+		$data = TestHelper::getValue($form, 'data');
+
 		$this->assertThat(
 			$data->get('title'),
 			$this->equalTo('Joomla Framework'),
@@ -153,33 +205,32 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testConstruct()
 	{
-		$form = new JFormInspector('form1');
+		$form = new Form('formName');
 
 		$this->assertThat(
 			($form instanceof Form),
 			$this->isTrue(),
-			'Line:' . __LINE__ . ' The JForm constuctor should return a JForm object.'
+			'Line:' . __LINE__ . ' The Form constuctor should return a Form object.'
 		);
 
 		// Check the integrity of the options.
 
-		$options = $form->getOptions();
+		$options = TestHelper::getValue($form, 'options');
 		$this->assertThat(
 			isset($options['control']),
 			$this->isTrue(),
-			'Line:' . __LINE__ . ' The JForm object should contain an options array with a control setting.'
+			'Line:' . __LINE__ . ' The Form object should contain an options array with a control setting.'
 		);
 
-		$options = $form->getOptions();
 		$this->assertThat(
 			$options['control'],
 			$this->isFalse(),
 			'Line:' . __LINE__ . ' The control setting should be false by default.'
 		);
 
-		$form = new JFormInspector('form1', array('control' => 'jform'));
+		$form = new Form('formName', array('control' => 'jform'));
 
-		$options = $form->getOptions();
+		$options = TestHelper::getValue($form, 'options');
 		$this->assertThat(
 			$options['control'],
 			$this->equalTo('jform'),
@@ -194,14 +245,9 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testFilter()
 	{
-		$form = new JFormInspector('form1');
+		$form = new JFormInspector('formName');
 
-		// Check the test data loads ok.
-		$this->assertThat(
-			$form->load(JFormDataHelper::$filterDocument),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
+		$xml = JFormDataHelper::$filterDocument;
 
 		$data = array(
 			'word' => 'Joomla! Framework',
@@ -211,6 +257,19 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 				'show_author' => false,
 			),
 			'default' => ''
+		);
+
+		// Check the test data loads ok.
+		$this->assertThat(
+			$form->filter($data),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Filter should return false for an invalid xml document.'
+		);
+
+		$this->assertThat(
+			$form->load(JFormDataHelper::$filterDocument),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
 		$filtered = $form->filter($data);
@@ -246,6 +305,8 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$this->equalTo(0),
 			'Line:' . __LINE__ . ' The nested variable should be present.'
 		);
+
+		// Todo : Add test for group fields
 	}
 
 	/**
@@ -255,138 +316,177 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testFilterField()
 	{
-		$form = new JFormInspector('form1');
+		$form = new Form('formName');
+
+		$xml = JFormDataHelper::$filterDocument;
+
+		$input = '<script>alert();</script> <p>Some text.</p>';
 
 		// Check the test data loads ok.
 		$this->assertThat(
-			$form->load(JFormDataHelper::$filterDocument),
+			$form->load($xml),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$input = '<script>alert();</script> <p>Some text.</p>';
-
+		// Check invalid SimpleXmlElement as field
 		$this->assertThat(
-			$form->filterField($form->findField('function'), $input),
+			TestHelper::invoke($form, 'filterField', "field", $input),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' No filter should be applied.'
+		);
+
+		$field = TestHelper::invoke($form, 'findField', 'function');
+		$this->assertThat(
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo('function'),
 			'Line:' . __LINE__ . ' The function filter should be correctly applied.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'int');
 		$this->assertThat(
-			$form->filterField($form->findField('int'), 'A1B2C3'),
+			TestHelper::invoke($form, 'filterField', $field, 'A1B2C3'),
 			$this->equalTo(1),
 			'Line:' . __LINE__ . ' The "int" filter should be correctly applied.'
 		);
 
+		// Todo : Coorect this test case.
+		$field = TestHelper::invoke($form, 'findField', 'int_array');
 		$this->assertThat(
-			$form->filterField($form->findField('method'), $input),
+			TestHelper::invoke($form, 'filterField', $field, array('A1B2C3', false)),
+			$this->equalTo(array(0,0)),
+			'Line:' . __LINE__ . ' The "int_array" filter should be correctly applied.'
+		);
+
+		$field = TestHelper::invoke($form, 'findField', 'method');
+		$this->assertThat(
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo('method'),
 			'Line:' . __LINE__ . ' The class method filter should be correctly applied.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'raw');
 		$this->assertThat(
-			$form->filterField($form->findField('raw'), $input),
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo($input),
 			'Line:' . __LINE__ . ' "The safehtml" filter should be correctly applied.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'safehtml');
 		$this->assertThat(
-			$form->filterField($form->findField('safehtml'), $input),
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo('alert(); <p>Some text.</p>'),
 			'Line:' . __LINE__ . ' "The safehtml" filter should be correctly applied.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'unset');
 		$this->assertThat(
-			$form->filterField($form->findField('unset'), $input),
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo(null),
 			'Line:' . __LINE__ . ' The value should be unset.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'word');
 		$this->assertThat(
-			$form->filterField($form->findField('word'), $input),
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo('scriptalertscriptpSometextp'),
 			'Line:' . __LINE__ . ' The "word" filter should be correctly applied.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'url');
 		$this->assertThat(
-			$form->filterField($form->findField('url'), 'http://example.com'),
+			TestHelper::invoke($form, 'filterField', $field, 'http://example.com'),
 			$this->equalTo('http://example.com'),
 			'Line:' . __LINE__ . ' A field with a valid protocol should return as is.'
 		);
 
 		$this->assertThat(
-			$form->filterField($form->findField('url'), 'http://<script>alert();</script> <p>Some text.</p>'),
+			TestHelper::invoke($form, 'filterField', $field, 'http://<script>alert();</script> <p>Some text.</p>'),
 			$this->equalTo('http://alert(); Some text.'),
 			'Line:' . __LINE__ . ' A "url" with scripts should be should be filtered.'
 		);
 
 		$this->assertThat(
-			$form->filterField($form->findField('url'), 'https://example.com'),
+			TestHelper::invoke($form, 'filterField', $field, 'https://example.com'),
 			$this->equalTo('https://example.com'),
 			'Line:' . __LINE__ . ' A field with a valid protocol that is not http should return as is.'
 		);
 
+		// Todo : fix this test. Undefined Uri::root
+		/*$this->assertThat(
+			TestHelper::invoke($form, 'filterField', $field, 'index.php'),
+			$this->equalTo('http://example.com'),
+			'Line:' . __LINE__ . ' A field without a protocol should return with a http:// protocol.'
+		);*/
+
 		$this->assertThat(
-			$form->filterField($form->findField('url'), 'example.com'),
+			TestHelper::invoke($form, 'filterField', $field, 'example.com'),
 			$this->equalTo('http://example.com'),
 			'Line:' . __LINE__ . ' A field without a protocol should return with a http:// protocol.'
 		);
 
 		$this->assertThat(
-			$form->filterField($form->findField('url'), 'hptarr.com'),
+			TestHelper::invoke($form, 'filterField', $field, 'hptarr.com'),
 			$this->equalTo('http://hptarr.com'),
 			'Line:' . __LINE__ . ' A field without a protocol and starts with t should return with a http:// protocol.'
 		);
 
 		$this->assertThat(
-			$form->filterField($form->findField('url'), ''),
+			TestHelper::invoke($form, 'filterField', $field, ''),
 			$this->equalTo(''),
 			'Line:' . __LINE__ . ' An empty "url" filter return nothing.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'default');
 		$this->assertThat(
-			$form->filterField($form->findField('default'), $input),
+			TestHelper::invoke($form, 'filterField', $field, $input),
 			$this->equalTo('alert(); Some text.'),
 			'Line:' . __LINE__ . ' The default strict filter should be correctly applied.'
 		);
 
+		$field = TestHelper::invoke($form, 'findField', 'tel');
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '222.3333333333'),
+			TestHelper::invoke($form, 'filterField', $field, '+31 42 1123 4567'),
+			$this->equalTo('31.4211234567'),
+			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
+		);
+		$this->assertThat(
+			TestHelper::invoke($form, 'filterField', $field, '222.3333333333'),
 			$this->equalTo('222.3333333333'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '+222.3333333333'),
+			TestHelper::invoke($form, 'filterField', $field, '+222.3333333333'),
 			$this->equalTo('222.3333333333'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '+2,2,2.3,3,3,3,3,3,3,3,3,3,3,3'),
+			TestHelper::invoke($form, 'filterField', $field, '+2,2,2.3,3,3,3,3,3,3,3,3,3,3,3'),
 			$this->equalTo('222.333333333333'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '33333333333'),
+			TestHelper::invoke($form, 'filterField', $field, '33333333333'),
 			$this->equalTo('.33333333333'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '222333333333333'),
+			TestHelper::invoke($form, 'filterField', $field, '222333333333333'),
 			$this->equalTo('222.333333333333'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '1 (202) 555-5555'),
+			TestHelper::invoke($form, 'filterField', $field, '1 (202) 555-5555'),
 			$this->equalTo('1.2025555555'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), '+222.33333333333x444'),
+			TestHelper::invoke($form, 'filterField', $field, '+222.33333333333x444'),
 			$this->equalTo('222.33333333333'),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
 		$this->assertThat(
-			$form->filterField($form->findField('tel'), 'ABCabc/?.!*x'),
+			TestHelper::invoke($form, 'filterField', $field, 'ABCabc/?.!*x'),
 			$this->equalTo(''),
 			'Line:' . __LINE__ . ' The tel filter should be correctly applied.'
 		);
@@ -403,6 +503,13 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		$form = new JFormInspector('form1');
 
 		$xml = JFormDataHelper::$findFieldDocument;
+
+		// Finding fields in a form with invalid xml docuement.
+		$this->assertThat(
+			$form->findField('bogus'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Form with invalid xml docuement should return false.'
+		);
 
 		// Check the test data loads ok.
 		$this->assertThat(
@@ -422,7 +529,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		$this->assertThat(
 			$form->findField('title', 'bogus'),
 			$this->isFalse(),
-			'Line:' . __LINE__ . ' An field in a group that does not exist should return false.'
+			'Line:' . __LINE__ . ' A field in a group that does not exist should return false.'
 		);
 
 		// Test various find combinations.
@@ -466,6 +573,13 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		// Prepare the form.
 		$form = new JFormInspector('form1');
 
+		// Finding fields in a form with invalid xml docuement.
+		$this->assertThat(
+			$form->findFieldsByFieldset('bogus'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Form with invalid xml docuement should return false.'
+		);
+
 		$this->assertThat(
 			$form->load(JFormDataHelper::$findFieldsByFieldsetDocument),
 			$this->isTrue(),
@@ -504,6 +618,13 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	{
 		// Prepare the form.
 		$form = new JFormInspector('form1');
+
+		// Finding fields in a form with invalid xml docuement.
+		$this->assertThat(
+			$form->findFieldsByGroup('bogus'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Form with invalid xml docuement should return false.'
+		);
 
 		$this->assertThat(
 			$form->load(JFormDataHelper::$findFieldsByGroupDocument),
@@ -567,6 +688,13 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	{
 		// Prepare the form.
 		$form = new JFormInspector('form1');
+
+		// Finding fields in a form with invalid xml docuement.
+		$this->assertThat(
+			$form->findGroup('bogus'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' Form with invalid xml docuement should return false.'
+		);
 
 		$this->assertThat(
 			$form->load(JFormDataHelper::$findGroupDocument),
@@ -650,13 +778,20 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		// Prepare the form.
 		$form = new JFormInspector('form1');
 
+		// Check for errors.
+
+		$this->assertThat(
+			$form->getField('title'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' A form with invalid xml document should return false.'
+		);
+
+		// Load a xml document in the form.
 		$this->assertThat(
 			$form->load(JFormDataHelper::$getFieldDocument),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
-
-		// Check for errors.
 
 		$this->assertThat(
 			$form->getField('bogus'),
@@ -749,6 +884,25 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 * Test for Form::getFieldAttribute method.
 	 *
 	 * @return void
+	 *
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testGetFieldAttributeInvalidXml()
+	{
+		$form = new JFormInspector('form1');
+
+		// Check for invalid form document.
+		$this->assertThat(
+			$form->getFieldAttribute('title', 'description'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' A form with invalid xml document should return false.'
+		);
+	}
+
+	/**
+	 * Test for Form::getFieldAttribute method.
+	 *
+	 * @return void
 	 */
 	public function testGetFieldAttribute()
 	{
@@ -817,10 +971,71 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 * Test for Form::getInstance.
 	 *
 	 * @return void
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testGetInstanceNoDataException()
+	{
+		$form = new Form('form1');
+
+		$this->assertThat(
+			Form::getInstance('form1') == $form,
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' getInstance should throw exception if no data is given.'
+		);
+	}
+
+	/**
+	 * Test for Form::getInstance.
+	 *
+	 * @return void
+	 *
+	 * @expectedException RuntimeException
+	 */
+	public function testGetInstanceMalformedDataException()
+	{
+		$form = new Form('form2');
+
+		$this->assertThat(
+			Form::getInstance('form2', '<abc') == $form,
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' getInstance should thow exception if data is malformed.'
+		);
+	}
+
+	/**
+	 * Test for Form::getInstance.
+	 *
+	 * @return void
+	 *
+	 * @expectedException RuntimeException
+	 */
+	public function testGetInstanceNoDataFileException()
+	{
+		$form = new Form('form3');
+
+		$this->assertThat(
+			Form::getInstance('form3', 'abc') == $form,
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' getInstance should thow exception if access to data file gives error.'
+		);
+	}
+
+	/**
+	 * Test for Form::getInstance.
+	 *
+	 * @return void
 	 */
 	public function testGetInstance()
 	{
-		$this->markTestIncomplete();
+		$form = JFormInspector::getInstance('form1', 
+			JFormDataHelper::$getFieldDocument);
+
+		$this->assertThat(
+			JFormInspector::getInstance('form1') == $form,
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' getInstance should return the correct instance of form.'
+		);
 	}
 
 	/**
@@ -886,6 +1101,12 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$form->load(JFormDataHelper::$loadFieldDocument),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
+		);
+
+		$this->assertThat(
+			$form->getInput('bogus'),
+			$this->equalTo(''),
+			'Line:' . __LINE__ . ' The method should return a empty string if field is not found.'
 		);
 
 		$this->assertThat(
@@ -975,6 +1196,12 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
+		$this->assertThat(
+			$form->getLabel('bogus'),
+			$this->equalTo(''),
+			'Line:' . __LINE__ . ' The method should return a empty string if field is not found.'
+		);
+
 		$expected = '<label id="title_id-lbl" for="title_id" class="hasTip required" ' .
 				'title="Title::The title.">Title<span class="star">&#160;*</span></label>';
 
@@ -1060,6 +1287,12 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$this->equalTo(4),
 			'Line:' . __LINE__ . ' There are 3 field elements in a fieldset and 1 field element marked with the fieldset attribute.'
 		);
+
+		$this->assertThat(
+			count($form->getFieldset()),
+			$this->equalTo(8),
+			'Line:' . __LINE__ . ' There are total 8 fields in the document.'
+		);
 	}
 
 	/**
@@ -1071,6 +1304,13 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	{
 		// Prepare the form.
 		$form = new JFormInspector('form1');
+
+		// Check for invalid form document.
+		$this->assertThat(
+			count($form->getFieldsets()),
+			$this->equalTo(0),
+			'Line:' . __LINE__ . ' A form with invalid xml document should return empty array.'
+		);
 
 		$this->assertThat(
 			$form->load(JFormDataHelper::$getFieldsetsDocument),
@@ -1331,10 +1571,30 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' An unknown field should return false.'
 		);
 
-		// Test correct usage.
+		$xml = new \SimpleXMLElement('<barfoo name="foobar" required="true" type="abrakadabra" />');
+		$field = $form->loadField($xml);
+		
+		$this->assertThat(
+			$field,
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' A invalid field element should return false.'
+		);
 
-		$field = $form->getField('title');
-		$field = $form->loadField($field);
+		// Test correct usage.
+		$xml = new \SimpleXMLElement('<field name="foobar" required="true" type="abrakadabra" />');
+		$field = $form->loadField($xml);
+		
+		$this->assertThat(
+			$field instanceof \Joomla\Form\Field,
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' A field should be loaded successfully and return its instance.'
+		);
+
+		$this->assertThat(
+			$field->type,
+			$this->equalTo('Text'),
+			'Line:' . __LINE__ . ' An unknown field type should loaded as text field.'
+		);
 	}
 
 	/**
@@ -1412,7 +1672,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$this->fail('Line:' . __LINE__ . ' Error in text XML data');
 		}
 
-		JFormInspector::mergeNode($xml1->field, $xml2->field);
+		TestHelper::invoke(new Form('formName'), 'mergeNode', $xml1->field, $xml2->field);
 
 		$fields = $xml1->xpath('field[@name="foo"] | field[@type="text"]');
 		$this->assertThat(
@@ -1430,21 +1690,21 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	public function testMergeNodes()
 	{
 		// The source data.
-		$xml1 = simplexml_load_string('<form><fields><field name="foo" /></fields></form>');
+		$xml1 = simplexml_load_string('<form><fields><field name="foo" type="text"/></fields></form>');
 
 		// The new data for adding the field.
-		$xml2 = simplexml_load_string('<form><fields><field name="foo" type="text" /><field name="soap" /></fields></form>');
+		$xml2 = simplexml_load_string('<form><fields><field name="foo"  /><fields><field name="soap" /></fields></fields></form>');
 
 		if ($xml1 === false || $xml2 === false)
 		{
 			$this->fail('Line:' . __LINE__ . ' Error in text XML data');
 		}
 
-		JFormInspector::mergeNodes($xml1->fields, $xml2->fields);
+		TestHelper::invoke(new Form('formName'), 'mergeNodes', $xml1->fields, $xml2->fields);
 
 		$this->assertThat(
 			count($xml1->xpath('fields/field')),
-			$this->equalTo(2),
+			$this->equalTo(1),
 			'Line:' . __LINE__ . ' The merge should have two field tags, one existing, one new.'
 		);
 
@@ -1455,7 +1715,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertThat(
-			count($xml1->xpath('fields/field[@name="soap"]')),
+			count($xml1->xpath('fields/fields/field[@name="soap"]')),
 			$this->equalTo(1),
 			'Line:' . __LINE__ . ' A new field should be added.'
 		);
@@ -1530,7 +1790,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test for Form::setField method.
+	 * Test for Form::reset method.
 	 *
 	 * @return void
 	 */
@@ -1663,7 +1923,35 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		$this->assertThat(
 			$form->getFieldAttribute('title', 'required', 'default'),
 			$this->equalTo('true'),
-			'Line:' . __LINE__ . ' The label should contain just the new label.'
+			'Line:' . __LINE__ . ' We should now get replaced field.'
+		);
+
+		$newField = new \SimpleXMLElement('<field name="newName" required="true"/>');
+
+		$this->assertThat(
+			$form->setField($newField, null, true),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The setField method should return true.'
+		);
+
+		$this->assertThat(
+			$form->getFieldAttribute('newName', 'required', 'default'),
+			$this->equalTo('true'),
+			'Line:' . __LINE__ . ' We should now get replaced field.'
+		);
+
+		$newField = new \SimpleXMLElement('<field name="anotherName" required="true"/>');
+
+		$this->assertThat(
+			$form->setField($newField, 'params', true),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The setField method should return true.'
+		);
+
+		$this->assertThat(
+			$form->getFieldAttribute('anotherName', 'required', 'default', 'params'),
+			$this->equalTo('true'),
+			'Line:' . __LINE__ . ' We should now get replaced field.'
 		);
 	}
 
@@ -1680,6 +1968,12 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$form->load(JFormDataHelper::$loadDocument),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
+		);
+
+		$this->assertThat(
+			$form->setFieldAttribute('bogus', 'label', 'The Title'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' The method should return false for non-existent field.'
 		);
 
 		$this->assertThat(
@@ -1704,6 +1998,32 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			$form->getFieldAttribute('show_title', 'label', 'default', 'params'),
 			$this->equalTo('Show Title'),
 			'Line:' . __LINE__ . ' The new value of the grouped field should be set.'
+		);
+	}
+
+	/**
+	 * Test for Form::setFields method.
+	 *
+	 * @return void
+	 *
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testSetFieldsInvalidElements()
+	{
+		$form = new JFormInspector('form1');
+
+		$this->assertThat(
+			$form->load(JFormDataHelper::$loadDocument),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' XML string should load successfully.'
+		);
+
+		$elements = array('bogus');
+
+		$this->assertThat(
+			$form->setFields($elements, null, false),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' The setFields method should throw error on invalid element(s).'
 		);
 	}
 

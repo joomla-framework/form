@@ -788,7 +788,7 @@ class Form
 		// Make sure there is a valid Form XML document.
 		if (!($this->xml instanceof \SimpleXMLElement))
 		{
-			throw new \UnexpectedValueException(sprintf('%s::getFieldAttribute `xml` is not an instance of SimpleXMLElement', get_class($this)));
+			throw new \UnexpectedValueException(sprintf('%s::removeField `xml` is not an instance of SimpleXMLElement', get_class($this)));
 		}
 
 		// Find the form field element from the definition.
@@ -819,7 +819,7 @@ class Form
 		// Make sure there is a valid Form XML document.
 		if (!($this->xml instanceof \SimpleXMLElement))
 		{
-			throw new \UnexpectedValueException(sprintf('%s::getFieldAttribute `xml` is not an instance of SimpleXMLElement', get_class($this)));
+			throw new \UnexpectedValueException(sprintf('%s::removeGroup `xml` is not an instance of SimpleXMLElement', get_class($this)));
 		}
 
 		// Get the fields elements for a given group.
@@ -876,7 +876,7 @@ class Form
 		// Make sure there is a valid Form XML document.
 		if (!($this->xml instanceof \SimpleXMLElement))
 		{
-			throw new \UnexpectedValueException(sprintf('%s::getFieldAttribute `xml` is not an instance of SimpleXMLElement', get_class($this)));
+			throw new \UnexpectedValueException(sprintf('%s::setField `xml` is not an instance of SimpleXMLElement', get_class($this)));
 		}
 
 		// Find the form field element from the definition.
@@ -937,7 +937,7 @@ class Form
 		// Make sure there is a valid Form XML document.
 		if (!($this->xml instanceof \SimpleXMLElement))
 		{
-			throw new \UnexpectedValueException(sprintf('%s::getFieldAttribute `xml` is not an instance of SimpleXMLElement', get_class($this)));
+			throw new \UnexpectedValueException(sprintf('%s::setFieldAttribute `xml` is not an instance of SimpleXMLElement', get_class($this)));
 		}
 
 		// Find the form field element from the definition.
@@ -979,7 +979,7 @@ class Form
 		// Make sure there is a valid Form XML document.
 		if (!($this->xml instanceof \SimpleXMLElement))
 		{
-			throw new \UnexpectedValueException(sprintf('%s::getFieldAttribute `xml` is not an instance of SimpleXMLElement', get_class($this)));
+			throw new \UnexpectedValueException(sprintf('%s::setFields `xml` is not an instance of SimpleXMLElement', get_class($this)));
 		}
 
 		// Make sure the elements to set are valid.
@@ -1232,11 +1232,6 @@ class Form
 					if (substr($number, 0, 1) == 1)
 					{
 						$number = substr($number, 1);
-					}
-
-					if (substr($number, 0, 2) == '+1')
-					{
-						$number = substr($number, 2);
 					}
 
 					$result = '1.' . $number;
@@ -1936,19 +1931,6 @@ class Form
 	{
 		// The assumption is that the inputs are at the same relative level.
 		// So we just have to scan the children and deal with them.
-
-		// Update the attributes of the child node.
-		foreach ($new->attributes() as $name => $value)
-		{
-			if (isset($source[$name]))
-			{
-				$source[$name] = (string) $value;
-			}
-			else
-			{
-				$source->addAttribute($name, $value);
-			}
-		}
 
 		foreach ($new->children() as $child)
 		{
