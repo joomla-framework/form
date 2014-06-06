@@ -24,7 +24,7 @@ if (!defined('JCOMPAT_UNICODE_PROPERTIES'))
  *
  * @since  1.0
  */
-class Rule
+abstract class Rule
 {
 	/**
 	 * The regular expression to use in testing a form field value.
