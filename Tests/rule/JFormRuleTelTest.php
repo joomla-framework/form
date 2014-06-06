@@ -28,13 +28,13 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 					array('anything_5555555555', false),
 					array('5555555555_anything', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('(555) 234-5678', true),
 					array('1-555-234-5678', true),
 					array('+1-555-234-5678', true),
@@ -47,11 +47,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('(555) 234-5678', true),
 				),
 			),
@@ -59,11 +59,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('(555) 234-5678', true),
 				),
 			),
@@ -71,7 +71,7 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 					array('anything_5555555555', false),
 					array('5555555555_anything', false),
@@ -81,7 +81,7 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 					array('555.5555555_anything', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+555 234 5678', true),
 					array('+123 555 234 5678', true),
 					array('+2 52 34 55', true),
@@ -92,11 +92,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+555 234 5678', true),
 				),
 			),
@@ -104,11 +104,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+555 234 5678', true),
 				),
 			),
@@ -116,11 +116,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+555 234 5678', true),
 				),
 			),
@@ -128,11 +128,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('123451234512', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+555 234 5678', true),
 				),
 			),
@@ -140,14 +140,14 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('12345123451234512345', false),
 					array('123.1234', false),
 					array('23.1234', false),
 					array('3.1234', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+123.1234', true),
 					array('+23.1234', true),
 					array('+3.1234', true),
@@ -158,11 +158,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('12345123451234512345', false),
 
 					// Test pass conditions.
-					array('0', true),
+					array('', true),
 					array('+123.1234', true),
 				),
 			),
@@ -170,7 +170,7 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 				array(
 					// Test fail conditions no plan.
 					array('bogus', false),
-					array('0', true), // Todo false
+					array('0', false),
 					array('anything_555.5555555', false),
 					array('555.5555555x555_anything', false),
 					array('555.', false),
@@ -210,7 +210,8 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 			$this->assertEquals(
 				$rule->test($field, $assertion[0]),
 				$assertion[1],
-				'Line:' . __LINE__ . ' The rule should ' . ($assertion[1] ? 'pass' : 'fail') . ' and return ' . ($assertion[1] ? 'true' : 'false') . ' for input ' . $assertion[0] . '.'
+				'Line:' . __LINE__ . ' The rule should ' . ($assertion[1] ? 'pass' : 'fail')
+				. ' with "' . $assertion[0] . '" and return ' . ($assertion[1] ? 'true' : 'false') . '.'
 			);
 		}
 	}

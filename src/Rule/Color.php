@@ -38,7 +38,7 @@ class Color extends Rule
 	{
 		$value = trim($value);
 
-		if (empty($value))
+		if ($value === '')
 		{
 			// A color field can't be empty, we default to black. This is the same as the HTML5 spec.
 			$value = '#000000';

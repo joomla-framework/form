@@ -28,7 +28,7 @@ class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
 			array(
 				// failing cases
 				array('Simple String' , '0', 'bogus', 'false'),
-				array('Simple String' , '0', '0', 'true'), // Todo false
+				array('Simple String' , '0', '0', 'false'),
 				array('No scheme' , '0', 'mydomain.com', 'false'),
 				array('No ://' , '0', 'httpmydomain.com', 'false'),
 				array('Three slashes' , '0', 'http:///mydomain.com', 'false'),

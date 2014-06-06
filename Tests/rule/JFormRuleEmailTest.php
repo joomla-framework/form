@@ -34,10 +34,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The rule should fail and return false.'
 		);
 
-		// Todo isFalse
 		$this->assertThat(
 			$rule->test($xml->field[0], '0'),
-			$this->isTrue(),
+			$this->isFalse(),
 			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
 		);
 

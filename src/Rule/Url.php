@@ -44,7 +44,7 @@ class Url extends Rule
 		// If the field is empty and not required, the field is valid.
 		$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
 
-		if (!$required && empty($value))
+		if (!$required && $value === '')
 		{
 			return true;
 		}
