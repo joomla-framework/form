@@ -57,7 +57,7 @@ class LanguageField extends ListField
 	 *
 	 * @since   1.0
 	 */
-	protected function createLanguageList($selected, $basePath = JPATH_ROOT)
+	protected function createLanguageList($selected = null, $basePath = JPATH_ROOT)
 	{
 		$list = array();
 
@@ -71,12 +71,12 @@ class LanguageField extends ListField
 			$option['text'] = $metadata['name'];
 			$option['value'] = $lang;
 
-			if ($lang == $selected)
+			if ($selected && $lang == $selected)
 			{
 				$option['selected'] = 'selected="selected"';
 			}
 
-			$list[] = $option;
+			$list[] = (object) $option;
 		}
 
 		return $list;
