@@ -51,7 +51,7 @@ class DatabaseConnectionField extends ListField
 		 * If no supported databases are listed, it is assumed all available databases
 		 * are supported.
 		 */
-		$supported = $this->element['supported'];
+		$supported = (string) $this->element['supported'];
 
 		if (!empty($supported))
 		{
@@ -59,9 +59,9 @@ class DatabaseConnectionField extends ListField
 
 			foreach ($supported as $support)
 			{
-				if (in_array($support, $available))
+				if (in_array(ucfirst($support), $available))
 				{
-					$options[$support] = Text::_(ucfirst($support));
+					$options[lcfirst($support)] = Text::_(ucfirst($support));
 				}
 			}
 		}
@@ -69,7 +69,7 @@ class DatabaseConnectionField extends ListField
 		{
 			foreach ($available as $support)
 			{
-				$options[$support] = Text::_(ucfirst($support));
+				$options[lcfirst($support)] = Text::_(ucfirst($support));
 			}
 		}
 
