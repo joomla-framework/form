@@ -9,6 +9,7 @@ namespace Joomla\Form\Tests;
 use Joomla\Test\TestHelper;
 use Joomla\Form\Field\RadioField;
 use SimpleXmlElement;
+
 /**
  * Test class for JForm.
  *
@@ -17,50 +18,105 @@ use SimpleXmlElement;
 class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Test data for getInput test
+	 *
+	 * @return  array
+	 */
+	public function dataGetInput()
+	{
+		return array(
+			array(
+				'<field name="myName" id="myId" type="radio" class="foo bar">'
+					. '<option value="0">No</option>'
+					. '<option value="1">Yes</option>'
+				. '</field>',
+				array(
+					'tag' => 'fieldset',
+					'attributes' => array(
+						'id' => 'myId',
+						'class' => 'radio foo bar'
+					),
+					'children' => array(
+						'count' => 4
+					)
+				)
+			),
+			array(
+				'<field name="myName" id="myId" type="radio" class="foo bar">'
+					. '<option value="0" class="one two">No</option>'
+					. '<option value="1">Yes</option>'
+				. '</field>',
+				array(
+					'tag' => 'label',
+					'attributes' => array(
+						'for' => 'myId0',
+						'class' => 'one two',
+					),
+					'parent' => array('tag' => 'fieldset')
+				)
+			),
+			array(
+				'<field name="myName" id="myId" type="radio">'
+					. '<option value="0" disabled="true" class="one two">No</option>'
+					. '<option value="1">Yes</option>'
+				. '</field>',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'radio',
+						'id' => 'myId0',
+						'name' => 'myName',
+						'class' => 'one two',
+						'value' => '0',
+						'disabled' => 'disabled'
+					),
+					'parent' => array('tag' => 'fieldset')
+				)
+			)
+		);
+	}
+
+	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @dataProvider dataGetInput
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
-		$form = new JFormInspector('form1');
+		$field = new RadioField;
 
+		$xml = new SimpleXMLElement($xml);
 		$this->assertThat(
-			$form->load('<form><field name="radio" type="radio" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new RadioField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($xml, 'aValue'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
-
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
-
-		// TODO: Should check all the attributes have come in properly.
+		
 	}
 
 	public function dataGetOptions()
 	{
 		return array(
-			array('<option value="0" onclick="foobar();">No</option><option value="1">Yes</option>',
+			array('<option value="0" onclick="foobar();">No</option>'
+				. '<item value="1">Yes</item>',
 					array(
-						array(
+						//presentInArray#optionNumber => optionArray
+						'1#0' => array(
 							'value' => '0',
 							'text' => 'No',
 							'disable' => false,
 							'class' => '',
 							'onclick' => 'foobar();'
 						),
-						array(
+						'0#1' => array(
 							'value' => '1',
 							'text' => 'Yes',
 							'disable' => false,
@@ -69,16 +125,17 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 						),
 					),
 				),
-			array('<option value="oof" disabled="true">Foo</option><option value="rab" class="lorem">Bar</option>',
+			array('<option value="oof" disabled="true">Foo</option>'
+				. '<option value="rab" class="lorem">Bar</option>',
 					array(
-						array(
+						'1#0' => array(
 							'value' => 'oof',
 							'text' => 'Foo',
 							'disable' => true,
 							'class' => '',
 							'onclick' => ''
 						),
-						array(
+						'1#1' => array(
 							'value' => 'rab',
 							'text' => 'Bar',
 							'disable' => false,
@@ -102,7 +159,7 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 	{
 		$field = new RadioField;
 
-		$fieldStartTag = '<field name="radio" type="radio">';
+		$fieldStartTag = '<field name="myName" type="radio">';
 		$fieldEndTag = '</field>';
 
 		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
@@ -113,18 +170,17 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$options = TestHelper::invoke($field, 'getOptions');
-		
-		$i = 0;
-		foreach ($expected as $expectedOption) {
-			foreach ($expectedOption as $attr => $value) {
-				$this->assertEquals(
-					$options[$i]->$attr,
-					$value,
-					'Line:' . __LINE__ . ' The getOption method should compute ' . $attr . ' correctly'
-				);
-			}
 
-			++$i;
+		foreach ($expected as $inOrNot => $expectedOption) {
+			$expected = $inOrNot[0] == '1' ? true : false;
+			$i = substr($inOrNot, 2);
+
+			$this->assertEquals(
+				in_array((object)$expectedOption, $options),
+				$expected,
+				'Line:' . __LINE__ . ' The getOption method should compute option #'
+				. $i . ' correctly.'
+			);
 		}
 	}
 }
