@@ -22,22 +22,6 @@ use Joomla\Registry\Registry;
 class JFormTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test showXml
-	 *
-	 * @param   string  $form  The form.
-	 *
-	 * @return void
-	 */
-	private function _showXml($form)
-	{
-		$dom = new \DOMDocument('1.0');
-		$dom->preserveWhiteSpace = false;
-		$dom->formatOutput = true;
-		$dom->loadXML($form->getXml()->asXML());
-		echo $dom->saveXML();
-	}
-
-	/**
 	 * Set up for testing
 	 *
 	 * @return void
@@ -350,7 +334,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The "int" filter should be correctly applied.'
 		);
 
-		// Todo : Coorect this test case.
+		// Todo : Correct this test case.
 		$field = TestHelper::invoke($form, 'findField', 'int_array');
 		$this->assertThat(
 			TestHelper::invoke($form, 'filterField', $field, array('A1B2C3', false)),
@@ -1418,8 +1402,6 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		// @todo remove: $this->_showXml($form);die;
-
 		$this->assertThat(
 			count($form->findFieldsByGroup(false)),
 			$this->equalTo(6),
@@ -1540,7 +1522,6 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The internal XML should still be named "form".'
 		);
 
-		// @todo remove: $this->_showXml($form);die;
 		$this->assertThat(
 			count($form->getXml()->fields->fields),
 			$this->equalTo(2),
