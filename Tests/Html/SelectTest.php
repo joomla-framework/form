@@ -555,7 +555,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 		{
 			$html = Select::integerlist($start, $end, $inc, $name, $attribs, $selected, $format);
 		}
-		var_dump($html);
+
 		foreach ($expected as $tag)
 		{
 			$this->assertTag(
