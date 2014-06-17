@@ -20,6 +20,8 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 	 * Test data for testing of Joomla\Form\Rule\Tel::test method.
 	 *
 	 * @return array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataTel()
 	{
@@ -194,8 +196,8 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the Joomla\Form\Rule\Tel::test method.
 	 *
-	 * @param   string  $xml  		  @todo
-	 * @param   array   $assertions   @todo
+	 * @param   string  $xml         @todo
+	 * @param   array   $assertions  @todo
 	 *
 	 * @dataProvider dataTel
 	 *
@@ -206,7 +208,8 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 		$rule = new RuleTel;
 		$field = new SimpleXmlElement($xml);
 
-		foreach ($assertions as $assertion) {
+		foreach ($assertions as $assertion)
+		{
 			$this->assertEquals(
 				$rule->test($field, $assertion[0]),
 				$assertion[1],

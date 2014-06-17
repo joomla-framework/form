@@ -22,6 +22,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 * This method is used to add additional lookup paths for field helpers.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testAddFieldPath()
 	{
@@ -55,6 +57,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 * This method is used to add additional lookup paths for form XML files.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testAddFormPath()
 	{
@@ -88,6 +92,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 * This method is used to add additional lookup paths for form XML files.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testAddRulePath()
 	{
@@ -119,6 +125,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 * Test the Form::loadFieldType method.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testLoadFieldType()
 	{
@@ -172,6 +180,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 * Test for Form::loadRuleType method.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testLoadRuleType()
 	{

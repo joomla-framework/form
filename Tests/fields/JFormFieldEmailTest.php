@@ -20,6 +20,8 @@ class JFormFieldEmailTest extends \PHPUnit_Framework_TestCase
 	 * Test data for getInput test
 	 *
 	 * @return  array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataGetInput()
 	{
@@ -58,9 +60,13 @@ class JFormFieldEmailTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getInput method.
 	 *
+	 * @param   string  $xml              @todo
+	 * @param   string  $expectedTagAttr  @todo
+	 *
 	 * @return void
 	 *
 	 * @dataProvider dataGetInput
+	 * @since  __VERSION_NO__
 	 */
 	public function testGetInput($xml, $expectedTagAttr)
 	{
@@ -72,7 +78,7 @@ class JFormFieldEmailTest extends \PHPUnit_Framework_TestCase
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
-		
+
 		$this->assertTag(
 			$expectedTagAttr,
 			$field->input,

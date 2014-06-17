@@ -22,12 +22,14 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 * Test the Joomla\Form\Rule\Equals::test method.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testEquals()
 	{
 		$rule = new RuleEquals;
 		$field = new SimpleXmlElement('<field name="foo" field="bar" />');
-		
+
 		// Test fail conditions.
 		$registry = new Registry(array('barfoo' => 'aValue'));
 		$this->assertThat(
@@ -51,12 +53,13 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @expectedException UnexpectedValueException
+	 * @since __VERSION_NO__
 	 */
 	public function testEqualsNoField()
 	{
 		$rule = new RuleEquals;
 		$field = new SimpleXmlElement('<field name="foo" />');
-		
+
 		// Test fail conditions.
 		$registry = new Registry(array('barfoo' => 'aValue'));
 		$rule->test($field, 'myValue', '', $registry);
@@ -68,12 +71,13 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @expectedException InvalidArgumentException
+	 * @since __VERSION_NO__
 	 */
 	public function testEqualsNullRegistry()
 	{
 		$rule = new RuleEquals;
 		$field = new SimpleXmlElement('<field name="foo" field="bar" />');
-		
+
 		// Test fail conditions.
 		$rule->test($field, 'myValue');
 	}

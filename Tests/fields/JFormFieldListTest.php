@@ -107,9 +107,13 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getInput method.
 	 *
+	 * @param   string  $xml              @todo
+	 * @param   string  $expectedTagAttr  @todo
+	 *
 	 * @return void
 	 *
 	 * @dataProvider dataGetInput
+	 * @since __VERSION_NO__
 	 */
 	public function testGetInput($xml, $expectedTagAttr)
 	{
@@ -129,6 +133,13 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	/**
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
 	public function dataGetOptions()
 	{
 		return array(
@@ -176,9 +187,12 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getOptions method.
 	 *
-	 * @dataProvider dataGetOptions
+	 * @param   string  $optionTag  @todo
+	 * @param   string  $expected   @todo
+	 *
 	 * @return  void
 	 *
+	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */
 	public function testGetOptions($optionTag, $expected)
@@ -197,12 +211,13 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 
 		$options = TestHelper::invoke($field, 'getOptions');
 
-		foreach ($expected as $inOrNot => $expectedOption) {
+		foreach ($expected as $inOrNot => $expectedOption)
+		{
 			$expected = $inOrNot[0] == '1' ? true : false;
 			$i = substr($inOrNot, 2);
 
 			$this->assertEquals(
-				in_array((object)$expectedOption, $options),
+				in_array((object) $expectedOption, $options),
 				$expected,
 				'Line:' . __LINE__ . ' The getOption method should compute option #'
 				. $i . ' correctly'

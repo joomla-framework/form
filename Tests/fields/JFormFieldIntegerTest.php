@@ -17,6 +17,13 @@ use SimpleXmlElement;
  */
 class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
 	public function dataGetOptions()
 	{
 		return array(
@@ -95,7 +102,6 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 					'<option value="50">50</option>'
 					. '<option value="foo">bar</option>',
 					array(
-						
 						array(
 							'value' => '50',
 							'text' => '50',
@@ -119,9 +125,15 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getOptions method.
 	 *
-	 * @dataProvider dataGetOptions
+	 * @param   string  $first     @todo
+	 * @param   string  $last      @todo
+	 * @param   string  $step      @todo
+	 * @param   string  $options   @todo
+	 * @param   string  $expected  @todo
+	 *
 	 * @return  void
 	 *
+	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */
 	public function testGetOptions($first, $last, $step, $options, $expected)
@@ -139,7 +151,6 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 		{
 			$fieldEndTag = ' />';
 		}
-		
 
 		$xml = new SimpleXmlElement($fieldStartTag . $fieldAttr . $fieldEndTag);
 		$this->assertThat(
@@ -149,9 +160,11 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$options = TestHelper::invoke($field, 'getOptions');
-		
+
 		$i = 0;
-		if (empty($expected)){
+
+		if (empty($expected))
+		{
 			$this->assertThat(
 				empty($options),
 				$this->isTrue(),
@@ -160,15 +173,18 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 		}
 		else
 		{
-			foreach ($expected as $expectedOption) {
-				foreach ($expectedOption as $attr => $value) {
+			foreach ($expected as $expectedOption)
+			{
+				foreach ($expectedOption as $attr => $value)
+				{
 					$this->assertEquals(
 						$options[$i]->$attr,
 						$value,
 						'Line:' . __LINE__ . ' The getOption method should compute range correctly.'
 					);
 				}
-                ++$i;
+
+				++$i;
 			}
 		}
 	}

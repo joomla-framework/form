@@ -46,6 +46,13 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 		// TODO: Should check all the attributes have come in properly.
 	}
 
+	/**
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
 	public function dataGetOptions()
 	{
 		return array(
@@ -138,9 +145,12 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getGroups method.
 	 *
-	 * @dataProvider dataGetOptions
+	 * @param   string  $optionTag  @todo
+	 * @param   string  $expected   @todo
+	 *
 	 * @return  void
 	 *
+	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */
 	public function testGetGroups($optionTag, $expected)
@@ -159,7 +169,8 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 
 		$groups = TestHelper::invoke($field, 'getGroups');
 
-		foreach ($expected as $i => $expectedGroup) {
+		foreach ($expected as $i => $expectedGroup)
+		{
 			$this->assertTrue(
 				in_array($expectedGroup, $groups),
 				'Line:' . __LINE__ . ' The getGroups method should compute group #'
@@ -173,8 +184,8 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @since   1.0
 	 * @expectedException UnexpectedValueException
+	 * @since   1.0
 	 */
 	public function testGetGroupsUnknownChildException()
 	{

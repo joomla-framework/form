@@ -44,13 +44,20 @@ class JFormFieldLanguageTest extends TestDatabase
 		return $this->createXMLDataSet(__DIR__ . '/testfiles/JFormField.xml');
 	}
 
+	/**
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
 	public function dataGetOptions()
 	{
 		return array(
 			array('<option value="0" onclick="foobar();">No</option>'
 				. '<item value="1">Yes</item>',
 					array(
-						//presentInArray#optionNumber => optionArray
+						// Format presentInArray#optionNumber => optionArray
 						'1#0' => array(
 							'value' => '0',
 							'text' => 'No',
@@ -96,9 +103,12 @@ class JFormFieldLanguageTest extends TestDatabase
 	/**
 	 * Test the getOptions method.
 	 *
-	 * @dataProvider dataGetOptions
+	 * @param   string  $optionTag  @todo
+	 * @param   string  $expected   @todo
+	 *
 	 * @return  void
 	 *
+	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */
 	public function testGetOptions($optionTag, $expected)
@@ -118,12 +128,13 @@ class JFormFieldLanguageTest extends TestDatabase
 
 		$options = TestHelper::invoke($field, 'getOptions');
 
-		foreach ($expected as $inOrNot => $expectedOption) {
+		foreach ($expected as $inOrNot => $expectedOption)
+		{
 			$expected = $inOrNot[0] == '1' ? true : false;
 			$i = substr($inOrNot, 2);
 
 			$this->assertEquals(
-				in_array((object)$expectedOption, $options),
+				in_array((object) $expectedOption, $options),
 				$expected,
 				'Line:' . __LINE__ . ' The getOption method should compute option #'
 				. $i . ' correctly'
@@ -140,8 +151,8 @@ class JFormFieldLanguageTest extends TestDatabase
 	{
 		$field = new LanguageField;
 		$list = TestHelper::invoke(
-			$field, 
-			'createLanguageList', 
+			$field,
+			'createLanguageList',
 			'en-GB',
 			__DIR__ . '/data'
 		);

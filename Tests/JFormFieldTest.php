@@ -21,6 +21,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * set up for testing
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function setUp()
 	{
@@ -34,6 +36,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * Tear down test
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	protected function tearDown()
 	{
@@ -42,9 +46,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the Joomla\Form\Field::__construct method
 	 *
-	 * @covers Joomla\Form\Field::__construct
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::__construct
+	 * @since __VERSION_NO__
 	 */
 	public function testConstruct()
 	{
@@ -121,6 +126,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * Tests the Joomla\Form\Field::__get method
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testGet()
 	{
@@ -130,9 +137,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the Joomla\Form\Field::GetId method
 	 *
-	 * @covers Joomla\Form\Field::getId
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::getId
+	 * @since __VERSION_NO__
 	 */
 	public function testGetId()
 	{
@@ -169,6 +177,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * Tests the Joomla\Form\Field::getInput method
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testGetInput()
 	{
@@ -178,9 +188,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the Joomla\Form\Field::getLabel method
 	 *
-	 * @covers Joomla\Form\Field::getLabel
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::getLabel
+	 * @since __VERSION_NO__
 	 */
 	public function testGetLabel()
 	{
@@ -250,9 +261,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the Joomla\Form\Field::getTitle method
 	 *
-	 * @covers Joomla\Form\Field::getTitle
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::getTitle
+	 * @since __VERSION_NO__
 	 */
 	public function testGetTitle()
 	{
@@ -303,9 +315,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the Joomla\Form\Field::setForm method
 	 *
-	 * @covers Joomla\Form\Field::setForm
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::setForm
+	 * @since __VERSION_NO__
 	 */
 	public function testSetForm()
 	{
@@ -325,10 +338,11 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test an invalid argument for the Joomla\Form\Field::setup method
 	 *
+	 * @return void
+	 *
 	 * @covers Joomla\Form\Field::setup
 	 * @expectedException \PHPUnit_Framework_Error
-	 *
-	 * @return void
+	 * @since __VERSION_NO__
 	 */
 	public function testSetupInvalidArgument()
 	{
@@ -346,9 +360,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test an invalid element for the Joomla\Form\Field::setup method
 	 *
-	 * @covers Joomla\Form\Field::setup
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::setup
+	 * @since __VERSION_NO__
 	 */
 	public function testSetupInvalidElement()
 	{
@@ -366,10 +381,11 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the Joomla\Form\Field::setup method
 	 *
-	 * @covers Joomla\Form\Field::setup
-	 * @covers Joomla\Form\Field::__get
-	 *
 	 * @return void
+	 *
+	 * @covers Joomla\Form\Field::__get
+	 * @covers Joomla\Form\Field::setup
+	 * @since __VERSION_NO__
 	 */
 	public function testSetup()
 	{

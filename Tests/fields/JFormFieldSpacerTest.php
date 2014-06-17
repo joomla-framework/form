@@ -20,6 +20,8 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testGetInput()
 	{
@@ -43,6 +45,8 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 * Test data for getLabel test
 	 *
 	 * @return  array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataGetLabel()
 	{
@@ -69,12 +73,15 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getLabel method.
 	 *
+	 * @param   string  $xml             @todo
+	 * @param   string  $expectedOutput  @todo
+	 *
 	 * @return void
 	 *
 	 * @covers \Joomla\Form\Field\SpacerField::getTitle
 	 * @covers \Joomla\Form\Field\SpacerField::getLabel
-	 *
 	 * @dataProvider dataGetLabel
+	 * @since __VERSION_NO__
 	 */
 	public function testGetLabel($xml, $expectedOutput)
 	{
@@ -89,7 +96,7 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 
 		$expectedOutput = '<span class="spacer"><span class="before"></span>'
 			. $expectedOutput . '<span class="after"></span></span>';
-		
+
 		$this->assertEquals(
 			$expectedOutput,
 			$field->label,

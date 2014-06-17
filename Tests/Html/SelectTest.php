@@ -116,7 +116,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @dataProvider  dataGenericList
 	 * @since         3.2
-	*/
+	 */
 	public function testGenericlist($expected, $data, $name, $attribs = null,
 		$optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
 		$translate = false)
@@ -412,7 +412,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the radiolist method.
 	 *
-	 * @param   string  $expected   Expected generated HTML of radio list.
+	 * @param   string  $expected  Expected generated HTML of radio list.
 	 * @param   string  $name      The value of the HTML name attribute
 	 * @param   array   $attribs   Additional HTML attributes for the <select> tag
 	 * @param   string  $selected  The key that is selected
@@ -472,64 +472,64 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 				0, 1, -1,
 				'myName'
 			),
-            array(
-                array(
-                    array(
-                        'tag' => 'select',
-                        'attributes' => array(
-                            'name' => 'myName',
-                        ),
-                        'children' => array(
-                        	'count' => 1
-                        )
-                    ),
-                ),
-                0, 0, 1,
-                'myName'
-            ),
-            array(
-                array(
-                    array(
-                        'tag' => 'select',
-                        'attributes' => array(
-                            'name' => 'myName',
-                        ),
-                        'children' => array(
-                        	'count' => 6
-                        )
-                    ),
-                ),
-                0, 5, 1,
-                'myName'
-            ),
-            array(
-                array(
-                    array(
-                        'tag' => 'select',
-                        'attributes' => array(
-                            'name' => 'myName',
-                            'class' => 'i am radio',
+			array(
+				array(
+					array(
+						'tag' => 'select',
+						'attributes' => array(
+							'name' => 'myName',
+						),
+						'children' => array(
+							'count' => 1
+						)
+					),
+				),
+				0, 0, 1,
+				'myName'
+			),
+			array(
+				array(
+					array(
+						'tag' => 'select',
+						'attributes' => array(
+							'name' => 'myName',
+						),
+						'children' => array(
+							'count' => 6
+						)
+					),
+				),
+				0, 5, 1,
+				'myName'
+			),
+			array(
+				array(
+					array(
+						'tag' => 'select',
+						'attributes' => array(
+							'name' => 'myName',
+							'class' => 'i am radio',
 							'onchange' => 'jsfunc();',
-                        ),
-                        'children' => array(
-                        	'count' => 6
-                        )
-                    ),
-                ),
-                5, 0, -1,
-                'myName',
-                array(
+						),
+						'children' => array(
+							'count' => 6
+						)
+					),
+				),
+				5, 0, -1,
+				'myName',
+				array(
 					'class' => 'i am radio',
 					'onchange' => 'jsfunc();',
 				),
-            ),
+			),
 		);
 	}
 
 	/**
 	 * Test the radiolist method.
 	 *
-	 * @param   string  $expected   Expected generated HTML of radio list.
+	 * @param   string   $expected  Expected generated HTML of radio list.
 	 * @param   integer  $start     The start integer
 	 * @param   integer  $end       The end integer
 	 * @param   integer  $inc       The increment
@@ -802,6 +802,4 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 			Select::option($value, $text, $optKey, $optText, $disable)
 		);
 	}
-
-
 }

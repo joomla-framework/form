@@ -20,6 +20,8 @@ class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
 	 * Test data for testing of Joomla\Form\Rule\Boolean::test method.
 	 *
 	 * @return array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataBoolean()
 	{
@@ -42,6 +44,7 @@ class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
 			array('FALSE', true),
 		);
 	}
+
 	/**
 	 * Test the Joomla\Form\Rule\Boolean::test method.
 	 *
@@ -56,7 +59,6 @@ class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
 	{
 		$rule = new RuleBoolean;
 		$xml = new SimpleXmlElement('<field name="foo" />');
-
 
 		$this->assertEquals(
 			$rule->test($xml->field, $value),

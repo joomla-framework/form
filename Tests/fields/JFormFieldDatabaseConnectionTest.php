@@ -18,13 +18,22 @@ use SimpleXMLElement;
  */
 class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
 	public function dataGetOptions()
 	{
 		$conn = DatabaseDriver::getConnectors();
 		$available = array_map('ucfirst', $conn);
 
 		$expected = array();
-		foreach ($available as $value) {
+
+		foreach ($available as $value)
+		{
 			$expected[lcfirst($value)] = $value;
 		}
 
@@ -39,7 +48,9 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 				$available,
 				$expected,
 			),
+
 			// Todo : create mock of static function JDatabaseDriver::getConnectors.
+
 			/*array(
 				array("mysqli"),
 				array(),
@@ -51,11 +62,14 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getOptions method.
 	 *
+	 * @param   string  $supported        @todo
+	 * @param   string  $available        @todo
+	 * @param   string  $expectedOptions  @todo
+	 *
 	 * @return  void
 	 *
-	 * @since   1.0
-	 *
 	 * @dataProvider dataGetOptions
+	 * @since   1.0
 	 */
 	public function testGetOptions($supported, $available, $expectedOptions)
 	{

@@ -20,6 +20,8 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 	 * Sets up dependancies for the test.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	protected function setUp()
 	{
@@ -32,6 +34,8 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testGetInput()
 	{

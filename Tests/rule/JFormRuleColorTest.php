@@ -20,6 +20,8 @@ class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 	 * Test data for testing of Joomla\Form\Rule\Color::test method.
 	 *
 	 * @return array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataColor()
 	{
@@ -46,7 +48,7 @@ class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 	 * Test the Joomla\Form\Rule\Color::test method.
 	 *
 	 * @param   string   $color           @todo
-	 * @param   boolean  $expectedResult  @todo
+	 * @param   boolean  $expectedOutput  @todo
 	 *
 	 * @dataProvider dataColor
 	 *
@@ -59,7 +61,7 @@ class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 		$this->assertThat(
 			$rule->test($xml, $color),
 			$this->equalTo($expectedOutput),
-			'Line:' . __LINE__ . ' '. $color . ' should have returned '
+			'Line:' . __LINE__ . ' ' . $color . ' should have returned '
 				. ($expectedOutput ? 'true' : 'false') . ' but did not.'
 		);
 	}

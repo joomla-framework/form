@@ -20,13 +20,15 @@ class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
 	 * Test data for testing of Joomla\Form\Rule\Url::test method.
 	 *
 	 * @return array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataUrl()
 	{
 		// Most test urls are directly from or based on the RFCs noted in the rule.
 		return
 			array(
-				// failing cases
+				// Failing cases
 				array('Simple String' , '0', 'bogus', 'false'),
 				array('Simple String' , '0', '0', 'false'),
 				array('No scheme' , '0', 'mydomain.com', 'false'),
@@ -42,7 +44,7 @@ class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
 				array('Invalid host' , '0', "http://m\xFF ABComain.com", 'false'),
 				array('Invalid path' , '0', "http://mydomain.com/foo\xFF ABCbar", 'false'),
 
-				// passing cases
+				// Passing cases
 				array('Simple String' , '0', '', 'true'),
 				array('http' , '0', 'http://mydomain.com', 'true'),
 				array('Upper case scheme' , '0', 'HTTP://mydomain.com', 'true'),
@@ -67,13 +69,14 @@ class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
 	 * Test the Joomla\Form\Rule\Url::test method.
 	 *
 	 * @param   string  $caseDescription  @todo
-	 * @param   string  $xmlfield  		  @todo
-	 * @param   string  $url       		  @todo
-	 * @param   string  $expected  		  @todo
-	 *
-	 * @dataProvider dataUrl
+	 * @param   string  $xmlfield         @todo
+	 * @param   string  $url              @todo
+	 * @param   string  $expected         @todo
 	 *
 	 * @return void
+	 *
+	 * @dataProvider dataUrl
+	 * @since __VERSION_NO__
 	 */
 	public function testUrl($caseDescription, $xmlfield, $url, $expected)
 	{

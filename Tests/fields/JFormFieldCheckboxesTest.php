@@ -21,10 +21,12 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 * Test data for getInput test
 	 *
 	 * @return  array
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function dataGetInput()
 	{
-		return array(// Todo 
+		return array(
 			array(
 				'<field name="myName" id="myId" type="checkboxes" class="foo bar">'
 					. '<option value="0">No</option>'
@@ -101,6 +103,10 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getInput method.
 	 *
+	 * @param   string  $xml              @todo
+	 * @param   string  $value            @todo
+	 * @param   string  $expectedTagAttr  @todo
+	 *
 	 * @return void
 	 *
 	 * @dataProvider dataGetInput
@@ -121,16 +127,20 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 			$field->input,
 			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
-		
 	}
 
+	/**
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 */
 	public function dataGetOptions()
 	{
 		return array(
 			array('<option value="0" onclick="foobar();">No</option>'
 				. '<item value="1">Yes</item>',
 					array(
-						//presentInArray#optionNumber => optionArray
+						// Format presentInArray#optionNumber => optionArray
 						'1#0' => array(
 							'value' => '0',
 							'text' => 'No',
@@ -172,9 +182,12 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the getOptions method.
 	 *
-	 * @dataProvider dataGetOptions
+	 * @param   string  $optionTag  @todo
+	 * @param   string  $expected   @todo
+	 *
 	 * @return  void
 	 *
+	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */
 	public function testGetOptions($optionTag, $expected)
@@ -193,12 +206,13 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 
 		$options = TestHelper::invoke($field, 'getOptions');
 
-		foreach ($expected as $inOrNot => $expectedOption) {
+		foreach ($expected as $inOrNot => $expectedOption)
+		{
 			$expected = $inOrNot[0] == '1' ? true : false;
 			$i = substr($inOrNot, 2);
 
 			$this->assertEquals(
-				in_array((object)$expectedOption, $options),
+				in_array((object) $expectedOption, $options),
 				$expected,
 				'Line:' . __LINE__ . ' The getOption method should compute option #'
 				. $i . ' correctly.'

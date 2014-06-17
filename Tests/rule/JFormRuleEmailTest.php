@@ -20,6 +20,8 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * Test the Joomla\Form\Rule\Email::test method.
 	 *
 	 * @return void
+	 *
+	 * @since __VERSION_NO__
 	 */
 	public function testEmail()
 	{
@@ -89,10 +91,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $emailAddress    Email to be tested
 	 * @param   boolean  $expectedResult  Result of test
 	 *
-	 * @dataProvider emailData1
-	 *
 	 * @return void
 	 *
+	 * @dataProvider emailData1
 	 * @since 11.1
 	 */
 	public function testEmailData($emailAddress, $expectedResult)
@@ -129,10 +130,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $emailAddress    Email to be tested
 	 * @param   boolean  $expectedResult  Result of test
 	 *
-	 * @dataProvider emailData2
-	 *
 	 * @return void
 	 *
+	 * @dataProvider emailData2
 	 * @since 12.3
 	 */
 	public function testEmailData2($emailAddress, $expectedResult)
@@ -170,10 +170,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $emailAddress    Email to be tested
 	 * @param   boolean  $expectedResult  Result of test
 	 *
-	 * @dataProvider emailData3
-	 *
 	 * @return void
 	 *
+	 * @dataProvider emailData3
 	 * @since 12.3
 	 */
 	public function testEmailData3($emailAddress, $expectedResult)
@@ -183,7 +182,7 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 		$this->assertThat(
 			$rule->test($xml->field[0], $emailAddress),
 			$this->equalTo($expectedResult),
-			'Line:' . __LINE__ . ' '. $emailAddress . ' should have returned '
+			'Line:' . __LINE__ . ' ' . $emailAddress . ' should have returned '
 				. ($expectedResult ? 'true' : 'false') . ' but did not.'
 		);
 	}
