@@ -12,6 +12,7 @@ use Joomla\Form\FormHelper;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\FormHelper
  * @since  1.0
  */
 class JFormHelperTest extends \PHPUnit_Framework_TestCase
@@ -23,6 +24,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::addFieldPath
+	 * @covers ::addPath
 	 * @since __VERSION_NO__
 	 */
 	public function testAddFieldPath()
@@ -58,6 +61,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::addFormPath
+	 * @covers ::addPath
 	 * @since __VERSION_NO__
 	 */
 	public function testAddFormPath()
@@ -93,6 +98,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::addRulePath
+	 * @covers ::addPath
 	 * @since __VERSION_NO__
 	 */
 	public function testAddRulePath()
@@ -122,10 +129,88 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Test the Form::loadFieldClass method.
+	 *
+	 * @return void
+	 *
+	 * @covers ::loadFieldClass
+	 * @covers ::loadRuleClass
+	 * @covers ::loadClass
+	 * @since __VERSION_NO__
+	 */
+	public function testLoadClass()
+	{
+		$this->assertThat(
+			FormHelper::loadFieldClass('bogus'),
+			$this->isFalse(),
+			'Line:' . __LINE__ . ' loadFieldClass should return false if class not found.'
+		);
+
+		$this->assertEquals(
+			"Joomla\\Form\\Field\\TextField",
+			FormHelper::loadFieldClass('text'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct class.'
+		);
+
+		$this->assertEquals(
+			"Joomla\\Form\\Field\\TextField",
+			FormHelper::loadFieldClass('joomla.text'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct class.'
+		);
+
+		// Add custom path.
+		FormHelper::addFieldPath(__DIR__ . '/_testfields');
+
+		$this->assertEquals(
+			"Joomla\\Form\\Field\\TestField",
+			FormHelper::loadFieldClass('test'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct custom class.'
+		);
+
+		$this->assertEquals(
+			"Joomla\\Form\\Field\\FooField",
+			FormHelper::loadFieldClass('foo'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct custom class.'
+		);
+
+		$this->assertEquals(
+			"Foo\\Form\\Field\\BarField",
+			FormHelper::loadFieldClass('foo.bar'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct custom class.'
+		);
+
+		$this->assertEquals(
+			"Joomla\\Form\\Field\\Modal\\FooField",
+			FormHelper::loadFieldClass('modal\\foo'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct custom class.'
+		);
+
+		$this->assertEquals(
+			"Foo\\Form\\Field\\Modal\\BarField",
+			FormHelper::loadFieldClass('foo.modal\\bar'),
+			'Line:' . __LINE__ . ' loadFieldClass should return the correct custom class.'
+		);
+
+		$this->assertEquals(
+			"Joomla\\Form\\Rule\\Email",
+			FormHelper::loadRuleClass('email'),
+			'Line:' . __LINE__ . ' loadRuleClass should return the correct class.'
+		);
+
+		$this->assertEquals(
+			"Joomla\\Form\\Rule\\Url",
+			FormHelper::loadRuleClass('joomla.url'),
+			'Line:' . __LINE__ . ' loadRuleClass should return the correct class.'
+		);
+	}
+
+	/**
 	 * Test the Form::loadFieldType method.
 	 *
 	 * @return void
 	 *
+	 * @covers ::loadFieldType
+	 * @covers ::loadType
 	 * @since __VERSION_NO__
 	 */
 	public function testLoadFieldType()
@@ -136,9 +221,16 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' loadFieldType should return false if class not found.'
 		);
 
+		$field = FormHelper::loadFieldType('list');
 		$this->assertThat(
-			(FormHelper::loadFieldType('list') instanceof \Joomla\Form\Field\ListField),
+			($field instanceof \Joomla\Form\Field\ListField),
 			$this->isTrue(),
+			'Line:' . __LINE__ . ' loadFieldType should return the correct class.'
+		);
+
+		$this->assertEquals(
+			$field,
+			FormHelper::loadFieldType('list', false),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct class.'
 		);
 
@@ -181,6 +273,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::loadRuleType
+	 * @covers ::loadType
 	 * @since __VERSION_NO__
 	 */
 	public function testLoadRuleType()

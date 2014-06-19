@@ -12,6 +12,7 @@ use SimpleXMLElement;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\FileField
  * @since  1.0
  */
 class JFormFieldFileTest extends \PHPUnit_Framework_TestCase
@@ -63,6 +64,7 @@ class JFormFieldFileTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInput
 	 * @dataProvider dataGetInput
 	 * @since __VERSION_NO__
 	 */

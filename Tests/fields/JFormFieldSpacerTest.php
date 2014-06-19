@@ -12,6 +12,7 @@ use SimpleXmlElement;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\SpacerField
  * @since  1.0
  */
 class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,7 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInput
 	 * @since __VERSION_NO__
 	 */
 	public function testGetInput()
@@ -78,8 +80,8 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers \Joomla\Form\Field\SpacerField::getTitle
-	 * @covers \Joomla\Form\Field\SpacerField::getLabel
+	 * @covers ::getTitle
+	 * @covers ::getLabel
 	 * @dataProvider dataGetLabel
 	 * @since __VERSION_NO__
 	 */

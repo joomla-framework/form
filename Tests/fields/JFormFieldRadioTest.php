@@ -13,6 +13,7 @@ use SimpleXmlElement;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\RadioField
  * @since  1.0
  */
 class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
@@ -86,6 +87,7 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInput
 	 * @dataProvider dataGetInput
 	 * @since __VERSION_NO__
 	 */
@@ -167,6 +169,7 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getOptions
 	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */

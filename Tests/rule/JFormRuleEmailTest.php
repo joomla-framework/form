@@ -12,6 +12,7 @@ use Joomla\Form\Rule\Email as RuleEmail;
 /**
  * Test class for Joolma Framework Form rule Email.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Email
  * @since  1.0
  */
 class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,7 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @since __VERSION_NO__
 	 */
 	public function testEmail()
@@ -93,6 +95,7 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @dataProvider emailData1
 	 * @since 11.1
 	 */
@@ -132,6 +135,7 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @dataProvider emailData2
 	 * @since 12.3
 	 */
@@ -172,6 +176,7 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @dataProvider emailData3
 	 * @since 12.3
 	 */

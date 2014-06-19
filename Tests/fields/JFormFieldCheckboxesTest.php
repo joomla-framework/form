@@ -13,6 +13,7 @@ use SimpleXmlElement;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\CheckboxesField
  * @since  1.0
  */
 class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
@@ -109,7 +110,9 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInput
 	 * @dataProvider dataGetInput
+	 * @since __VERSION_NO__
 	 */
 	public function testGetInput($xml, $value, $expectedTagAttr)
 	{
@@ -187,6 +190,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getOptions
 	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */

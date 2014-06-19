@@ -14,6 +14,7 @@ use Joomla\Registry\Registry;
 /**
  * Test class for Joolma Framework Form rule Equals.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Equals
  * @since  1.0
  */
 class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
@@ -23,6 +24,7 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @since __VERSION_NO__
 	 */
 	public function testEquals()
@@ -52,6 +54,7 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @expectedException UnexpectedValueException
 	 * @since __VERSION_NO__
 	 */
@@ -70,6 +73,7 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @expectedException InvalidArgumentException
 	 * @since __VERSION_NO__
 	 */

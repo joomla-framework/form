@@ -12,6 +12,7 @@ use SimpleXmlElement;
 /**
  * Test class for Joolma Framework Form rule Color.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Color
  * @since  1.0
  */
 class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
@@ -50,8 +51,8 @@ class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $color           @todo
 	 * @param   boolean  $expectedOutput  @todo
 	 *
+	 * @covers ::test
 	 * @dataProvider dataColor
-	 *
 	 * @return void
 	 */
 	public function testColor($color, $expectedOutput)

@@ -12,6 +12,7 @@ use Joomla\Form\Field\ImageListField;
 /**
  * Test class for JFormFieldImageList.
  *
+ * @coversDefaultClass Joomla\Form\Field\ImageListField
  * @since  1.0
  */
 class JFormFieldImageListTest extends \PHPUnit_Framework_TestCase
@@ -35,6 +36,7 @@ class JFormFieldImageListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getInput
 	 * @since   1.0
 	 */
 	public function testGetInput()

@@ -13,6 +13,7 @@ use SimpleXmlElement;
 /**
  * Test class for JFormFieldGroupedList.
  *
+ * @coversDefaultClass Joomla\Form\Field\GroupedListField
  * @since  1.0
  */
 class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
@@ -22,6 +23,7 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getInput
 	 * @since   1.0
 	 */
 	public function testGetInput()
@@ -47,13 +49,13 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test data for getOptions test
+	 * Test data for getGroups test
 	 *
 	 * @return  array
 	 *
 	 * @since __VERSION_NO__
 	 */
-	public function dataGetOptions()
+	public function dataGetGroups()
 	{
 		return array(
 			array('<option value="oof" disabled="true">Foo</option>'
@@ -150,7 +152,8 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @dataProvider dataGetOptions
+	 * @covers ::getGroups
+	 * @dataProvider dataGetGroups
 	 * @since   1.0
 	 */
 	public function testGetGroups($optionTag, $expected)
@@ -184,6 +187,7 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getGroups
 	 * @expectedException UnexpectedValueException
 	 * @since   1.0
 	 */

@@ -13,6 +13,7 @@ use SimpleXmlElement;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\IntegerField
  * @since  1.0
  */
 class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
@@ -133,6 +134,7 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getOptions
 	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */

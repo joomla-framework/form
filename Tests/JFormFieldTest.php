@@ -13,6 +13,7 @@ use Joomla\Test\TestHelper;
 /**
  * Test class for JFormField.
  *
+ * @coversDefaultClass Joomla\Form\Field
  * @since  1.0
  */
 class JFormFieldTest extends \PHPUnit_Framework_TestCase
@@ -48,7 +49,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::__construct
+	 * @covers ::__construct
 	 * @since __VERSION_NO__
 	 */
 	public function testConstruct()
@@ -139,7 +140,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::getId
+	 * @covers ::getId
 	 * @since __VERSION_NO__
 	 */
 	public function testGetId()
@@ -171,6 +172,47 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			$this->equalTo('jform_params_colours'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
+
+		$form = new JFormInspector('form1');
+
+		$this->assertThat(
+			$form->load(JFormDataHelper::$loadFieldDocument),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' XML string should load successfully.'
+		);
+
+		$field = new JFormFieldInspector($form);
+
+		$xml = $form->getXML();
+		$date = array_pop($xml->xpath('fields/field[@name="created_date"]'));
+
+		// No form control with group
+		$this->assertThat(
+			$field->setup($colours, 'red', 'params'),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The setup method should return true if successful.'
+		);
+
+		$this->assertThat(
+			// Use original 'id' and 'name' here (from XML definition of the form field)
+			$field->getId((string) $colours['id'], (string) $colours['name']),
+			$this->equalTo('params_colours'),
+			'Line:' . __LINE__ . ' The property should be computed from the XML.'
+		);
+
+		// No form control with no group
+		$this->assertThat(
+			$field->setup($date, '01-01-1990'),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The setup method should return true if successful.'
+		);
+
+		$this->assertThat(
+			// Use original 'id' and 'name' here (from XML definition of the form field)
+			$field->getId((string) $date['id'], (string) $date['name']),
+			$this->equalTo('created_date'),
+			'Line:' . __LINE__ . ' The property should be computed from the XML.'
+		);
 	}
 
 	/**
@@ -190,7 +232,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::getLabel
+	 * @covers ::getLabel
 	 * @since __VERSION_NO__
 	 */
 	public function testGetLabel()
@@ -263,7 +305,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::getTitle
+	 * @covers ::getTitle
 	 * @since __VERSION_NO__
 	 */
 	public function testGetTitle()
@@ -317,7 +359,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::setForm
+	 * @covers ::setForm
 	 * @since __VERSION_NO__
 	 */
 	public function testSetForm()
@@ -340,7 +382,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::setup
+	 * @covers ::setup
 	 * @expectedException \PHPUnit_Framework_Error
 	 * @since __VERSION_NO__
 	 */
@@ -362,7 +404,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::setup
+	 * @covers ::setup
 	 * @since __VERSION_NO__
 	 */
 	public function testSetupInvalidElement()
@@ -383,8 +425,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Joomla\Form\Field::__get
-	 * @covers Joomla\Form\Field::setup
+	 * @covers ::__get
+	 * @covers ::setup
 	 * @since __VERSION_NO__
 	 */
 	public function testSetup()
@@ -594,6 +636,104 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			$field->element['class'],
 			'required',
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
+		);
+	}
+
+	/**
+	 * Tests the Joomla\Form\Field::getName method
+	 *
+	 * @return void
+	 *
+	 * @covers ::getName
+	 * @since __VERSION_NO__
+	 */
+	public function testGetName()
+	{
+		$form = new JFormInspector('form1');
+
+		$field = new JFormFieldInspector($form);
+
+		$this->assertEquals(
+			'foo',
+			TestHelper::invoke($field, 'getName', 'foo'),
+			'Line:' . __LINE__ . ' getName should return generated name correctly.'
+		);
+
+		TestHelper::setValue($field, 'multiple', true);
+		$this->assertEquals(
+			'foo[]',
+			TestHelper::invoke($field, 'getName', 'foo'),
+			'Line:' . __LINE__ . ' getName should return generated name correctly.'
+		);
+		TestHelper::setValue($field, 'multiple', false);
+
+		TestHelper::setValue($field, 'group', 'myGroup');
+		$this->assertEquals(
+			'myGroup[foo]',
+			TestHelper::invoke($field, 'getName', 'foo'),
+			'Line:' . __LINE__ . ' getName should return generated name correctly.'
+		);
+
+		TestHelper::setValue($field, 'group', 'myGroup.one.two');
+		$this->assertEquals(
+			'myGroup[one][two][foo]',
+			TestHelper::invoke($field, 'getName', 'foo'),
+			'Line:' . __LINE__ . ' getName should return generated name correctly.'
+		);
+
+		TestHelper::setValue($field, 'group', '');
+		TestHelper::setValue($field, 'formControl', 'bar');
+		$this->assertEquals(
+			'bar[foo]',
+			TestHelper::invoke($field, 'getName', 'foo'),
+			'Line:' . __LINE__ . ' getName should return generated name correctly.'
+		);
+
+		TestHelper::setValue($field, 'group', 'myGroup');
+		$this->assertEquals(
+			'bar[myGroup][foo]',
+			TestHelper::invoke($field, 'getName', 'foo'),
+			'Line:' . __LINE__ . ' getName should return generated name correctly.'
+		);
+	}
+
+	/**
+	 * Tests the Joomla\Form\Field::getFieldName method
+	 *
+	 * @return void
+	 *
+	 * @covers ::getFieldName
+	 * @since __VERSION_NO__
+	 */
+	public function testGetFieldName()
+	{
+		$form = new JFormInspector('form1');
+
+		$field = new JFormFieldInspector($form);
+
+		TestHelper::setValue($field, 'count', 0);
+		$this->assertEquals(
+			'__field1',
+			TestHelper::invoke($field, 'getFieldName', ''),
+			'Line:' . __LINE__ . ' getFieldname should return generated field name using count correctly.'
+		);
+
+		$this->assertEquals(
+			1,
+			TestHelper::getValue($field, 'count'),
+			'Line:' . __LINE__ . ' getFieldname should increment counter.'
+		);
+
+		$this->assertEquals(
+			'foo',
+			TestHelper::invoke($field, 'getFieldName', 'foo'),
+			'Line:' . __LINE__ . ' getFieldname should return generated field name using count correctly.'
+		);
+
+		$this->assertEquals(
+			1,
+			TestHelper::getValue($field, 'count'),
+			'Line:' . __LINE__ . ' getFieldname should not increment counter if fieldname is given.'
 		);
 	}
 }

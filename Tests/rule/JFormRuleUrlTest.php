@@ -12,6 +12,7 @@ use Joomla\Form\Rule\Url as RuleUrl;
 /**
  * Test class for Joolma Framework Form rule Url.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Url
  * @since  1.0
  */
 class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
@@ -75,6 +76,7 @@ class JFormRuleUrlTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::test
 	 * @dataProvider dataUrl
 	 * @since __VERSION_NO__
 	 */

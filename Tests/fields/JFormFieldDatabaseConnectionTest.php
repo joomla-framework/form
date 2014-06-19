@@ -14,6 +14,7 @@ use SimpleXMLElement;
 /**
  * Test class for JFormFieldDatabaseConnection.
  *
+ * @coversDefaultClass Joomla\Form\Field\DatabaseConnectionField
  * @since  1.0
  */
 class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
@@ -68,6 +69,7 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getOptions
 	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */

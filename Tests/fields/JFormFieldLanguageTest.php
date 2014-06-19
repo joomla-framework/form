@@ -14,6 +14,7 @@ use SimpleXmlElement;
 /**
  * Test class for JFormFieldLanguage.
  *
+ * @coversDefaultClass Joomla\Form\Field\LanguageField
  * @since  1.0
  */
 class JFormFieldLanguageTest extends TestDatabase
@@ -108,6 +109,7 @@ class JFormFieldLanguageTest extends TestDatabase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getOptions
 	 * @dataProvider dataGetOptions
 	 * @since   1.0
 	 */
@@ -146,6 +148,9 @@ class JFormFieldLanguageTest extends TestDatabase
 	 * Test...
 	 *
 	 * @return void
+	 * 
+	 * @covers ::createLanguageList
+	 * @since   __VERSION_NO__
 	 */
 	public function testCreateLanguageList()
 	{

@@ -12,6 +12,7 @@ use SimpleXMLElement;
 /**
  * Test class for JFormFieldTel.
  *
+ * @coversDefaultClass Joomla\Form\Html\Select
  * @since  1.0
  */
 class SelectTest extends \PHPUnit_Framework_TestCase
@@ -85,6 +86,23 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 					'list.select' => '2',
 				),
 			),
+			array("<select id=\"myName\" name=\"myName\" class=\"foobar\" onchange=\"barfoo();\">\n"
+				. "\t<option value=\"1\">Foo</option>\n"
+				. "\t<option value=\"2\">Bar</option>\n"
+				. "</select>\n",
+				array(
+					array(
+						'value' => '1',
+						'text' => 'Foo',
+					),
+					array(
+						'value' => '2',
+						'text' => 'Bar',
+					),
+				),
+				'myName',
+				'class="foobar" onchange="barfoo();"',
+			),
 		);
 	}
 
@@ -114,6 +132,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::genericList
 	 * @dataProvider  dataGenericList
 	 * @since         3.2
 	 */
@@ -244,7 +263,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 							'id' => 'myFooBarListNamebar',
 							'value' => 'bar',
 							'class' => 'i am radio',
-							'onchange' => 'jsfunc();'
+							'onchange' => 'jsfunc();',
+							'checked' => 'checked',
 						)
 					),
 				),
@@ -266,6 +286,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 				),
 				'key',
 				'val',
+				array('one', 'bar'),
 			),
 		);
 	}
@@ -285,6 +306,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::radioList
 	 * @dataProvider  dataRadiolist
 	 * @since         3.2
 	 */
@@ -422,6 +444,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::booleanList
 	 * @dataProvider  dataBooleanlist
 	 * @since         3.2
 	 */
@@ -518,9 +541,26 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 				),
 				5, 0, -1,
 				'myName',
+				'class="i am radio" onchange="jsfunc();"',
+			),
+			array(
 				array(
-					'class' => 'i am radio',
-					'onchange' => 'jsfunc();',
+					array(
+						'tag' => 'select',
+						'attributes' => array(
+							'name' => 'myName',
+							'class' => 'i am radio',
+							'onchange' => 'jsfunc();',
+						),
+						'children' => array(
+							'count' => 6
+						)
+					),
+				),
+				5, 0, -1,
+				'myName',
+				array(
+					'list.attr' => 'class="i am radio" onchange="jsfunc();"',
 				),
 			),
 		);
@@ -542,14 +582,15 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::integerList
 	 * @dataProvider  dataIntegerlist
 	 * @since         3.2
 	 */
 	public function testIntegerlist($expected, $start, $end, $inc, $name, $attribs = null, $selected = null, $format = '')
 	{
-		if (func_num_args() == 5)
+		if (func_num_args() == 6)
 		{
-			$html = Select::integerlist($start, $end, $inc, $name);
+			$html = Select::integerlist($start, $end, $inc, $name, $attribs);
 		}
 		else
 		{
@@ -577,30 +618,56 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 		return array(
 			// Function parameters array($expected, $arr, $optKey = 'value', $optText = 'text', $selected = null, $translate = false)
 			array(
-				"<option value=\"1\">&nbsp;Test</option>\n",
+				"<option value=\"1\" selected=\"selected\">Test</option>\n" .
+				"<option value=\"2\">Bar</option>\n" .
+				"<option value=\"3\" selected=\"selected\">Foo</option>\n",
+				array(
+					'1' => 'Test',
+					'2' => 'Bar',
+					'3' => 'Foo',
+				),
+				array(
+					'list.select' => array('1', '3')
+				)
+			),
+			array(
+				"<option value=\"1\" selected=\"selected\">&nbsp;Test</option>\n",
 				array(
 					array(
 						'value' => '1',
 						'text' => '&nbsp;Test',
 					),
 				),
+				array(
+					'list.select' => '1'
+				)
 			),
 			array(
-				"<option value=\"1\" disabled=\"disabled\">&nbsp;Test</option>\n",
+				"<option value=\"1\">&nbsp;Test</option>\n",
+				array(
+					(object) array(
+						'value' => '1',
+						'text' => '&nbsp;Test',
+					),
+				),
+			),
+			array(
+				"<option value=\"1\" disabled=\"disabled\">&nbsp;Test - foo</option>\n",
 				array(
 					array(
 						'value' => '1',
-						'text' => '&nbsp;Test',
+						'text' => '&nbsp;Test - foo',
 						'disable' => true,
 					),
 				),
 			),
 			array(
-				"<option value=\"1\">&nbsp;Test</option>\n",
+				"<option value=\"1\">-&nbsp;Test -</option>\n",
 				array(
 					array(
 						'optionValue' => '1',
-						'optionText' => '&nbsp;Test',
+						'optionText' => '-&nbsp;Test -',
+						'list.translate' => true,
 					),
 				),
 				array(
@@ -684,6 +751,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::options
 	 * @dataProvider  dataOptions
 	 * @since         3.1
 	 */
@@ -758,6 +826,19 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 					'option.text' => 'optionText',
 				),
 			),
+			array(
+				array(
+					'value' => 'optionValue',
+					'text' => 'optionText',
+					'label' => '',
+					'disable' => false,
+				),
+				'optionValue',
+				'optionText',
+				array(
+					'option.label' => 'label',
+				),
+			),
 		);
 	}
 
@@ -791,6 +872,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::option
 	 * @dataProvider  dataOption
 	 * @since         3.2
 	 */

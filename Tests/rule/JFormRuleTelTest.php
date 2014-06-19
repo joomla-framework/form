@@ -12,6 +12,7 @@ use SimpleXmlElement;
 /**
  * Test class for Joolma Framework Form rule Tel.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Tel
  * @since  1.0
  */
 class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
@@ -199,8 +200,8 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 	 * @param   string  $xml         @todo
 	 * @param   array   $assertions  @todo
 	 *
+	 * @covers ::test
 	 * @dataProvider dataTel
-	 *
 	 * @return void
 	 */
 	public function testTel($xml, $assertions)

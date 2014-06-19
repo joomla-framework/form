@@ -12,6 +12,7 @@ use SimpleXmlElement;
 /**
  * Test class for Joolma Framework Form rule Options.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Options
  * @since  1.0
  */
 class JFormRuleOptionsTest extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,7 @@ class JFormRuleOptionsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::test
 	 * @since   1.0
 	 */
 	public function testOptions()

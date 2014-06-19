@@ -12,6 +12,7 @@ use Joomla\Form\Field\FolderListField;
 /**
  * Test class for JFormFieldFolderList.
  *
+ * @coversDefaultClass Joomla\Form\Field\FolderListField
  * @since  1.0
  */
 class JFormFieldFolderListTest extends \PHPUnit_Framework_TestCase
@@ -35,6 +36,7 @@ class JFormFieldFolderListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getInput
 	 * @since   1.0
 	 */
 	public function testGetInput()

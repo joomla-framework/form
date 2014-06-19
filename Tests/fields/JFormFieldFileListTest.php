@@ -12,6 +12,7 @@ use Joomla\Form\Field\FileListField;
 /**
  * Test class for JFormFieldFileList.
  *
+ * @coversDefaultClass Joomla\Form\Field\FileListField
  * @since  1.0
  */
 class JFormFieldFileListTest extends \PHPUnit_Framework_TestCase
@@ -35,6 +36,7 @@ class JFormFieldFileListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
+	 * @covers ::getInput
 	 * @since   1.0
 	 */
 	public function testGetInput()

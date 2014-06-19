@@ -12,6 +12,7 @@ use SimpleXMLElement;
 /**
  * Test class for JFormFieldTel.
  *
+ * @coversDefaultClass Joomla\Form\Field\UrlField
  * @since  1.0
  */
 class JFormFieldUrlTest extends \PHPUnit_Framework_TestCase
@@ -64,6 +65,7 @@ class JFormFieldUrlTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInput
 	 * @dataProvider dataGetInput
 	 * @since __VERSION_NO__
 	 */

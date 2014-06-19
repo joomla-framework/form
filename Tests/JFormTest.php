@@ -17,6 +17,7 @@ use Joomla\Registry\Registry;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Form
  * @since  1.0
  */
 class JFormTest extends \PHPUnit_Framework_TestCase
@@ -52,6 +53,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::addNode
 	 * @since __VERSION_NO__
 	 */
 	public function testAddNode()
@@ -84,6 +86,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::bind
 	 * @since __VERSION_NO__
 	 */
 	public function testBind()
@@ -195,6 +198,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::__construct
 	 * @since __VERSION_NO__
 	 */
 	public function testConstruct()
@@ -237,6 +241,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::filter
 	 * @since __VERSION_NO__
 	 */
 	public function testFilter()
@@ -310,6 +315,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::filterField
 	 * @since __VERSION_NO__
 	 */
 	public function testFilterField()
@@ -496,6 +502,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::findField
 	 * @since __VERSION_NO__
 	 */
 	public function testFindField()
@@ -569,6 +576,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::findFieldsByFieldset
 	 * @since __VERSION_NO__
 	 */
 	public function testFindFieldsByFieldset()
@@ -617,6 +625,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::findFieldsByGroup
 	 * @since __VERSION_NO__
 	 */
 	public function testFindFieldsByGroup()
@@ -689,6 +698,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::findGroup
 	 * @since __VERSION_NO__
 	 */
 	public function testFindGroup()
@@ -740,6 +750,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getErrors
 	 * @since __VERSION_NO__
 	 */
 	public function testGetErrors()
@@ -782,6 +793,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getField
 	 * @since __VERSION_NO__
 	 */
 	public function testGetField()
@@ -896,6 +908,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getFieldAttribute
 	 * @expectedException UnexpectedValueException
 	 * @since __VERSION_NO__
 	 */
@@ -916,6 +929,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getFieldAttribute
 	 * @since __VERSION_NO__
 	 */
 	public function testGetFieldAttribute()
@@ -962,6 +976,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getFormControl
 	 * @since __VERSION_NO__
 	 */
 	public function testGetFormControl()
@@ -988,6 +1003,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInstance
 	 * @expectedException InvalidArgumentException
 	 * @since __VERSION_NO__
 	 */
@@ -1007,6 +1023,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInstance
 	 * @expectedException RuntimeException
 	 * @since __VERSION_NO__
 	 */
@@ -1026,6 +1043,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInstance
 	 * @expectedException RuntimeException
 	 * @since __VERSION_NO__
 	 */
@@ -1045,6 +1063,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInstance
 	 * @since __VERSION_NO__
 	 */
 	public function testGetInstance()
@@ -1065,6 +1084,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getGroup
 	 * @since __VERSION_NO__
 	 */
 	public function testGetGroup()
@@ -1117,6 +1137,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getInput
 	 * @since __VERSION_NO__
 	 */
 	public function testGetInput()
@@ -1212,6 +1233,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getLabel
 	 * @since __VERSION_NO__
 	 */
 	public function testGetLabel()
@@ -1245,6 +1267,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getName
 	 * @since __VERSION_NO__
 	 */
 	public function testGetName()
@@ -1263,6 +1286,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getValue
 	 * @since __VERSION_NO__
 	 */
 	public function testGetValue()
@@ -1297,6 +1321,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getFieldset
 	 * @since __VERSION_NO__
 	 */
 	public function testGetFieldset()
@@ -1334,6 +1359,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getFieldsets
 	 * @since __VERSION_NO__
 	 */
 	public function testGetFieldsets()
@@ -1408,6 +1434,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::load
 	 * @since __VERSION_NO__
 	 */
 	public function testLoad()
@@ -1502,6 +1529,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::load
 	 * @since __VERSION_NO__
 	 */
 	public function testLoad_BadInput()
@@ -1562,6 +1590,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::load
 	 * @since __VERSION_NO__
 	 */
 	public function testLoad_XPath()
@@ -1592,6 +1621,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::loadField
 	 * @since __VERSION_NO__
 	 */
 	public function testLoadField()
@@ -1645,6 +1675,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::loadFile
 	 * @since __VERSION_NO__
 	 */
 	public function testLoadFile()
@@ -1702,6 +1733,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::mergeNode
 	 * @since __VERSION_NO__
 	 */
 	public function testMergeNode()
@@ -1732,6 +1764,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::mergeNodes
 	 * @since __VERSION_NO__
 	 */
 	public function testMergeNodes()
@@ -1773,6 +1806,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::removeField
 	 * @since __VERSION_NO__
 	 */
 	public function testRemoveField()
@@ -1815,6 +1849,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::removeGroup
 	 * @since __VERSION_NO__
 	 */
 	public function testRemoveGroup()
@@ -1845,6 +1880,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::reset
 	 * @since __VERSION_NO__
 	 */
 	public function testReset()
@@ -1934,6 +1970,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::setField
 	 * @since __VERSION_NO__
 	 */
 	public function testSetField()
@@ -2015,6 +2052,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::setFieldAttribute
 	 * @since __VERSION_NO__
 	 */
 	public function testSetFieldAttribute()
@@ -2063,6 +2101,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::setFields
 	 * @expectedException UnexpectedValueException
 	 * @since __VERSION_NO__
 	 */
@@ -2090,6 +2129,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::setFields
 	 * @since __VERSION_NO__
 	 */
 	public function testSetFields()
@@ -2135,6 +2175,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::setValue
 	 * @since __VERSION_NO__
 	 */
 	public function testSetValue()
@@ -2187,6 +2228,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::syncPaths
 	 * @since __VERSION_NO__
 	 */
 	public function testSyncPaths()
@@ -2263,6 +2305,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::validate
 	 * @since __VERSION_NO__
 	 */
 	public function testValidate()
@@ -2323,7 +2366,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return   void
 	 *
-	 * @covers  Joomla\Form\Form::validateField
+	 * @covers ::validateField
 	 * @since   1.0
 	 */
 	public function testValidateField()
@@ -2385,7 +2428,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return   void
 	 *
-	 * @covers  Joomla\Form\Form::validateField
+	 * @covers ::validateField
 	 * @expectedException  \UnexpectedValueException
 	 * @since   1.0
 	 */

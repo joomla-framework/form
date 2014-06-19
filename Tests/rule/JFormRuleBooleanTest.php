@@ -12,6 +12,7 @@ use SimpleXmlElement;
 /**
  * Test class for Joolma Framework Form rule Boolean.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Boolean
  * @since  1.0
  */
 class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
@@ -53,6 +54,7 @@ class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @dataProvider dataBoolean
 	 *
+	 * @covers ::test
 	 * @return void
 	 */
 	public function testBoolean($value, $expectedOutput)

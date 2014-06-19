@@ -12,6 +12,7 @@ use Joomla\Form\Field\TimezoneField;
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\TimezoneField
  * @since  1.0
  */
 class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
@@ -35,34 +36,22 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @covers ::getGroups
 	 * @since __VERSION_NO__
 	 */
-	public function testGetInput()
+	public function testGetGroups()
 	{
-		$form = new JFormInspector('form1');
-
+		$field = new TimezoneField;
+		$element = new \SimpleXmlElement('<field name="myName" id="myId" />');
 		$this->assertThat(
-			$form->load('<form><field name="timezone" type="timezone" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new TimezoneField($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
+			$field->setup($element, 'value'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->markTestIncomplete('Problems encountered in next assertion');
-
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertGreaterThan(
+			0,
+			TestHelper::invoke($field, 'getGroups')
 		);
-
-		// TODO: Should check all the attributes have come in properly.
 	}
 }

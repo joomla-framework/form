@@ -526,6 +526,11 @@ abstract class Select
 			$label = '';
 			$id = '';
 
+			if (is_object($element))
+			{
+				$element = (array) $element;
+			}
+
 			if (is_array($element))
 			{
 				$key = $options['option.key'] === null ? $elementKey : $element[$options['option.key']];
@@ -547,31 +552,6 @@ abstract class Select
 				}
 
 				if (isset($element[$options['option.disable']]) && $element[$options['option.disable']])
-				{
-					$extra .= ' disabled="disabled"';
-				}
-			}
-			elseif (is_object($element))
-			{
-				$key = $options['option.key'] === null ? $elementKey : $element->$options['option.key'];
-				$text = $element->$options['option.text'];
-
-				if (isset($element->$options['option.attr']))
-				{
-					$attr = $element->$options['option.attr'];
-				}
-
-				if (isset($element->$options['option.id']))
-				{
-					$id = $element->$options['option.id'];
-				}
-
-				if (isset($element->$options['option.label']))
-				{
-					$label = $element->$options['option.label'];
-				}
-
-				if (isset($element->$options['option.disable']) && $element->$options['option.disable'])
 				{
 					$extra .= ' disabled="disabled"';
 				}
@@ -606,10 +586,10 @@ abstract class Select
 			else
 			{
 				// If no string after hyphen - take hyphen out
-				$splitText = preg_split('/ -[\s]*/', $text, 2, PREG_SPLIT_NO_EMPTY);
-				$text = isset($splitText[0]) ? $splitText[0] : '';
+				$splitText = explode(' - ', $text, 2);
+				$text = $splitText[0];
 
-				if (isset($splitText[1]))
+				if (isset($splitText[1]) && $splitText[1] != "" && !preg_match('/^[\s]+$/', $splitText[1]))
 				{
 					$text .= ' - ' . $splitText[1];
 				}
@@ -715,7 +695,7 @@ abstract class Select
 
 					if ($k == $k2)
 					{
-						$extra .= ' selected="selected"';
+						$extra .= ' checked="checked"';
 						break;
 					}
 				}
