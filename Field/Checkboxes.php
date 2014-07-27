@@ -107,6 +107,10 @@ class Field_Checkboxes extends Field
 	{
 		$options = array();
 
+		/**
+		 * @ignore
+		 * @var \SimpleXMLElement $option
+		 */
 		foreach ($this->element->children() as $option)
 		{
 			// Only add <option /> elements.

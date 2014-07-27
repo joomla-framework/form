@@ -72,7 +72,7 @@ class Form
 	/**
 	 * Form instances.
 	 *
-	 * @var    array
+	 * @var    Form[]
 	 * @since  1.0
 	 */
 	protected static $forms = array();
@@ -210,6 +210,10 @@ class Form
 		}
 
 		// Filter the fields.
+		/**
+		 * @ignore
+		 * @var \SimpleXMLElement $field
+		 */
 		foreach ($fields as $field)
 		{
 			$name = (string) $field['name'];
@@ -315,7 +319,7 @@ class Form
 			return (string) $element[$attribute];
 		}
 		else
-		// Otherwise return the given default value.
+			// Otherwise return the given default value.
 		{
 			return $default;
 		}
@@ -341,7 +345,7 @@ class Form
 			$elements = $this->findFieldsByFieldset($set);
 		}
 		else
-		// Get all fields.
+			// Get all fields.
 		{
 			$elements = $this->findFieldsByGroup();
 		}
@@ -353,6 +357,10 @@ class Form
 		}
 
 		// Build the result array from the found field elements.
+		/**
+		 * @ignore
+		 * @var \SimpleXMLElement $element
+		 */
 		foreach ($elements as $element)
 		{
 			// Get the field groups for the element.
@@ -395,6 +403,10 @@ class Form
 			// Get the fields elements for a given group.
 			$elements = &$this->findGroup($group);
 
+			/**
+			 * @ignore
+			 * @var \SimpleXMLElement $element
+			 */
 			foreach ($elements as &$element)
 			{
 				// Get an array of <fieldset /> elements and fieldset attributes within the fields element.
@@ -438,7 +450,7 @@ class Form
 				}
 			}
 			else
-			// Must be dealing with a fieldset attribute.
+				// Must be dealing with a fieldset attribute.
 			{
 				// Only create it if it doesn't already exist.
 				if (empty($fieldsets[(string) $set]))
@@ -452,7 +464,7 @@ class Form
 						$fieldset = (object) array('name' => (string) $set, 'label' => '', 'description' => '');
 					}
 					else
-					// Build the fieldset object from the element.
+						// Build the fieldset object from the element.
 					{
 						$fieldset = (object) array('name' => '', 'label' => '', 'description' => '');
 
@@ -512,6 +524,10 @@ class Form
 		}
 
 		// Build the result array from the found field elements.
+		/**
+		 * @ignore
+		 * @var \SimpleXMLElement $element
+		 */
 		foreach ($elements as $element)
 		{
 			// Get the field groups for the element.
@@ -619,10 +635,10 @@ class Form
 	 * field being loaded.  If it is false, then the new field being loaded will be ignored and the
 	 * method will move on to the next field to load.
 	 *
-	 * @param   string  $data     The name of an XML string or object.
-	 * @param   string  $replace  Flag to toggle whether form fields should be replaced if a field
-	 *                            already exists with the same group/name.
-	 * @param   string  $xpath    An optional xpath to search for the fields.
+	 * @param   string    $data    The name of an XML string or object.
+	 * @param   bool      $replace Flag to toggle whether form fields should be replaced if a field
+	 *                             already exists with the same group/name.
+	 * @param bool|string $xpath   An optional xpath to search for the fields.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -669,7 +685,7 @@ class Form
 				return true;
 			}
 			else
-			// Create a root element for the form.
+				// Create a root element for the form.
 			{
 				$this->xml = new \SimpleXMLElement('<form></form>');
 			}
@@ -743,9 +759,9 @@ class Form
 	 * to false.
 	 *
 	 * @param   string  $file   The filesystem path of an XML file.
-	 * @param   string  $reset  Flag to toggle whether form fields should be replaced if a field
+	 * @param   bool  $reset  Flag to toggle whether form fields should be replaced if a field
 	 *                          already exists with the same group/name.
-	 * @param   string  $xpath  An optional xpath to search for the fields.
+	 * @param   bool|string  $xpath  An optional xpath to search for the fields.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -949,7 +965,7 @@ class Form
 			return false;
 		}
 		else
-		// Otherwise set the attribute and return true.
+			// Otherwise set the attribute and return true.
 		{
 			$element[$attribute] = $value;
 
@@ -1078,6 +1094,10 @@ class Form
 		}
 
 		// Validate the fields.
+		/**
+		 * @ignore
+		 * @var \SimpleXMLElement $field
+		 */
 		foreach ($fields as $field)
 		{
 			$value = null;
@@ -1193,6 +1213,9 @@ class Form
 					// If it looks like an internal link, then add the root.
 					if (substr($value, 0) == 'index.php')
 					{
+						/**
+						 * TODO: replace root() do not exists
+						 */
 						$value = Uri::root() . $value;
 					}
 
@@ -1204,6 +1227,9 @@ class Form
 				// If relative URLS are allowed we assume that URLs without protocols are internal.
 				elseif (!$protocol && $element['relative'])
 				{
+					/**
+					 * TODO: replace getInstance() do not exists
+					 */
 					$host = Uri::getInstance('SERVER')->gethost();
 
 					// If it starts with the host string, just prepend the protocol.
@@ -1212,8 +1238,11 @@ class Form
 						$value = 'http://' . $value;
 					}
 					else
-					// Otherwise prepend the root.
+						// Otherwise prepend the root.
 					{
+						/**
+						 * TODO: replace root() do not exists
+						 */
 						$value = Uri::root() . $value;
 					}
 				}
@@ -1242,7 +1271,7 @@ class Form
 					$result = '1.' . $number;
 				}
 				elseif (preg_match('/^\+(?:[0-9] ?){6,14}[0-9]$/', $value) == 1)
-				// If not, does it match ITU-T?
+					// If not, does it match ITU-T?
 				{
 					$countrycode = substr($value, 0, strpos($value, ' '));
 					$countrycode = (string) preg_replace('/[^\d]/', '', $countrycode);
@@ -1251,7 +1280,7 @@ class Form
 					$result = $countrycode . '.' . $number;
 				}
 				elseif (preg_match('/^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$/', $value) == 1)
-				// If not, does it match EPP?
+					// If not, does it match EPP?
 				{
 					if (strstr($value, 'x'))
 					{
@@ -1262,12 +1291,12 @@ class Form
 					$result = str_replace('+', '', $value);
 				}
 				elseif (preg_match('/[0-9]{1,3}\.[0-9]{4,14}$/', $value) == 1)
-				// Maybe it is already ccc.nnnnnnn?
+					// Maybe it is already ccc.nnnnnnn?
 				{
 					$result = $value;
 				}
 				else
-				// If not, can we make it a string of digits?
+					// If not, can we make it a string of digits?
 				{
 					$value = (string) preg_replace('/[^\d]/', '', $value);
 
@@ -1288,7 +1317,7 @@ class Form
 						}
 					}
 					else
-					// If not let's not save anything.
+						// If not let's not save anything.
 					{
 						$result = '';
 					}
@@ -1305,12 +1334,12 @@ class Form
 					$return = call_user_func(explode('::', $filter), $value);
 				}
 				elseif (function_exists($filter))
-				// Filter using a callback function if specified.
+					// Filter using a callback function if specified.
 				{
 					$return = call_user_func($filter, $value);
 				}
 				else
-				// Filter using InputFilter. All HTML code is filtered by default.
+					// Filter using InputFilter. All HTML code is filtered by default.
 				{
 					$filterInput = new Filter\InputFilter;
 					$return = $filterInput->clean($value, $filter);
@@ -1349,6 +1378,10 @@ class Form
 			$elements = &$this->findGroup($group);
 
 			// Get all of the field elements with the correct name for the fields elements.
+			/**
+			 * @ignore
+			 * @var \SimpleXMLElement $element
+			 */
 			foreach ($elements as $element)
 			{
 				// If there are matching field elements add them to the fields array.
@@ -1367,6 +1400,10 @@ class Form
 			// Use the first correct match in the given group.
 			$groupNames = explode('.', $group);
 
+			/**
+			 * @ignore
+			 * @var \SimpleXMLElement $field
+			 */
 			foreach ($fields as &$field)
 			{
 				// Get the group names as strings for ancestor fields elements.
@@ -1401,7 +1438,7 @@ class Form
 					continue;
 				}
 				else
-				// Found it!
+					// Found it!
 				{
 					$element = &$field;
 					break;
@@ -1474,6 +1511,10 @@ class Form
 			$elements = &$this->findGroup($group);
 
 			// Get all of the field elements for the fields elements.
+			/**
+			 * @ignore
+			 * @var \SimpleXMLElement $element
+			 */
 			foreach ($elements as $element)
 			{
 				// If there are field elements add them to the return result.
@@ -1485,10 +1526,14 @@ class Form
 						$fields = array_merge($fields, $tmp);
 					}
 					else
-					// If we want to exclude nested groups then we need to check each field.
+						// If we want to exclude nested groups then we need to check each field.
 					{
 						$groupNames = explode('.', $group);
 
+						/**
+						 * @ignore
+						 * @var \SimpleXMLElement $field
+						 */
 						foreach ($tmp as $field)
 						{
 							// Get the names of the groups that the field is in.
@@ -1566,6 +1611,10 @@ class Form
 				$tmp = array();
 
 				// Check to make sure that there are no parent groups for each element.
+				/**
+				 * @ignore
+				 * @var \SimpleXMLElement $element
+				 */
 				foreach ($current as $element)
 				{
 					// Get any fields elements with the correct group name.
@@ -1820,9 +1869,9 @@ class Form
 	 * @param   string  $name     The name of the form.
 	 * @param   string  $data     The name of an XML file or string to load as the form definition.
 	 * @param   array   $options  An array of form options.
-	 * @param   string  $replace  Flag to toggle whether form fields should be replaced if a field
+	 * @param   bool  $replace  Flag to toggle whether form fields should be replaced if a field
 	 *                            already exists with the same group/name.
-	 * @param   string  $xpath    An optional xpath to search for the fields.
+	 * @param   bool|string  $xpath    An optional xpath to search for the fields.
 	 *
 	 * @return  Form   Instance of this class.
 	 *
@@ -1950,6 +1999,10 @@ class Form
 			}
 		}
 
+		/**
+		 * @ignore
+		 * @var \SimpleXMLElement $child
+		 */
 		foreach ($new->children() as $child)
 		{
 			$type = $child->getName();
