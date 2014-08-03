@@ -83,10 +83,7 @@ class Field_Radio extends Field
 	{
 		$options = array();
 
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $option
-		 */
+		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)
 		{
 			// Only add <option /> elements.

@@ -41,10 +41,7 @@ class Field_GroupedList extends Field
 		$groups = array();
 		$label = 0;
 
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $element
-		 */
+		/** @var \SimpleXMLElement $element */
 		foreach ($this->element->children() as $element)
 		{
 			switch ($element->getName())
@@ -89,10 +86,7 @@ class Field_GroupedList extends Field
 					}
 
 					// Iterate through the children and build an array of options.
-					/**
-					 * @ignore
-					 * @var \SimpleXMLElement $option
-					 */
+					/** @var \SimpleXMLElement $option */
 					foreach ($element->children() as $option)
 					{
 						// Only add <option /> elements.

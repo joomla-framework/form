@@ -210,10 +210,7 @@ class Form
 		}
 
 		// Filter the fields.
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $field
-		 */
+		/** @var \SimpleXMLElement $field */
 		foreach ($fields as $field)
 		{
 			$name = (string) $field['name'];
@@ -357,10 +354,7 @@ class Form
 		}
 
 		// Build the result array from the found field elements.
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $element
-		 */
+		/** @var \SimpleXMLElement $element */
 		foreach ($elements as $element)
 		{
 			// Get the field groups for the element.
@@ -403,10 +397,7 @@ class Form
 			// Get the fields elements for a given group.
 			$elements = &$this->findGroup($group);
 
-			/**
-			 * @ignore
-			 * @var \SimpleXMLElement $element
-			 */
+			/** @var \SimpleXMLElement $element */
 			foreach ($elements as &$element)
 			{
 				// Get an array of <fieldset /> elements and fieldset attributes within the fields element.
@@ -524,10 +515,7 @@ class Form
 		}
 
 		// Build the result array from the found field elements.
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $element
-		 */
+		/** @var \SimpleXMLElement $element */
 		foreach ($elements as $element)
 		{
 			// Get the field groups for the element.
@@ -1094,10 +1082,7 @@ class Form
 		}
 
 		// Validate the fields.
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $field
-		 */
+		/** @var \SimpleXMLElement $field */
 		foreach ($fields as $field)
 		{
 			$value = null;
@@ -1378,10 +1363,7 @@ class Form
 			$elements = &$this->findGroup($group);
 
 			// Get all of the field elements with the correct name for the fields elements.
-			/**
-			 * @ignore
-			 * @var \SimpleXMLElement $element
-			 */
+			/** @var \SimpleXMLElement $element */
 			foreach ($elements as $element)
 			{
 				// If there are matching field elements add them to the fields array.
@@ -1400,10 +1382,7 @@ class Form
 			// Use the first correct match in the given group.
 			$groupNames = explode('.', $group);
 
-			/**
-			 * @ignore
-			 * @var \SimpleXMLElement $field
-			 */
+			/** @var \SimpleXMLElement $field */
 			foreach ($fields as &$field)
 			{
 				// Get the group names as strings for ancestor fields elements.
@@ -1511,10 +1490,7 @@ class Form
 			$elements = &$this->findGroup($group);
 
 			// Get all of the field elements for the fields elements.
-			/**
-			 * @ignore
-			 * @var \SimpleXMLElement $element
-			 */
+			/** @var \SimpleXMLElement $element */
 			foreach ($elements as $element)
 			{
 				// If there are field elements add them to the return result.
@@ -1530,10 +1506,7 @@ class Form
 					{
 						$groupNames = explode('.', $group);
 
-						/**
-						 * @ignore
-						 * @var \SimpleXMLElement $field
-						 */
+						/** @var \SimpleXMLElement $field */
 						foreach ($tmp as $field)
 						{
 							// Get the names of the groups that the field is in.
@@ -1611,10 +1584,7 @@ class Form
 				$tmp = array();
 
 				// Check to make sure that there are no parent groups for each element.
-				/**
-				 * @ignore
-				 * @var \SimpleXMLElement $element
-				 */
+				/** @var \SimpleXMLElement $element */
 				foreach ($current as $element)
 				{
 					// Get any fields elements with the correct group name.
@@ -1999,10 +1969,7 @@ class Form
 			}
 		}
 
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $child
-		 */
+		/** @var \SimpleXMLElement $child */
 		foreach ($new->children() as $child)
 		{
 			$type = $child->getName();

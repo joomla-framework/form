@@ -84,10 +84,7 @@ class Field_List extends Field
 	{
 		$options = array();
 
-		/**
-		 * @ignore
-		 * @var \SimpleXMLElement $option
-		 */
+		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)
 		{
 			// Only add <option /> elements.
