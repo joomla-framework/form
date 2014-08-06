@@ -22,17 +22,16 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getInput
-	 * @since __VERSION_NO__
+	 * @covers  ::getInput
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetInput()
 	{
 		$field = new SpacerField;
 
 		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" />');
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'aValue'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
@@ -80,19 +79,18 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getTitle
-	 * @covers ::getLabel
-	 * @dataProvider dataGetLabel
-	 * @since __VERSION_NO__
+	 * @covers        ::getTitle
+	 * @covers        ::getLabel
+	 * @dataProvider  dataGetLabel
+	 * @since         __VERSION_NO__
 	 */
 	public function testGetLabel($xml, $expectedOutput)
 	{
 		$field = new SpacerField;
 
 		$xml = new SimpleXMLElement($xml);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'aValue'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 

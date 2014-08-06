@@ -200,9 +200,11 @@ class JFormRuleTelTest extends \PHPUnit_Framework_TestCase
 	 * @param   string  $xml         @todo
 	 * @param   array   $assertions  @todo
 	 *
-	 * @covers ::test
-	 * @dataProvider dataTel
 	 * @return void
+	 *
+	 * @covers        ::test
+	 * @dataProvider  dataTel
+	 * @since         __VERSION_NO__
 	 */
 	public function testTel($xml, $assertions)
 	{

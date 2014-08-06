@@ -36,22 +36,18 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getGroups
-	 * @since __VERSION_NO__
+	 * @covers  ::getGroups
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetGroups()
 	{
 		$field = new TimezoneField;
 		$element = new \SimpleXmlElement('<field name="myName" id="myId" />');
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($element, 'value'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertGreaterThan(
-			0,
-			TestHelper::invoke($field, 'getGroups')
-		);
+		$this->assertGreaterThan(0, TestHelper::invoke($field, 'getGroups'));
 	}
 }

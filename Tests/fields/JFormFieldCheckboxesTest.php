@@ -110,18 +110,17 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getInput
-	 * @dataProvider dataGetInput
-	 * @since __VERSION_NO__
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         __VERSION_NO__
 	 */
 	public function testGetInput($xml, $value, $expectedTagAttr)
 	{
 		$field = new CheckboxesField;
 
 		$xml = new SimpleXMLElement($xml);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, $value),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
@@ -190,9 +189,9 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers ::getOptions
-	 * @dataProvider dataGetOptions
-	 * @since   1.0
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
 	public function testGetOptions($optionTag, $expected)
 	{

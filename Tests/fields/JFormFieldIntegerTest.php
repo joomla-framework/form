@@ -155,9 +155,8 @@ class JFormFieldIntegerTest extends \PHPUnit_Framework_TestCase
 		}
 
 		$xml = new SimpleXmlElement($fieldStartTag . $fieldAttr . $fieldEndTag);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'value'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 

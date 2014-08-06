@@ -34,23 +34,20 @@ class JFormRuleOptionsTest extends \PHPUnit_Framework_TestCase
 
 		// Test fail conditions.
 
-		$this->assertThat(
+		$this->assertFalse(
 			$rule->test($xml, 'bogus'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' The rule should fail and return false.'
 		);
 
 		// Test pass conditions.
 
-		$this->assertThat(
+		$this->assertTrue(
 			$rule->test($xml, 'value1'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' value1 should pass and return true.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			$rule->test($xml, 'value2'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' value2 should pass and return true.'
 		);
 	}

@@ -24,9 +24,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::addFieldPath
-	 * @covers ::addPath
-	 * @since __VERSION_NO__
+	 * @covers  ::addFieldPath
+	 * @covers  ::addPath
+	 * @since   __VERSION_NO__
 	 */
 	public function testAddFieldPath()
 	{
@@ -37,9 +37,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		// use of realpath to ensure test works for on all platforms
 		$valid = dirname(__DIR__) . '/src/field';
 
-		$this->assertThat(
-			in_array($valid, $paths),
-			$this->isTrue(),
+		$this->assertContains(
+			$valid,
+			$paths,
 			'Line:' . __LINE__ . ' The libraries fields path should be included by default.'
 		);
 
@@ -47,9 +47,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		FormHelper::addFieldPath(__DIR__);
 		$paths = FormHelper::addFieldPath();
 
-		$this->assertThat(
-			in_array(__DIR__, $paths),
-			$this->isTrue(),
+		$this->assertContains(
+			__DIR__,
+			$paths,
 			'Line:' . __LINE__ . ' An added path should be in the returned array.'
 		);
 	}
@@ -74,8 +74,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		// use of realpath to ensure test works for on all platforms
 		$valid = dirname(__DIR__) . '/src/form';
 
-		$this->assertThat(
-			in_array($valid, $paths),
+		$this->assertContains(
+			$valid,
+			$paths,
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' The libraries forms path should be included by default.'
 		);
@@ -84,9 +85,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		FormHelper::addFormPath(__DIR__);
 		$paths = FormHelper::addFormPath();
 
-		$this->assertThat(
-			in_array(__DIR__, $paths),
-			$this->isTrue(),
+		$this->assertContains(
+			__DIR__,
+			$paths,
 			'Line:' . __LINE__ . ' An added path should be in the returned array.'
 		);
 	}
@@ -111,9 +112,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		// use of realpath to ensure test works for on all platforms
 		$valid = dirname(__DIR__) . '/src/rule';
 
-		$this->assertThat(
-			in_array($valid, $paths),
-			$this->isTrue(),
+		$this->assertContains(
+			$valid,
+			$paths,
 			'Line:' . __LINE__ . ' The libraries rule path should be included by default.'
 		);
 
@@ -121,9 +122,9 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		FormHelper::addRulePath(__DIR__);
 		$paths = FormHelper::addRulePath();
 
-		$this->assertThat(
-			in_array(__DIR__, $paths),
-			$this->isTrue(),
+		$this->assertContains(
+			__DIR__,
+			$paths,
 			'Line:' . __LINE__ . ' An added path should be in the returned array.'
 		);
 	}
@@ -133,16 +134,15 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::loadFieldClass
-	 * @covers ::loadRuleClass
-	 * @covers ::loadClass
-	 * @since __VERSION_NO__
+	 * @covers  ::loadFieldClass
+	 * @covers  ::loadRuleClass
+	 * @covers  ::loadClass
+	 * @since   __VERSION_NO__
 	 */
 	public function testLoadClass()
 	{
-		$this->assertThat(
+		$this->assertFalse(
 			FormHelper::loadFieldClass('bogus'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' loadFieldClass should return false if class not found.'
 		);
 
@@ -215,16 +215,14 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testLoadFieldType()
 	{
-		$this->assertThat(
+		$this->assertFalse(
 			FormHelper::loadFieldType('bogus'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' loadFieldType should return false if class not found.'
 		);
 
 		$field = FormHelper::loadFieldType('list');
-		$this->assertThat(
+		$this->assertTrue(
 			($field instanceof \Joomla\Form\Field\ListField),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct class.'
 		);
 
@@ -237,33 +235,28 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 		// Add custom path.
 		FormHelper::addFieldPath(__DIR__ . '/_testfields');
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadFieldType('test') instanceof \Joomla\Form\Field\TestField),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct custom class.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadFieldType('foo') instanceof \Joomla\Form\Field\FooField),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct custom class.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadFieldType('foo.bar') instanceof \Foo\Form\Field\BarField),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct custom class.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadFieldType('modal\\foo') instanceof \Joomla\Form\Field\Modal\FooField),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct custom class.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadFieldType('foo.modal\\bar') instanceof \Foo\Form\Field\Modal\BarField),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' loadFieldType should return the correct custom class.'
 		);
 	}
@@ -281,9 +274,8 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 	{
 		// Test error handling.
 
-		$this->assertThat(
+		$this->assertFalse(
 			FormHelper::loadRuleType('bogus'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' Loading an unknown rule should return false.'
 		);
 
@@ -291,47 +283,40 @@ class JFormHelperTest extends \PHPUnit_Framework_TestCase
 
 		FormHelper::addRulePath(__DIR__ . '/_testrules');
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('custom') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading a known rule should return a rule object.'
 		);
 
 		// Test all the stock rules load.
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('boolean') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading the boolean rule should return a rule object.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('email') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading the email rule should return a rule object.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('equals') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading the equals rule should return a rule object.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('options') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading the options rule should return a rule object.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('color') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading the color rule should return a rule object.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			(FormHelper::loadRuleType('tel') instanceof Rule),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Loading the tel rule should return a rule object.'
 		);
 	}

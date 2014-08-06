@@ -69,9 +69,9 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers ::getOptions
-	 * @dataProvider dataGetOptions
-	 * @since   1.0
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
 	public function testGetOptions($supported, $available, $expectedOptions)
 	{
@@ -81,9 +81,8 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 
 		$field = new DatabaseConnectionField;
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($element, 'aValue'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 

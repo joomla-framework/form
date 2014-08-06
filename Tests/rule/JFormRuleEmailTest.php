@@ -22,8 +22,8 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::test
-	 * @since __VERSION_NO__
+	 * @covers  ::test
+	 * @since   __VERSION_NO__
 	 */
 	public function testEmail()
 	{
@@ -32,35 +32,30 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 
 		// Test fail conditions.
 
-		$this->assertThat(
+		$this->assertFalse(
 			$rule->test($xml->field[0], 'bogus'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' The rule should fail and return false.'
 		);
 
-		$this->assertThat(
+		$this->assertFalse(
 			$rule->test($xml->field[0], '0'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
 		);
 
-		$this->assertThat(
+		$this->assertFalse(
 			$rule->test($xml->field[0], 'false'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
 		);
 
 		// Test pass conditions.
 
-		$this->assertThat(
+		$this->assertTrue(
 			$rule->test($xml->field[0], ''),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			$rule->test($xml->field[0], 'me@example.com'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The basic rule should pass and return true.'
 		);
 	}
@@ -103,9 +98,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	{
 		$rule = new RuleEmail;
 		$xml = simplexml_load_string('<form><field name="email1" /></form>');
-		$this->assertThat(
+		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
-			$this->equalTo($expectedResult),
+			$expectedResult,
 			$emailAddress . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
 		);
 	}
@@ -143,9 +138,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	{
 		$rule = new RuleEmail;
 		$xml = simplexml_load_string('<form><field name="email1" multiple="multiple" /></form>');
-		$this->assertThat(
+		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
-			$this->equalTo($expectedResult),
+			$expectedResult,
 			$emailAddress . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
 		);
 	}
@@ -184,9 +179,9 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	{
 		$rule = new RuleEmail;
 		$xml = simplexml_load_string('<form><field name="email1" tld="tld" /></form>');
-		$this->assertThat(
+		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
-			$this->equalTo($expectedResult),
+			$expectedResult,
 			'Line:' . __LINE__ . ' ' . $emailAddress . ' should have returned '
 				. ($expectedResult ? 'true' : 'false') . ' but did not.'
 		);

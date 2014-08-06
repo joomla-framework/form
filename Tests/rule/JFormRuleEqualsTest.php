@@ -24,8 +24,8 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::test
-	 * @since __VERSION_NO__
+	 * @covers  ::test
+	 * @since   __VERSION_NO__
 	 */
 	public function testEquals()
 	{
@@ -34,17 +34,15 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 
 		// Test fail conditions.
 		$registry = new Registry(array('barfoo' => 'aValue'));
-		$this->assertThat(
+		$this->assertFalse(
 			$rule->test($field, 'myValue', '', $registry),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' Equal rule should have failed and returned false.'
 		);
 
 		// Test pass conditions.
 		$registry = new Registry(array('barfoo' => 'aValue', 'bar' => 'myValue'));
-		$this->assertThat(
+		$this->assertTrue(
 			$rule->test($field, 'myValue', '', $registry),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' Equal rule should have passed and returned true.'
 		);
 	}
@@ -54,9 +52,9 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::test
-	 * @expectedException UnexpectedValueException
-	 * @since __VERSION_NO__
+	 * @covers             ::test
+	 * @expectedException  UnexpectedValueException
+	 * @since              __VERSION_NO__
 	 */
 	public function testEqualsNoField()
 	{
@@ -73,9 +71,9 @@ class JFormRuleEqualsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::test
-	 * @expectedException InvalidArgumentException
-	 * @since __VERSION_NO__
+	 * @covers             ::test
+	 * @expectedException  InvalidArgumentException
+	 * @since              __VERSION_NO__
 	 */
 	public function testEqualsNullRegistry()
 	{

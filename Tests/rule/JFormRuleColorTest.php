@@ -51,9 +51,11 @@ class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $color           @todo
 	 * @param   boolean  $expectedOutput  @todo
 	 *
-	 * @covers ::test
-	 * @dataProvider dataColor
-	 * @return void
+	 * @return       void
+	 *
+	 * @covers        ::test
+	 * @dataProvider  dataColor
+	 * @since         __VERSION_NO__
 	 */
 	public function testColor($color, $expectedOutput)
 	{

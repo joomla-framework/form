@@ -61,18 +61,17 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getInput
-	 * @dataProvider dataGetInput
-	 * @since __VERSION_NO__
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         __VERSION_NO__
 	 */
 	public function testGetInput($xml, $expectedTagAttr)
 	{
 		$field = new HiddenField;
 
 		$xml = new SimpleXMLElement($xml);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'aValue'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 

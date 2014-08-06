@@ -109,9 +109,9 @@ class JFormFieldLanguageTest extends TestDatabase
 	 *
 	 * @return  void
 	 *
-	 * @covers ::getOptions
-	 * @dataProvider dataGetOptions
-	 * @since   1.0
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
 	public function testGetOptions($optionTag, $expected)
 	{
@@ -122,9 +122,8 @@ class JFormFieldLanguageTest extends TestDatabase
 		$fieldEndTag = '</field>';
 
 		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'value'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
@@ -148,7 +147,7 @@ class JFormFieldLanguageTest extends TestDatabase
 	 * Test...
 	 *
 	 * @return void
-	 * 
+	 *
 	 * @covers ::createLanguageList
 	 * @since   __VERSION_NO__
 	 */

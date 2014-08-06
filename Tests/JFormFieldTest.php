@@ -34,39 +34,26 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tear down test
-	 *
-	 * @return void
-	 *
-	 * @since __VERSION_NO__
-	 */
-	protected function tearDown()
-	{
-	}
-
-	/**
 	 * Tests the Joomla\Form\Field::__construct method
 	 *
 	 * @return void
 	 *
-	 * @covers ::__construct
-	 * @since __VERSION_NO__
+	 * @covers  ::__construct
+	 * @since   __VERSION_NO__
 	 */
 	public function testConstruct()
 	{
 		$form = new Form('form1');
 
-		$this->assertThat(
+		$this->assertTrue(
 			$form->load(JFormDataHelper::$loadFieldDocument),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
 		$field = new JFormFieldInspector($form);
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field instanceof \Joomla\Form\Field,
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The JFormField constuctor should return a JFormField object.'
 		);
 
@@ -94,15 +81,13 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The field type should have been guessed by the constructor.'
 		);
 
-		$this->assertEquals(
+		$this->assertNull(
 			$field->formControl,
-			null,
 			'Line:' . __LINE__ . ' The internal form should be identical to the variable passed in the contructor.'
 		);
 
-		$this->assertEquals(
+		$this->assertNull(
 			TestHelper::getValue($field, 'form'),
-			null,
 			'Line:' . __LINE__ . ' The internal form should be identical to the variable passed in the contructor.'
 		);
 
@@ -140,16 +125,15 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getId
-	 * @since __VERSION_NO__
+	 * @covers  ::getId
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetId()
 	{
 		$form = new JFormInspector('form1', array('control' => 'jform'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$form->load(JFormDataHelper::$loadFieldDocument),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
@@ -160,24 +144,22 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$xml = $form->getXML();
 		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($colours, 'red', 'params'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'jform_params_colours',
 			// Use original 'id' and 'name' here (from XML definition of the form field)
 			$field->getId((string) $colours['id'], (string) $colours['name']),
-			$this->equalTo('jform_params_colours'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
 		$form = new JFormInspector('form1');
 
-		$this->assertThat(
+		$this->assertTrue(
 			$form->load(JFormDataHelper::$loadFieldDocument),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
@@ -187,30 +169,28 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$date = array_pop($xml->xpath('fields/field[@name="created_date"]'));
 
 		// No form control with group
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($colours, 'red', 'params'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'params_colours',
 			// Use original 'id' and 'name' here (from XML definition of the form field)
 			$field->getId((string) $colours['id'], (string) $colours['name']),
-			$this->equalTo('params_colours'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
 		// No form control with no group
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($date, '01-01-1990'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'created_date',
 			// Use original 'id' and 'name' here (from XML definition of the form field)
 			$field->getId((string) $date['id'], (string) $date['name']),
-			$this->equalTo('created_date'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 	}
@@ -232,16 +212,15 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getLabel
-	 * @since __VERSION_NO__
+	 * @covers  ::getLabel
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetLabel()
 	{
 		$form = new JFormInspector('form1');
 
-		$this->assertThat(
+		$this->assertTrue(
 			$form->load(JFormDataHelper::$loadFieldDocument),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
@@ -252,18 +231,17 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$xml = $form->getXML();
 		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($title, 'The title'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
 		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" ' .
 			'title="Title::The title.">Title<span class="star">&#160;*</span></label>';
 
-		$this->assertThat(
+		$this->assertEquals(
+			$equals,
 			$field->getLabel(),
-			$this->equalTo($equals),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
@@ -271,15 +249,14 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($colours, 'id'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'<label id="colours-lbl" for="colours" class="">colours</label>',
 			$field->getLabel(),
-			$this->equalTo('<label id="colours-lbl" for="colours" class="">colours</label>'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
@@ -287,15 +264,14 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($id, 'id'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'',
 			$field->getLabel(),
-			$this->equalTo(''),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 	}
@@ -305,16 +281,15 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getTitle
-	 * @since __VERSION_NO__
+	 * @covers  ::getTitle
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetTitle()
 	{
 		$form = new JFormInspector('form1');
 
-		$this->assertThat(
+		$this->assertTrue(
 			$form->load(JFormDataHelper::$loadFieldDocument),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
@@ -325,15 +300,14 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$xml = $form->getXML();
 		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($title, 'The title'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'Title',
 			$field->getTitle(),
-			$this->equalTo('Title'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
@@ -341,15 +315,14 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($id, 'id'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'',
 			$field->getTitle(),
-			$this->equalTo(''),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 	}
@@ -359,8 +332,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::setForm
-	 * @since __VERSION_NO__
+	 * @covers  ::setForm
+	 * @since   __VERSION_NO__
 	 */
 	public function testSetForm()
 	{
@@ -382,19 +355,17 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::setup
-	 * @expectedException \PHPUnit_Framework_Error
-	 * @since __VERSION_NO__
+	 * @covers             ::setup
+	 * @expectedException  \PHPUnit_Framework_Error
+	 * @since              __VERSION_NO__
 	 */
 	public function testSetupInvalidArgument()
 	{
 		$form = new JFormInspector('form1');
 		$field = new JFormFieldInspector($form);
 
-		$wrong = 'wrong';
-		$this->assertThat(
-			$field->setup($wrong, 0),
-			$this->isFalse(),
+		$this->assertFalse(
+			$field->setup('wrong', 0),
 			'Line:' . __LINE__ . ' If not a form object, setup should return false.'
 		);
 	}
@@ -404,8 +375,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::setup
-	 * @since __VERSION_NO__
+	 * @covers  ::setup
+	 * @since   __VERSION_NO__
 	 */
 	public function testSetupInvalidElement()
 	{
@@ -413,9 +384,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$field = new JFormFieldInspector($form);
 
 		$wrong = new \SimpleXmlElement('<form></form>');
-		$this->assertThat(
+		$this->assertFalse(
 			$field->setup($wrong, 0),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' If not a field object, setup should return false.'
 		);
 	}
@@ -425,17 +395,16 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::__get
-	 * @covers ::setup
-	 * @since __VERSION_NO__
+	 * @covers  ::__get
+	 * @covers  ::setup
+	 * @since   __VERSION_NO__
 	 */
 	public function testSetup()
 	{
 		$form = new JFormInspector('form1');
 
-		$this->assertThat(
+		$this->assertTrue(
 			$form->load(JFormDataHelper::$loadFieldDocument),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
@@ -446,78 +415,74 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$xml = $form->getXML();
 		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($title, 'The title'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'title',
 			$field->name,
-			$this->equalTo('title'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'The title',
 			$field->value,
-			$this->equalTo('The title'),
 			'Line:' . __LINE__ . ' The value should be set from the setup method argument.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'title_id',
 			$field->id,
-			$this->equalTo('title_id'),
 			'Line:' . __LINE__ . ' The property should be set from the XML (non-alpha transposed to underscore).'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'inputbox required',
 			(string) $title['class'],
-			$this->equalTo('inputbox required'),
 			'Line:' . __LINE__ . ' The property should be set from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertequals(
+			'none',
 			$field->validate,
-			$this->equalTo('none'),
 			'Line:' . __LINE__ . ' The property should be set from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertFalse(
 			$field->multiple,
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->required,
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'',
 			$field->input,
-			$this->equalTo(''),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
 		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" title="Title::The title.">' .
 			'Title<span class="star">&#160;*</span></label>';
 
-		$this->assertThat(
+		$this->assertEquals(
+			$equals,
 			$field->label,
-			$this->equalTo($equals),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'Title',
 			$field->title,
-			$this->equalTo('Title'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$this->assertThat(
+		$this->assertNull(
 			$field->unexisting,
-			$this->equalTo(null),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
@@ -525,33 +490,31 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($colours, 'green', 'params'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'params_colours',
 			$field->id,
-			$this->equalTo('params_colours'),
-			'Line:' . __LINE__ . ' The property should be computed from the XML.'
-		);
-
-		$this->assertThat(
-			$field->name,
-			$this->equalTo('params[colours][]'),
-			'Line:' . __LINE__ . ' The property should be computed from the XML.'
-		);
-
-		$this->assertThat(
-			$field->multiple,
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
 		$this->assertEquals(
-			$field->group,
+			'params[colours][]',
+			$field->name,
+			'Line:' . __LINE__ . ' The property should be computed from the XML.'
+		);
+
+		$this->assertTrue(
+			$field->multiple,
+			'Line:' . __LINE__ . ' The property should be computed from the XML.'
+		);
+
+		$this->assertEquals(
 			'params',
+			$field->group,
 			'Line:' . __LINE__ . ' The property should be set to the the group name.'
 		);
 
@@ -559,15 +522,13 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($id, 42),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->hidden,
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The hidden property should be set from the field type.'
 		);
 
@@ -575,15 +536,13 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$createdDate = array_pop($xml->xpath('fields/field[@name="created_date"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($createdDate, '0000-00-00 00:00:00'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->hidden,
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The hidden property should be set from the hidden attribute.'
 		);
 
@@ -591,15 +550,14 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		$spacer = array_pop($xml->xpath('fields/field[@type="spacer"]'));
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($spacer, ''),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'__field1',
 			$field->name,
-			$this->equalTo('__field1'),
 			'Line:' . __LINE__ . ' The spacer name should be set using an automatic generated name.'
 		);
 
@@ -608,33 +566,32 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		$comment = array_pop($xml->xpath('fields/fields[@name="params"]/fields[@name="subparams"]/field[@name="comment"]'));
 		$field->forceMultiple = true;
 
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($comment, 'My comment', 'params.subparams'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true if successful.'
 		);
 
-		$this->assertThat(
+		$this->assertEquals(
+			'params_subparams_comment',
 			$field->id,
-			$this->equalTo('params_subparams_comment'),
-			'Line:' . __LINE__ . ' The property should be computed from the XML.'
-		);
-
-		$this->assertThat(
-			$field->name,
-			$this->equalTo('params[subparams][comment][]'),
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
 		$this->assertEquals(
-			$field->group,
+			'params[subparams][comment][]',
+			$field->name,
+			'Line:' . __LINE__ . ' The property should be computed from the XML.'
+		);
+
+		$this->assertEquals(
 			'params.subparams',
+			$field->group,
 			'Line:' . __LINE__ . ' The property should be set to the the group name.'
 		);
 
 		$this->assertEquals(
-			$field->element['class'],
 			'required',
+			$field->element['class'],
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 	}
@@ -644,8 +601,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getName
-	 * @since __VERSION_NO__
+	 * @covers  ::getName
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetName()
 	{
@@ -702,8 +659,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers ::getFieldName
-	 * @since __VERSION_NO__
+	 * @covers  ::getFieldName
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetFieldName()
 	{

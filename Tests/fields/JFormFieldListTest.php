@@ -122,9 +122,8 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 		$field = new ListField;
 
 		$xml = new SimpleXMLElement($xml);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'aValue'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
@@ -206,9 +205,8 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 		$fieldEndTag = '</field>';
 
 		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'value'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
