@@ -132,7 +132,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers ::genericList
+	 * @covers        ::genericList
 	 * @dataProvider  dataGenericList
 	 * @since         3.2
 	 */
@@ -152,6 +152,133 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 			$this->assertEquals(
 				$expected,
 				Select::genericlist($data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate)
+			);
+		}
+	}
+
+	/**
+	 * Grouped list dataset
+	 *
+	 * @return  array
+	 *
+	 * @since   3.2
+	 */
+	public function dataGroupedlist()
+	{
+		return array(
+			array(
+				array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myName',
+						'name' => 'myName',
+						'class' => 'aClass'
+					),
+					'child' => array(
+						'tag' => 'option',
+						'attributes' => array(
+							'value' => 'foo',
+						),
+						'content' => 'Foo'
+					)
+				),
+				array(
+					0 => array(
+						(object) array(
+							'value' => 'foo',
+							'text' => 'Foo',
+							'disable' => false,
+							'class' => '',
+							'onclick' => ''
+						),
+					),
+				),
+				'myName',
+				array('group.items' => null, 'list.attr' => 'class="aClass"')
+			),
+			array(
+				array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => 'myName',
+						'class' => 'aClass'
+					),
+					'child' => array(
+						'tag' => 'optgroup',
+						'attributes' => array(
+							'label' => 'barfoo'
+						)
+					)
+				),
+				array(
+					'barfoo' => array(
+						(object) array(
+							'value' => 'oof',
+							'text' => 'Foo',
+							'disable' => false,
+							'class' => '',
+							'onclick' => ''
+						),
+					),
+				),
+				'myName',
+				array(
+					'group.items' => null,
+					'id' => 'myId',
+					'list.attr' => array('class' => "aClass")
+				)
+			),
+		);
+	}
+
+	/**
+	 * Generates a grouped HTML selection list from nested arrays.
+	 *
+	 * @param   string  $expected  Expected generated HTML <select> string.
+	 * @param   array   $data      An array of groups, each of which is an array of options.
+	 * @param   string  $name      The value of the HTML name attribute
+	 * @param   array   $options   Options, an array of key/value pairs. Valid options are:
+	 *                             Format options, {@see Select::$formatOptions}.
+	 *                             Selection options. See {@see Select::options()}.
+	 *                             group.id: The property in each group to use as the group id
+	 *                             attribute. Defaults to none.
+	 *                             group.label: The property in each group to use as the group
+	 *                             label. Defaults to "text". If set to null, the data array index key is
+	 *                             used.
+	 *                             group.items: The property in each group to use as the array of
+	 *                             items in the group. Defaults to "items". If set to null, group.id and
+	 *                             group. label are forced to null and the data element is assumed to be a
+	 *                             list of selections.
+	 *                             id: Value to use as the select element id attribute. Defaults to
+	 *                             the same as the name.
+	 *                             list.attr: Attributes for the select element. Can be a string or
+	 *                             an array of key/value pairs. Defaults to none.
+	 *                             list.select: either the value of one selected option or an array
+	 *                             of selected options. Default: none.
+	 *                             list.translate: Boolean. If set, text and labels are translated via
+	 *                             Text::_().
+	 *
+	 * @return  string  HTML for the select list
+	 *
+	 * @covers        ::groupedlist
+	 * @dataProvider  dataGroupedlist
+	 * @since         3.2
+	 */
+	public function testGroupedlist($expected, $data, $name, $options = array())
+	{
+		if (func_num_args() == 3)
+		{
+			$this->assertTag(
+				$expected,
+				Select::groupedlist($data, $name)
+			);
+		}
+		else
+		{
+			$this->assertTag(
+				$expected,
+				Select::groupedlist($data, $name, $options)
 			);
 		}
 	}
@@ -331,10 +458,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
 		foreach ($expected as $tag)
 		{
-			$this->assertTag(
-				$tag,
-				$html
-			);
+			$this->assertTag($tag, $html);
 		}
 	}
 
@@ -461,10 +585,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
 		foreach ($expected as $tag)
 		{
-			$this->assertTag(
-				$tag,
-				$html
-			);
+			$this->assertTag($tag, $html);
 		}
 	}
 
@@ -599,10 +720,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
 		foreach ($expected as $tag)
 		{
-			$this->assertTag(
-				$tag,
-				$html
-			);
+			$this->assertTag($tag, $html);
 		}
 	}
 
