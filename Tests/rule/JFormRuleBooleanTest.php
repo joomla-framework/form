@@ -69,4 +69,21 @@ class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
 				. ($expectedOutput ? 'true' : 'false') . '.'
 		);
 	}
+
+	/**
+	 * Test the Joomla\Form\Rule\Boolean::test method.
+	 *
+	 * @covers             Joomla\Form\Rule::test
+	 * @expectedException  UnexpectedValueException
+	 * @return void
+	 */
+	public function testRuleEmptyRegexException()
+	{
+		$rule = new RuleBoolean;
+		$xml = new SimpleXmlElement('<field name="foo" />');
+
+		TestHelper::setValue($rule, 'regex', '');
+
+		$rule->test($xml->field, 'true');
+	}
 }
