@@ -43,9 +43,8 @@ class JFormFieldImageListTest extends \PHPUnit_Framework_TestCase
 
 		// Only check for new filters added, rest is tested in parent's test.
 		$filter = '\.png$|\.gif$|\.jpg$|\.bmp$|\.ico$|\.jpeg$|\.psd$|\.eps$';
-		$this->assertEquals(
-			$filter,
-			TestHelper::getValue($field, 'element')['filter']
-		);
+		$element = TestHelper::getValue($field, 'element');
+
+		$this->assertEquals($filter, $element['filter']);
 	}
 }

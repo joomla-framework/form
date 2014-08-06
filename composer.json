@@ -21,7 +21,6 @@
     "require-dev": {
         "joomla/test": "~1.0"
     },
-    "target-dir": "Joomla/Form",
     "autoload": {
         "psr-4": {
             "Joomla\\Form\\": "src/",
