@@ -19,33 +19,137 @@ use SimpleXmlElement;
 class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Test data for getGroups test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
+	public function dataGetInput()
+	{
+		return array(
+			'basic' => array(
+				'inputs' => array(
+					'id' => 'myId',
+					'name' => 'myName',
+				),
+				'expected' => array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => 'myName',
+					),
+					'child' => array(
+						'tag' => 'optgroup',
+						'attributes' => array(
+							'label' => 'barfoo',
+						)
+					)
+				),
+			),
+			'allAttrSet' => array(
+				'inputs' => array(
+					'id' => 'myId',
+					'name' => 'myName',
+					'class' => 'aClass',
+					'disabled' => 'true',
+					'size' => '50',
+					'multiple' => 'true',
+				),
+				'expected' => array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => 'myName[]',
+						'class' => 'aClass',
+						'disabled' => 'disabled',
+						'size' => '50',
+						'multiple' => 'multiple',
+					)
+				),
+			),
+			'readonlySelectNoName' => array(
+				'inputs' => array(
+					'id' => 'myId',
+					'name' => 'myName',
+					'readonly' => 'true'
+				),
+				'expected' => array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => '',
+					)
+				),
+			),
+			'readonlyHiddenInput' => array(
+				'inputs' => array(
+					'id' => 'myId',
+					'name' => 'myName',
+					'readonly' => 'true'
+				),
+				'expected' => array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'hidden',
+						'name' => 'myName',
+						'value' => 'setupValue',
+					)
+				),
+			),
+		);
+	}
+
+	/**
 	 * Test the getInput method.
+	 *
+	 * @param   array  $inputs    Inputs to set the state
+	 * @param   array  $expected  Expected Output tags
 	 *
 	 * @return  void
 	 *
-	 * @covers ::getInput
-	 * @since   1.0
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         1.0
 	 */
-	public function testGetInput()
+	public function testGetInput($inputs, $expected)
 	{
-		$xml = '<field name="groupedlist" type="groupedlist" />';
+		$xml = '<field type="groupedlist"';
 
-		$field = new GroupedListField;
+		foreach ($inputs as $attr => $value)
+		{
+			$xml .= " $attr=\"$value\"";
+		}
+
+		$xml .= '/>';
+
+		$field = $this->getMock('Joomla\\Form\\Field\\GroupedListField', array('getGroups'));
+
+		// Configure the stub.
+		$field->expects($this->any())
+			->method('getGroups')
+			->will(
+				$this->returnValue(
+					array(
+					'barfoo' => array(
+							(object) array('value' => 'oof', 'text' => 'Foo')
+						)
+					)
+				)
+			);
 
 		$xml = new SimpleXmlElement($xml);
-		$this->assertThat(
-			$field->setup($xml, 'value'),
-			$this->isTrue(),
+
+		$this->assertTrue(
+			$field->setup($xml, 'setupValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertTag(
+			$expected,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
-
-		// TODO: Should check all the attributes have come in properly.
 	}
 
 	/**
@@ -102,6 +206,7 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 			),
 			array('<option value="foo">Foo</option>'
 				. '<group label="barfoo"><option value="oof" disabled="true">Foo</option>'
+				. '<foo>bar</foo>'
 				. '<option value="rab" class="lorem">Bar</option></group>'
 				. '<option value="bar">Bar</option>',
 				array(
@@ -164,9 +269,8 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 		$fieldEndTag = '</field>';
 
 		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'value'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
@@ -187,9 +291,9 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers ::getGroups
-	 * @expectedException UnexpectedValueException
-	 * @since   1.0
+	 * @covers             ::getGroups
+	 * @expectedException  UnexpectedValueException
+	 * @since              1.0
 	 */
 	public function testGetGroupsUnknownChildException()
 	{
@@ -200,9 +304,8 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 		$fieldEndTag = '</field>';
 
 		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
-		$this->assertThat(
+		$this->assertTrue(
 			$field->setup($xml, 'value'),
-			$this->isTrue(),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
