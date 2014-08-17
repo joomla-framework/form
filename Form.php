@@ -480,7 +480,7 @@ class Form
 	 *
 	 * @return  static
 	 *
-	 * @since   1.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	 public function setFormControl($control)
 	 {
