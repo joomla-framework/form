@@ -29,10 +29,21 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 		return array(
 			// Function parameters array($expected, $data, $name, $attribs = null, $optKey = 'value', $optText = 'text',
 			// 						$selected = null, $idtag = false, $translate = false)
-			array("<select id=\"myName\" name=\"myName\">\n"
-				. "\t<option value=\"1\">Foo</option>\n"
-				. "\t<option value=\"2\">Bar</option>\n"
-				. "</select>\n",
+			array(
+				array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myName',
+						'name' => 'myName'
+					),
+					'child' => array(
+						'tag' => 'option',
+						'attributes' => array(
+							'value' => '1'
+						),
+						'content' => 'Foo'
+					)
+				),
 				array(
 					array(
 						'value' => '1',
@@ -45,10 +56,22 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 				),
 				'myName',
 			),
-			array("<select id=\"myId\" name=\"myName\">\n"
-				. "\t<option value=\"1\">Foo</option>\n"
-				. "\t<option value=\"2\" selected=\"selected\">Bar</option>\n"
-				. "</select>\n",
+			array(
+				array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => 'myName'
+					),
+					'child' => array(
+						'tag' => 'option',
+						'attributes' => array(
+							'value' => '2',
+							'selected' => 'selected'
+						),
+						'content' => 'Bar'
+					)
+				),
 				array(
 					array(
 						'value' => '1',
@@ -66,10 +89,22 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 				'2',
 				'myId',
 			),
-			array("<select id=\"myId\" name=\"myName\">\n"
-				. "\t<option value=\"1\">Foo</option>\n"
-				. "\t<option value=\"2\" selected=\"selected\">Bar</option>\n"
-				. "</select>\n",
+			array(
+				array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myId',
+						'name' => 'myName'
+					),
+					'child' => array(
+						'tag' => 'option',
+						'attributes' => array(
+							'value' => '2',
+							'selected' => 'selected'
+						),
+						'content' => 'Bar'
+					)
+				),
 				array(
 					array(
 						'value' => '1',
@@ -86,10 +121,16 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 					'list.select' => '2',
 				),
 			),
-			array("<select id=\"myName\" name=\"myName\" class=\"foobar\" onchange=\"barfoo();\">\n"
-				. "\t<option value=\"1\">Foo</option>\n"
-				. "\t<option value=\"2\">Bar</option>\n"
-				. "</select>\n",
+			array(
+				array(
+					'tag' => 'select',
+					'attributes' => array(
+						'id' => 'myName',
+						'name' => 'myName',
+						'class' => 'foobar',
+						'onchange' => 'barfoo();'
+					)
+				),
 				array(
 					array(
 						'value' => '1',
@@ -109,7 +150,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test the genericlist method.
 	 *
-	 * @param   string   $expected   Expected generated HTML <select> string.
+	 * @param   string   $expected   Expected generated HTML <select> tag.
 	 * @param   array    $data       An array of objects, arrays, or scalars.
 	 * @param   string   $name       The value of the HTML name attribute.
 	 * @param   mixed    $attribs    Additional HTML attributes for the <select> tag. This
@@ -142,14 +183,14 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	{
 		if (func_num_args() == 4)
 		{
-			$this->assertEquals(
+			$this->assertTag(
 				$expected,
 				Select::genericlist($data, $name, $attribs)
 			);
 		}
 		else
 		{
-			$this->assertEquals(
+			$this->assertTag(
 				$expected,
 				Select::genericlist($data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate)
 			);
