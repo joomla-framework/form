@@ -4,35 +4,13 @@
 
 The Form Package provides an easy interface to create, display, and validate forms.
 
-To use the Form Package in your code include:
-
-	use namespace Joomla\Form\Form
-
-at the top of your PHP class.
-
-## Installation via Composer
-
-Add `"joomla/form": "~1.0"` to the require block in your composer.json and then run `composer install`.
-
-```json
-{
-	"require": {
-		"joomla/form": "~1.0"
-	}
-}
-```
-
-Alternatively, you can simply run the following from the command line:
-
-```sh
-composer require joomla/form "~1.0"
-```
-
 ## Creating a Form & Loading Data ##
 
 To use the Form Package in your code include:
 
-	use namespace Joomla\Form\Form
+```php
+use namespace Joomla\Form\Form
+```
 
 You will now be able to create form objects either programmatically or loading forms from an XML file.
 
@@ -40,30 +18,32 @@ You will now be able to create form objects either programmatically or loading f
 
 The Form Package requires forms in valid XML.  For example, a form to define a customer would use this XML:
 
-	<?xml version="1.0" encoding="utf-8"?>
-	<form>
-		<fields>
-			<field name="id" type="hidden" label=""/>
-			<field name="first_name" type="text" label="First Name" required="true"/>
-			<field name="last_name" type="text" label="Last Name" required="true"/>
-			<field name="street" type="text" label="Street" required="false"/>
-			<field name="suburb" type="text" label="suburb" required="false"/>
-			<field name="state" type="list" label="state" required="false">
-				<option value="QLD">Queensland</option>
-				<option value="NSW">New South Wales</option>
-				<option value="ACT">Australian Capital Territory</option>
-				<option value="VIC">Victoria</option>
-				<option value="TAS">Tasmania</option>
-				<option value="SA">South Australia</option>
-				<option value="WA">Western Australia</option>
-				<option value="NT">Nothern Territory</option>
-				<option value="N/A">Outside Australia</option>
-			</field>
-			<field name="postcode" type="text" label="Postcode" required="false"/>
-			<field name="email" type="text" label="Email" validate="email" required="false"/>
-			<field name="phone" type="text" label="Phone" validate="tel" required="true" />
-		</fields>
-	</form>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields>
+		<field name="id" type="hidden" label=""/>
+		<field name="first_name" type="text" label="First Name" required="true"/>
+		<field name="last_name" type="text" label="Last Name" required="true"/>
+		<field name="street" type="text" label="Street" required="false"/>
+		<field name="suburb" type="text" label="suburb" required="false"/>
+		<field name="state" type="list" label="state" required="false">
+			<option value="QLD">Queensland</option>
+			<option value="NSW">New South Wales</option>
+			<option value="ACT">Australian Capital Territory</option>
+			<option value="VIC">Victoria</option>
+			<option value="TAS">Tasmania</option>
+			<option value="SA">South Australia</option>
+			<option value="WA">Western Australia</option>
+			<option value="NT">Nothern Territory</option>
+			<option value="N/A">Outside Australia</option>
+		</field>
+		<field name="postcode" type="text" label="Postcode" required="false"/>
+		<field name="email" type="text" label="Email" validate="email" required="false"/>
+		<field name="phone" type="text" label="Phone" validate="tel" required="true" />
+	</fields>
+</form>
+```
 
 More advanced forms can also group forms into field sets and groups.
 
@@ -88,7 +68,11 @@ Once you have created the form XML you need to load the form into your code for 
 
 The first step is to create a Form object.  At minimum constructing a new form object requires naming the form.  To create a minimal form object you can use the below:
 
-	$clientForm = new Form('client');
+```php
+use Joomla\Form\Form;
+
+$clientForm = new Form('client');
+```
 
 The Form is now initialised and ready for use.  Presently it doesn't have any fields or data associated with it.
 
@@ -105,8 +89,10 @@ If the Form is being used to display data you need to populate the form fields. 
 
 For example using the customer form defined above this can be filled with an array like such:
 
-	$customer = new Array('first_name'=>'John','last_name'=>'Smith'...);
-	$customerForm->bind($customer);
+```php
+$customer = new array('first_name'=>'John','last_name'=>'Smith'...);
+$clientForm->bind($customer);
+```
 
 If you are using groups within your form you would need to nest these keys under a parent element.
 
@@ -121,21 +107,27 @@ This is the easiest option and useful when you have a small, simple form, or don
 
 Load your form fields using the Form::getGroup() method.  This requires a string indicating which field group you would like to load.  If you have not used field groups you can just pass in a blank string.  For example to load the fields from the customer form I would use:
 
-	$fields = $customForm->getGroup('');
+```php
+$fields = $customForm->getGroup('');
+```
 
 Once the fields have been loaded with the form you can then loop through these to display the label, input field, and if bound the data.
 
-	foreach ($fields as $field) {
-		echo $field->label;
-		echo $field->input;
-	}
+```php
+foreach ($fields as $field) {
+	echo $field->label;
+	echo $field->input;
+}
+```
 
 ### Option 2: Displaying a Form With More Control ###
 
 If you want to exert a little more control over how the form is laid out you can access each field by name.  For example to load the input and the label for the *first_name* field you would use the below:
 
-	echo $form->getLabel('first_name');
-	echo $form->getInput('first_name');
+```php
+echo $form->getLabel('first_name');
+echo $form->getInput('first_name');
+```
 
 ### Additional Options for Controlling Form Display ###
 
@@ -149,13 +141,17 @@ Before you can validate form data it is necessary to load the form again. (See L
 
 Once the form has been reloaded, don't bind data to it.  This time call the Form::validate() method passing in an array containing the data you wish to validate.  For example:
 
-	$clientForm->validate($_POST);
+```php
+$clientForm->validate($_POST);
+```
 
 This will validate the data stored in the POST array against the validation rules defined in the form.
 
 Validation errors are retrievable by using the Form::getErrors() function:
 
-	$clientForm->getErrors();
+```php
+$clientForm->getErrors();
+```
 
 Presently this will return an array of RuntimeException Objects.
 
@@ -177,20 +173,24 @@ Example
 
 In file "CustomField.php" write
 
-    namespace Joomla\Form\Field
+```php
+namespace Joomla\Form\Field
 
-	class CustomField extends \Joomla\Form\Field
+class CustomField extends \Joomla\Form\Field
+{
+	// Override this function
+	public function getInput()
 	{
-		// Override this function
-		public function getInput()
-		{
-			return 'field's html string.'
-		}
+		return 'field's html string.'
 	}
+}
+```
 
 To use above field in your form, write
 
-	<form type="custom" name="myName" id="myId" />
+```xml
+<form type="custom" name="myName" id="myId" />
+```
 
 ### Field in a different namespace
 You can also create custom field in different namespace instead of Joomla.
@@ -199,20 +199,24 @@ Example
 
 In file "FooField.php" write
 
-	namespace Bar\Form\Field
+```php
+namespace Bar\Form\Field
 
-	class FooField extends \Joomla\Form\Field
+class FooField extends \Joomla\Form\Field
+{
+	// Override this function
+	public function getInput()
 	{
-		// Override this function
-		public function getInput()
-		{
-			return 'field's html string.'
-		}
+		return 'field's html string.'
 	}
+}
+```
 
 To use above field just write
 
-	<form type="bar.foo" name="myName" id="myId" />
+```xml
+<form type="bar.foo" name="myName" id="myId" />
+```
 
 ### Field in a sub-namespace
 To create a field in a sub-namespace of Joomla\Form\Field.
@@ -221,21 +225,45 @@ Example
 
 In file "FooField.php" write
 
-	namespace Joomla\Form\Field\Bar
+```php
+namespace Joomla\Form\Field\Bar
 
-	class FooField extends \Joomla\Form\Field
+class FooField extends \Joomla\Form\Field
+{
+	// Override this function
+	public function getInput()
 	{
-		// Override this function
-		public function getInput()
-		{
-			return 'field's html string.'
-		}
+		return 'field's html string.'
 	}
+}
+```
 
 To use above field just write
 
-	<form type="bar\foo" name="myName" id="myId" />
+```xml
+<form type="bar\foo" name="myName" id="myId" />
+```
 
 One more thing, just make sure that the directory in which field file is present, is included field path. If not, you can add the path using FormHelper
 
-	FormHelper::addFieldPath(<absolute path to the directory containg field>);
+```php
+\Joomla\Form\FormHelper::addFieldPath(<absolute path to the directory containg field>);
+```
+
+## Installation via Composer
+
+Add `"joomla/form": "~1.0"` to the require block in your composer.json and then run `composer install`.
+
+```json
+{
+	"require": {
+		"joomla/form": "~1.0"
+	}
+}
+```
+
+Alternatively, you can simply run the following from the command line:
+
+```sh
+composer require joomla/form "~1.0"
+```
