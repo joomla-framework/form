@@ -41,6 +41,7 @@ class Field_GroupedList extends Field
 		$groups = array();
 		$label = 0;
 
+		/** @var \SimpleXMLElement $element */
 		foreach ($this->element->children() as $element)
 		{
 			switch ($element->getName())
@@ -85,6 +86,7 @@ class Field_GroupedList extends Field
 					}
 
 					// Iterate through the children and build an array of options.
+					/** @var \SimpleXMLElement $option */
 					foreach ($element->children() as $option)
 					{
 						// Only add <option /> elements.
@@ -165,7 +167,7 @@ class Field_GroupedList extends Field
 			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
 		}
 		else
-		// Create a regular list.
+			// Create a regular list.
 		{
 			$html[] = HtmlSelect::groupedlist(
 				$groups,
