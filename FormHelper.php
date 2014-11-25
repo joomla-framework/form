@@ -55,31 +55,33 @@ class FormHelper
 	/**
 	 * Method to load a form field object given a type.
 	 *
-	 * @param   string   $type  The field type.
-	 * @param   boolean  $new   Flag to toggle whether we should get a new instance of the object.
+	 * @param   string   $type  		The field type.
+	 * @param   boolean  $new   		Flag to toggle whether we should get a new instance of the object.
+	 * @param   boolean  $namespace    	If true, assume type is a a fully registered class name
 	 *
 	 * @return  mixed  Field object on success, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public static function loadFieldType($type, $new = true)
+	public static function loadFieldType($type, $new = true, $namespace = false)
 	{
-		return self::loadType('field', $type, $new);
+		return self::loadType('field', $type, $new, $namespace);
 	}
 
 	/**
 	 * Method to load a form rule object given a type.
 	 *
-	 * @param   string   $type  The rule type.
-	 * @param   boolean  $new   Flag to toggle whether we should get a new instance of the object.
+	 * @param   string   $type  		The rule type.
+	 * @param   boolean  $new   		Flag to toggle whether we should get a new instance of the object.
+	 * @param   boolean  $namespace    	If true, assume type is a a fully registered class name
 	 *
 	 * @return  mixed  Rule object on success, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public static function loadRuleType($type, $new = true)
+	public static function loadRuleType($type, $new = true, $namespace = false)
 	{
-		return self::loadType('rule', $type, $new);
+		return self::loadType('rule', $type, $new, $namespace);
 	}
 
 	/**
@@ -87,15 +89,16 @@ class FormHelper
 	 * Each type is loaded only once and then used as a prototype for other objects of same type.
 	 * Please, use this method only with those entities which support types (forms don't support them).
 	 *
-	 * @param   string   $entity  The entity.
-	 * @param   string   $type    The entity type.
-	 * @param   boolean  $new     Flag to toggle whether we should get a new instance of the object.
+	 * @param   string   $entity  		The entity.
+	 * @param   string   $type    		The entity type.
+	 * @param   boolean  $new     		Flag to toggle whether we should get a new instance of the object.
+	 * @param   boolean  $namespace    	If true, assume type is a a fully registered class name
 	 *
 	 * @return  mixed  Entity object on success, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	protected static function loadType($entity, $type, $new = true)
+	protected static function loadType($entity, $type, $new = true, $namespace = false)
 	{
 		// Reference to an array with current entity's type instances
 		$types = &self::$entities[$entity];
@@ -108,7 +111,7 @@ class FormHelper
 			return $types[$key];
 		}
 
-		$class = self::loadClass($entity, $type);
+		$class = self::loadClass($entity, $type, $namespace);
 
 		if ($class !== false)
 		{
@@ -127,30 +130,32 @@ class FormHelper
 	 * Attempt to import the Field class file if it isn't already imported.
 	 * You can use this method outside of Joomla\Form for loading a field for inheritance or composition.
 	 *
-	 * @param   string  $type  Type of a field whose class should be loaded.
+	 * @param   string  $type  			Type of a field whose class should be loaded.
+	 * @param   boolean $namespace    	If true, assume type is a a fully registered class name
 	 *
 	 * @return  mixed  Class name on success or false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public static function loadFieldClass($type)
+	public static function loadFieldClass($type, $namespace = false)
 	{
-		return self::loadClass('field', $type);
+		return self::loadClass('field', $type, $namespace);
 	}
 
 	/**
 	 * Attempt to import the Rule class file if it isn't already imported.
 	 * You can use this method outside of Joomla\Form for loading a rule for inheritance or composition.
 	 *
-	 * @param   string  $type  Type of a rule whose class should be loaded.
+	 * @param   string  $type  			Type of a rule whose class should be loaded.
+	 * @param   boolean $namespace    	If true, assume type is a a fully registered class name
 	 *
 	 * @return  mixed  Class name on success or false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public static function loadRuleClass($type)
+	public static function loadRuleClass($type, $namespace = false)
 	{
-		return self::loadClass('rule', $type);
+		return self::loadClass('rule', $type. $namespace);
 	}
 
 	/**
@@ -158,38 +163,46 @@ class FormHelper
 	 * Currently, it makes sense to use this method for the "field" and "rule" entities
 	 * (but you can support more entities in your subclass).
 	 *
-	 * @param   string  $entity  One of the form entities (field or rule).
-	 * @param   string  $type    Type of an entity.
+	 * @param   string  $entity  		One of the form entities (field or rule).
+	 * @param   string  $type    		Type of an entity.
+	 * @param   boolean $namespace   	If true, assume type is a a fully registered class name
 	 *
 	 * @return  mixed  Class name on success or false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	protected static function loadClass($entity, $type)
+	protected static function loadClass($entity, $type, $namespace = false)
 	{
-		if (strpos($type, '.'))
+		if ($namespace)
 		{
-			list($prefix, $type) = explode('.', $type);
+			return class_exists($type) ? $type : false;
 		}
 		else
 		{
-			$prefix = 'Joomla';
-		}
+			if (strpos($type, '.'))
+			{
+				list($prefix, $type) = explode('.', $type);
+			}
+			else
+			{
+				$prefix = 'Joomla';
+			}
 
-		$class = ucfirst($prefix) . '\\Form\\' . ucfirst($entity);
+			$class = ucfirst($prefix) . '\\Form\\' . ucfirst($entity);
 
-		if ($entity === 'field')
-		{
-			$class .= '_' . ucfirst($type);
-		}
-		else
-		{
-			$class .= '\\' . ucfirst($type);
-		}
+			if ($entity === 'field')
+			{
+				$class .= '_' . ucfirst($type);
+			}
+			else
+			{
+				$class .= '\\' . ucfirst($type);
+			}
 
-		if (class_exists($class))
-		{
-			return $class;
+			if (class_exists($class))
+			{
+				return $class;
+			}
 		}
 
 		// Get the field search path array.
@@ -230,7 +243,6 @@ class FormHelper
 				}
 			}
 		}
-
 		// Check for all if the class exists.
 		return class_exists($class) ? $class : false;
 	}

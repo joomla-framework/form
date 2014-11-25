@@ -1623,8 +1623,11 @@ class Form
 		// Get the field type.
 		$type = $element['type'] ? (string) $element['type'] : 'text';
 
+		// Check if the type is defined as a custom namespaced class
+		$namespace = $element['namespace'] ? true : false;
+
 		// Load the Field object for the field.
-		$field = FormHelper::loadFieldType($type);
+		$field = FormHelper::loadFieldType($type, true, $namespace);
 
 		// If the object could not be loaded, get a text field object.
 		if ($field === false)
