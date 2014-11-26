@@ -1623,8 +1623,11 @@ class Form
 		// Get the field type.
 		$type = $element['type'] ? (string) $element['type'] : 'text';
 
+		// Check if the type is defined as a custom namespaced class
+		$namespace = $element['namespace'] ? true : false;
+
 		// Load the Field object for the field.
-		$field = FormHelper::loadFieldType($type);
+		$field = FormHelper::loadFieldType($type, true, $namespace);
 
 		// If the object could not be loaded, get a text field object.
 		if ($field === false)
@@ -1661,17 +1664,19 @@ class Form
 			$value = $this->getValue((string) $element['name'], $group, $default);
 		}
 
-		// Setup the Field object.
-		$field->setForm($this);
+		//make sure the field is valid
+		if ($field !== false)
+		{
+			// Setup the Field object.
+			$field->setForm($this);
 
-		if ($field->setup($element, $value, $group))
-		{
-			return $field;
+			if ($field->setup($element, $value, $group))
+			{
+				return $field;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		
+		return false;
 	}
 
 	/**
