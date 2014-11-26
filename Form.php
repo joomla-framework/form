@@ -1664,17 +1664,19 @@ class Form
 			$value = $this->getValue((string) $element['name'], $group, $default);
 		}
 
-		// Setup the Field object.
-		$field->setForm($this);
+		//make sure the field is valid
+		if ($field !== false)
+		{
+			// Setup the Field object.
+			$field->setForm($this);
 
-		if ($field->setup($element, $value, $group))
-		{
-			return $field;
+			if ($field->setup($element, $value, $group))
+			{
+				return $field;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		
+		return false;
 	}
 
 	/**
