@@ -8,70 +8,46 @@ namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
 use Joomla\Form\Rule\Options as RuleOptions;
-
+use SimpleXmlElement;
 /**
- * Test class for JForm.
+ * Test class for Joolma Framework Form rule Options.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Options
  * @since  1.0
  */
 class JFormRuleOptionsTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Set up for testing
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Tear down test
-	 *
-	 * @return void
-	 *
-	 * @since   1.0
-	 */
-	protected function tearDown()
-	{
-	}
-
-	/**
 	 * Test the Joomla\Form\Rule\Options::test method.
 	 *
 	 * @return  void
 	 *
+	 * @covers ::test
 	 * @since   1.0
 	 */
 	public function testOptions()
 	{
 		$rule = new RuleOptions;
-		$xml = simplexml_load_string(
-			'<form><field name="field1"><option value="value1">Value1</option><option value="value2">Value2</option></field></form>'
+		$xml = new SimpleXmlElement(
+			'<field name="field1"><option value="value1">Value1</option><option value="value2">Value2</option></field>'
 		);
 
 		// Test fail conditions.
 
-		$this->assertThat(
-			$rule->test($xml->field[0], 'bogus'),
-			$this->isFalse(),
+		$this->assertFalse(
+			$rule->test($xml, 'bogus'),
 			'Line:' . __LINE__ . ' The rule should fail and return false.'
 		);
 
 		// Test pass conditions.
 
-		$this->assertThat(
-			$rule->test($xml->field[0], 'value1'),
-			$this->isTrue(),
+		$this->assertTrue(
+			$rule->test($xml, 'value1'),
 			'Line:' . __LINE__ . ' value1 should pass and return true.'
 		);
 
-		$this->assertThat(
-			$rule->test($xml->field[0], 'value2'),
-			$this->isTrue(),
+		$this->assertTrue(
+			$rule->test($xml, 'value2'),
 			'Line:' . __LINE__ . ' value2 should pass and return true.'
 		);
 	}

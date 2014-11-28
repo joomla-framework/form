@@ -57,6 +57,9 @@ class JFormDataHelper
 			name="int" filter="int" />
 
 		<field
+			name="int_array" filter="int_array" />
+
+		<field
 			name="method" filter="Joomla\\Form\\Tests\\JFormDataHelper::filter" />
 
 		<field

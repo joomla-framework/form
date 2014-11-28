@@ -10,35 +10,20 @@ use Joomla\Test\TestHelper;
 use Joomla\Form\Rule\Email as RuleEmail;
 
 /**
- * Test class for JForm.
+ * Test class for Joolma Framework Form rule Email.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Email
  * @since  1.0
  */
 class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * set up for testing
-	 *
-	 * @return void
-	 */
-	public function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Tear down test
-	 *
-	 * @return void
-	 */
-	protected function tearDown()
-	{
-	}
-
-	/**
 	 * Test the Joomla\Form\Rule\Email::test method.
 	 *
 	 * @return void
+	 *
+	 * @covers  ::test
+	 * @since   __VERSION_NO__
 	 */
 	public function testEmail()
 	{
@@ -47,30 +32,31 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 
 		// Test fail conditions.
 
-		$this->assertThat(
+		$this->assertFalse(
 			$rule->test($xml->field[0], 'bogus'),
-			$this->isFalse(),
 			'Line:' . __LINE__ . ' The rule should fail and return false.'
+		);
+
+		$this->assertFalse(
+			$rule->test($xml->field[0], '0'),
+			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
+		);
+
+		$this->assertFalse(
+			$rule->test($xml->field[0], 'false'),
+			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
 		);
 
 		// Test pass conditions.
 
-		$this->assertThat(
-			$rule->test($xml->field[0], 'me@example.com'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The basic rule should pass and return true.'
+		$this->assertTrue(
+			$rule->test($xml->field[0], ''),
+			'Line:' . __LINE__ . ' The non required field should pass with empty value.'
 		);
 
-		$this->markTestIncomplete('More tests required');
-
-		/*
-		 TODO: Need to test the "field" attribute which adds to the unique test where clause.
-		 TODO: Database error is prevents the following tests from working properly.
-		*/
-		$this->assertThat(
-			$rule->test($xml->field[1], 'me@example.com'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The unique rule should pass and return true.'
+		$this->assertTrue(
+			$rule->test($xml->field[0], 'me@example.com'),
+			'Line:' . __LINE__ . ' The basic rule should pass and return true.'
 		);
 	}
 
@@ -102,19 +88,19 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $emailAddress    Email to be tested
 	 * @param   boolean  $expectedResult  Result of test
 	 *
-	 * @dataProvider emailData1
-	 *
 	 * @return void
 	 *
+	 * @covers ::test
+	 * @dataProvider emailData1
 	 * @since 11.1
 	 */
 	public function testEmailData($emailAddress, $expectedResult)
 	{
 		$rule = new RuleEmail;
 		$xml = simplexml_load_string('<form><field name="email1" /></form>');
-		$this->assertThat(
+		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
-			$this->equalTo($expectedResult),
+			$expectedResult,
 			$emailAddress . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
 		);
 	}
@@ -130,6 +116,8 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	{
 		return array(
 			array('test@example.com', true),
+			array('test@example.com,badaddress.com', false),
+			array('test@example.com,badaddress.com,test2@example.com,', false),
 			array('test@example.com,test2@example.com,test3@localhost', true),
 		);
 	}
@@ -140,19 +128,19 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $emailAddress    Email to be tested
 	 * @param   boolean  $expectedResult  Result of test
 	 *
-	 * @dataProvider emailData2
-	 *
 	 * @return void
 	 *
+	 * @covers ::test
+	 * @dataProvider emailData2
 	 * @since 12.3
 	 */
 	public function testEmailData2($emailAddress, $expectedResult)
 	{
 		$rule = new RuleEmail;
 		$xml = simplexml_load_string('<form><field name="email1" multiple="multiple" /></form>');
-		$this->assertThat(
+		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
-			$this->equalTo($expectedResult),
+			$expectedResult,
 			$emailAddress . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
 		);
 	}
@@ -181,20 +169,21 @@ class JFormRuleEmailTest extends \PHPUnit_Framework_TestCase
 	 * @param   string   $emailAddress    Email to be tested
 	 * @param   boolean  $expectedResult  Result of test
 	 *
-	 * @dataProvider emailData3
-	 *
 	 * @return void
 	 *
+	 * @covers ::test
+	 * @dataProvider emailData3
 	 * @since 12.3
 	 */
 	public function testEmailData3($emailAddress, $expectedResult)
 	{
 		$rule = new RuleEmail;
 		$xml = simplexml_load_string('<form><field name="email1" tld="tld" /></form>');
-		$this->assertThat(
+		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
-			$this->equalTo($expectedResult),
-			$emailAddress . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
+			$expectedResult,
+			'Line:' . __LINE__ . ' ' . $emailAddress . ' should have returned '
+				. ($expectedResult ? 'true' : 'false') . ' but did not.'
 		);
 	}
 }

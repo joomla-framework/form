@@ -7,60 +7,44 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_ImageList;
+use Joomla\Form\Field\ImageListField;
+use SimpleXmlElement;
 
 /**
  * Test class for JFormFieldImageList.
  *
+ * @coversDefaultClass Joomla\Form\Field\ImageListField
  * @since  1.0
  */
 class JFormFieldImageListTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependencies for the test.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
-	}
-
-	/**
 	 * Test the getInput method.
 	 *
 	 * @return  void
 	 *
+	 * @covers  ::getOptions
 	 * @since   1.0
 	 */
-	public function testGetInput()
+	public function testGetOptions()
 	{
-		$form = new JFormInspector('form1');
+		$xml = '<field name="imagelist" type="imagelist" />';
 
-		$this->assertThat(
-			$form->load('<form><field name="imagelist" type="imagelist" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
+		$field = new ImageListField;
 
-		$field = new Field_ImageList($form);
+		$xml = new SimpleXmlElement($xml);
 
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$this->assertTrue(
+			$field->setup($xml, 'setupValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
-		);
+		TestHelper::invoke($field, 'getOptions');
 
-		// TODO: Should check all the attributes have come in properly.
+		// Only check for new filters added, rest is tested in parent's test.
+		$filter = '\.png$|\.gif$|\.jpg$|\.bmp$|\.ico$|\.jpeg$|\.psd$|\.eps$';
+		$element = TestHelper::getValue($field, 'element');
+
+		$this->assertEquals($filter, $element['filter']);
 	}
 }

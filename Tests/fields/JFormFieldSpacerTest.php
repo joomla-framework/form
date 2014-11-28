@@ -6,168 +6,107 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Spacer;
+use Joomla\Form\Field\SpacerField;
+use SimpleXmlElement;
 
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\SpacerField
  * @since  1.0
  */
 class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependancies for the test.
-	 *
-	 * @return void
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
-	}
-
-	/**
 	 * Test the getInput method.
 	 *
 	 * @return void
+	 *
+	 * @covers  ::getInput
+	 * @since   __VERSION_NO__
 	 */
 	public function testGetInput()
 	{
-		$form = new JFormInspector('form1');
+		$field = new SpacerField;
 
-		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Spacer($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$xml = new SimpleXmlElement('<field name="spacer" type="spacer" />');
+		$this->assertTrue(
+			$field->setup($xml, 'aValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertRegExp(
+			'/[\s]+/',
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should return only and atleast one space character.'
+		);
+	}
+
+	/**
+	 * Test data for getLabel test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
+	public function dataGetLabel()
+	{
+		return array(
+			array(
+				'<field name="spacer" type="spacer" description="spacer" />',
+				'<span class=""><label id="spacer-lbl" class="hasTip" title="spacer::spacer">spacer</label></span>'
+			),
+			array(
+				'<field name="spacer" type="spacer" class="text" />',
+				'<span class="text"><label id="spacer-lbl" class="">spacer</label></span>'
+			),
+			array(
+				'<field name="spacer" type="spacer" class="text" label="MyLabel" />',
+				'<span class="text"><label id="spacer-lbl" class="">MyLabel</label></span>'
+			),
+			array(
+				'<field name="spacer" type="spacer" hr="true" />',
+				'<span class=""><hr class="" /></span>'
+			),
 		);
 	}
 
 	/**
 	 * Test the getLabel method.
 	 *
-	 * @return void
-	 */
-	public function testGetLabel()
-	{
-		$form = new JFormInspector('form1');
-
-		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" description="spacer" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Spacer($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$equals = '<span class="spacer"><span class="before"></span><span class="">' .
-			'<label id="spacer-lbl" class="hasTip" title="spacer::spacer">spacer</label></span>' .
-			'<span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$equals,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-
-		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" class="text" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Spacer($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$equals = '<span class="spacer"><span class="before"></span><span class="text">' .
-			'<label id="spacer-lbl" class="">spacer</label></span><span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$equals,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-
-		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" class="text" label="MyLabel" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Spacer($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$equals = '<span class="spacer"><span class="before"></span><span class="text">' .
-			'<label id="spacer-lbl" class="">MyLabel</label></span><span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$equals,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-
-		$this->assertThat(
-			$form->load('<form><field name="spacer" type="spacer" hr="true" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Spacer($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$expected = '<span class="spacer"><span class="before"></span><span class=""><hr class="" /></span>' .
-			'<span class="after"></span></span>';
-
-		$this->assertEquals(
-			$field->label,
-			$expected,
-			'Line:' . __LINE__ . ' The getLabel method should return something without error.'
-		);
-	}
-
-	/**
-	 * Test the getTitle method.
+	 * @param   string  $xml             @todo
+	 * @param   string  $expectedOutput  @todo
 	 *
 	 * @return void
+	 *
+	 * @covers        ::getTitle
+	 * @covers        ::getLabel
+	 * @dataProvider  dataGetLabel
+	 * @since         __VERSION_NO__
 	 */
-	public function testGetTitle()
+	public function testGetLabel($xml, $expectedOutput)
 	{
-		$this->testGetLabel();
+		$field = new SpacerField;
+
+		$xml = new SimpleXMLElement($xml);
+		$this->assertTrue(
+			$field->setup($xml, 'aValue'),
+			'Line:' . __LINE__ . ' The setup method should return true.'
+		);
+
+		$expectedOutput = '<span class="spacer"><span class="before"></span>'
+			. $expectedOutput . '<span class="after"></span></span>';
+
+		$this->assertEquals(
+			$expectedOutput,
+			$field->label,
+			'Line:' . __LINE__ . ' The getLabel method should match expected ouput.'
+		);
+
+		$this->assertEquals(
+			$expectedOutput,
+			$field->title,
+			'Line:' . __LINE__ . ' The getLabel method should match expected ouput.'
+		);
 	}
 }

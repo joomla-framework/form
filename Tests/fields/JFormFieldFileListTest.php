@@ -7,60 +7,105 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_FileList;
+use Joomla\Form\Field\FileListField;
+use SimpleXmlElement;
 
 /**
  * Test class for JFormFieldFileList.
  *
+ * @coversDefaultClass Joomla\Form\Field\FileListField
  * @since  1.0
  */
 class JFormFieldFileListTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependencies for the test.
+	 * Test data for getGroups test
 	 *
-	 * @return  void
+	 * @return  array
 	 *
-	 * @since   1.0
+	 * @since __VERSION_NO__
 	 */
-	protected function setUp()
+	public function dataGetOptions()
 	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
+		return array(
+			array(
+				array(),
+				array(
+					(object) array('value' => '-1', 'text' => 'JOPTION_DO_NOT_USE', 'disable' => false),
+					(object) array('value' => '', 'text' => 'JOPTION_USE_DEFAULT', 'disable' => false),
+					(object) array('value' => 'JFormField.xml', 'text' => 'JFormField.xml', 'disable' => false),
+				)
+			),
+			array(
+				array('hide_none' => 'true'),
+				array(
+					(object) array('value' => '', 'text' => 'JOPTION_USE_DEFAULT', 'disable' => false),
+					(object) array('value' => 'JFormField.xml', 'text' => 'JFormField.xml', 'disable' => false),
+				)
+			),
+			array(
+				array('hide_default' => 'true'),
+				array(
+					(object) array('value' => '-1', 'text' => 'JOPTION_DO_NOT_USE', 'disable' => false),
+					(object) array('value' => 'JFormField.xml', 'text' => 'JFormField.xml', 'disable' => false),
+				)
+			),
+			array(
+				array(
+					'hide_default' => 'true',
+					'hide_none' => 'true',
+					'stripext' => 'true',
+					'exclude' => 'foobar'
+				),
+				array(
+					(object) array('value' => 'JFormField', 'text' => 'JFormField', 'disable' => false),
+				)
+			),
+			array(
+				array('exclude' => 'JFormField.xml'),
+				array(
+					(object) array('value' => '-1', 'text' => 'JOPTION_DO_NOT_USE', 'disable' => false),
+					(object) array('value' => '', 'text' => 'JOPTION_USE_DEFAULT', 'disable' => false),
+				)
+			),
+		);
 	}
 
 	/**
 	 * Test the getInput method.
 	 *
+	 * @param   array  $inputs    Inputs to set the state
+	 * @param   array  $expected  Expected file list
+	 *
 	 * @return  void
 	 *
-	 * @since   1.0
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
-	public function testGetInput()
+	public function testGetOptions($inputs, $expected)
 	{
-		$form = new JFormInspector('form1');
+		$xml = '<field name="filelist" type="filelist"';
+		$inputs['directory'] = __DIR__ . "/testfiles";
 
-		$this->assertThat(
-			$form->load('<form><field name="filelist" type="filelist" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
+		foreach ($inputs as $attr => $value)
+		{
+			$xml .= " $attr=\"$value\"";
+		}
 
-		$field = new Field_FileList($form);
+		$xml .= ' />';
 
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$field = new FileListField;
+
+		$xml = new SimpleXmlElement($xml);
+
+		$this->assertTrue(
+			$field->setup($xml, 'setupValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
-		);
+		$options = TestHelper::invoke($field, 'getOptions');
 
-		// TODO: Should check all the attributes have come in properly.
+		$this->assertEquals($expected, $options);
 	}
 }

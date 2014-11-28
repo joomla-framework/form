@@ -7,80 +7,89 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_DatabaseConnection;
+use Joomla\Form\Field\DatabaseConnectionField;
+use Joomla\Database\DatabaseDriver;
+use SimpleXMLElement;
 
 /**
  * Test class for JFormFieldDatabaseConnection.
  *
+ * @coversDefaultClass Joomla\Form\Field\DatabaseConnectionField
  * @since  1.0
  */
 class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependencies for the test.
+	 * Test data for getOptions test
 	 *
-	 * @return  void
+	 * @return  array
 	 *
-	 * @since   1.0
+	 * @since __VERSION_NO__
 	 */
-	protected function setUp()
+	public function dataGetOptions()
 	{
-		parent::setUp();
+		$conn = DatabaseDriver::getConnectors();
+		$available = array_map('ucfirst', $conn);
 
-		include_once dirname(__DIR__) . '/inspectors.php';
+		$expected = array();
+
+		foreach ($available as $value)
+		{
+			$expected[lcfirst($value)] = $value;
+		}
+
+		return array(
+			array(
+				array("mysqli"),
+				$available,
+				array("mysqli" => "Mysqli")
+			),
+			array(
+				array(),
+				$available,
+				$expected,
+			),
+
+			// Todo : create mock of static function JDatabaseDriver::getConnectors.
+
+			/*array(
+				array("mysqli"),
+				array(),
+				array('' => "JNONE")
+			),*/
+		);
 	}
 
 	/**
-	 * Test the getInput method.
+	 * Test the getOptions method.
+	 *
+	 * @param   string  $supported        @todo
+	 * @param   string  $available        @todo
+	 * @param   string  $expectedOptions  @todo
 	 *
 	 * @return  void
 	 *
-	 * @since   1.0
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
-	public function testGetInput()
+	public function testGetOptions($supported, $available, $expectedOptions)
 	{
-		$form = new JFormInspector('form1');
+		$xml = '<field name="databaseconnection" type="databaseconnection" '
+			. ' supported="' . implode(",", $supported) . '" />';
+		$element = new SimpleXmlElement($xml);
 
-		$this->assertThat(
-			$form->load('<form><field name="databaseconnection" type="databaseconnection" supported="mysqli" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
+		$field = new DatabaseConnectionField;
 
-		$field = new Field_DatabaseConnection($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$this->assertTrue(
+			$field->setup($element, 'aValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error; in this case, a "Mysqli" option.'
+		$this->assertEquals(
+			$expectedOptions,
+			TestHelper::invoke($field, 'getOptions'),
+			'Line:' . __LINE__ . ' The getOptions method should return correct options.'
 		);
-
-		$this->assertThat(
-			$form->load('<form><field name="databaseconnection" type="databaseconnection" supported="non-existing" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_DatabaseConnection($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The setup method should return true.'
-		);
-
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error; in this case, a "None" option.'
-		);
-
-		// TODO: Should check all the attributes have come in properly.
 	}
 }

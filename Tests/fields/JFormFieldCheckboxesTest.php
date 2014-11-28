@@ -7,393 +7,219 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Checkboxes;
+use Joomla\Form\Field\CheckboxesField;
+use SimpleXmlElement;
 
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\CheckboxesField
  * @since  1.0
  */
 class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependencies for the test.
+	 * Test data for getInput test
 	 *
-	 * @since   1.0
+	 * @return  array
 	 *
-	 * @return  void
+	 * @since __VERSION_NO__
 	 */
-	protected function setUp()
+	public function dataGetInput()
 	{
-	}
-
-	/**
-	 * Test the getInput method with no value and no checked attribute.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	public function testGetInputNoValueNoChecked()
-	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
-
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
-
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with no value, no checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-
-		$expected = '<fieldset id="myTestId" class="checkboxes"><ul>' .
-			'<li><input type="checkbox" id="myTestId0" name="myTestName" value="red"/><label for="myTestId0">red</label></li>' .
-			'<li><input type="checkbox" id="myTestId1" name="myTestName" value="blue"/>' .
-			'<label for="myTestId1">blue</label></li></ul></fieldset>';
-
-		$this->assertEquals(
-			$expected,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with no value and no checked values did not produce the right html'
+		return array(
+			array(
+				'<field name="myName" id="myId" type="checkboxes" class="foo bar">'
+					. '<option value="0">No</option>'
+					. '<option value="1">Yes</option>'
+				. '</field>',
+				null,
+				array(
+					'tag' => 'fieldset',
+					'attributes' => array(
+						'id' => 'myId',
+						'class' => 'checkboxes foo bar'
+					)
+				)
+			),
+			array(
+				'<field name="myName" id="myId" type="checkboxes">'
+					. '<option value="0">No</option>'
+					. '<option value="aValue">Yes</option>'
+				. '</field>',
+				'aValue',
+				array(
+					'tag' => 'li',
+					'child' => array(
+						'tag' => 'input',
+						'attributes' => array(
+							'type' => 'checkbox',
+							'id' => 'myId1',
+							'name' => 'myName[]',
+							'checked' => 'checked'
+						)
+					)
+				)
+			),
+			array(
+				'<field name="myName" id="myId" type="radio" class="foo bar">'
+					. '<option value="0" class="one two">No</option>'
+					. '<option value="1">Yes</option>'
+				. '</field>',
+				null,
+				array(
+					'tag' => 'li',
+					'child' => array(
+						'tag' => 'label',
+						'attributes' => array(
+							'for' => 'myId0',
+							'class' => 'one two'
+						)
+					)
+				)
+			),
+			array(
+				'<field name="myName" id="myId" type="checkboxes" checked="0">'
+					. '<option value="0" disabled="true" class="one two">No</option>'
+					. '<option value="1">Yes</option>'
+				. '</field>',
+				null,
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId0',
+						'name' => 'myName[]',
+						'class' => 'one two',
+						'value' => '0',
+						'disabled' => 'disabled',
+						'checked' => 'checked'
+					),
+					'parent' => array('tag' => 'li')
+				)
+			)
 		);
 	}
 
 	/**
-	 * Test the getInput method with one value selected and no checked attribute.
+	 * Test the getInput method.
 	 *
-	 * @since   1.0
+	 * @param   string  $xml              @todo
+	 * @param   string  $value            @todo
+	 * @param   string  $expectedTagAttr  @todo
 	 *
-	 * @return  void
+	 * @return void
+	 *
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         __VERSION_NO__
 	 */
-	public function testGetInputValueNoChecked()
+	public function testGetInput($xml, $value, $expectedTagAttr)
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
+		$field = new CheckboxesField;
 
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
+		$xml = new SimpleXMLElement($xml);
+		$this->assertTrue(
+			$field->setup($xml, $value),
+			'Line:' . __LINE__ . ' The setup method should return true.'
+		);
 
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with one value checked, no checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'value', 'red');
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-
-		$expected = '<fieldset id="myTestId" class="checkboxes"><ul>' .
-			'<li><input type="checkbox" id="myTestId0" name="myTestName" value="red" checked="checked"/>' .
-			'<label for="myTestId0">red</label></li>' .
-			'<li><input type="checkbox" id="myTestId1" name="myTestName" value="blue"/><label for="myTestId1">blue</label>' .
-			'</li></ul></fieldset>';
-
-		$this->assertEquals(
-			$expected,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with one value did not produce the right html'
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
 	}
 
 	/**
-	 * Test the getInput method with one value that is an array and no checked attribute.
+	 * Test data for getOptions test
 	 *
-	 * @since   1.0
-	 *
-	 * @return  void
+	 * @return  array
 	 */
-	public function testGetInputValueArrayNoChecked()
+	public function dataGetOptions()
 	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
-
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
-
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with one value checked, no checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		$valuearray = array('red');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'value', $valuearray);
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-
-		$fieldsetString = '<fieldset id="myTestId" class="checkboxes"><ul>' .
-			'<li><input type="checkbox" id="myTestId0" name="myTestName" value="red" checked="checked"/><label for="myTestId0">red</label></li>' .
-			'<li><input type="checkbox" id="myTestId1" name="myTestName" value="blue"/><label for="myTestId1">blue</label></li></ul></fieldset>';
-
-		$this->assertEquals(
-			$fieldsetString,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with one value did not produce the right html'
-		);
-	}
-
-	/**
-	 * Test the getInput method  with no value and one value in checked.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	public function testGetInputNoValueOneChecked()
-	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
-
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
-
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with nothing checked, one value in checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes" checked="blue">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-
-		$expected = '<fieldset id="myTestId" class="checkboxes"><ul>' .
-			'<li><input type="checkbox" id="myTestId0" name="myTestName" value="red"/><label for="myTestId0">red</label></li>' .
-			'<li><input type="checkbox" id="myTestId1" name="myTestName" value="blue" checked="checked"/>' .
-			'<label for="myTestId1">blue</label></li></ul></fieldset>';
-
-		$this->assertEquals(
-			$expected,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with no values and one value in the checked element did not produce the right html'
-		);
-	}
-
-	/**
-	 * Test the getInput method with no value and two values in the checked element.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	public function testGetInputNoValueTwoChecked()
-	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
-
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
-
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with nothing checked, two values in checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes" checked="red,blue">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-		TestHelper::setValue($formFieldCheckboxes, 'value', '""');
-
-		$expected = '<fieldset id="myTestId" class="checkboxes"><ul>' .
-			'<li><input type="checkbox" id="myTestId0" name="myTestName" value="red"/><label for="myTestId0">red</label></li>' .
-			'<li><input type="checkbox" id="myTestId1" name="myTestName" value="blue"/><label for="myTestId1">blue</label>' .
-			'</li></ul></fieldset>';
-
-		$this->assertEquals(
-			$expected,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with no values and two items in the checked element did not produce the right html'
-		);
-	}
-
-	/**
-	 * Test the getInput method with one value and a different checked value.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	public function testGetInputValueChecked()
-	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
-
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
-
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with one item checked, a different value in checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes" checked="blue">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'value', 'red');
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-
-		$expected = '<fieldset id="myTestId" class="checkboxes"><ul><li>' .
-			'<input type="checkbox" id="myTestId0" name="myTestName" value="red" checked="checked"/>' .
-			'<label for="myTestId0">red</label></li><li><input type="checkbox" id="myTestId1" name="myTestName" value="blue"/>' .
-			'<label for="myTestId1">blue</label></li></ul></fieldset>';
-
-		$this->assertEquals(
-			$expected,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with one value and a different value in the checked element did not produce the right html'
-		);
-	}
-
-	/**
-	 * Test the getInput method with multiple values, no checked.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	public function testGetInputValuesNoChecked()
-	{
-		$formFieldCheckboxes = $this->getMock('Joomla\\Form\\Field_Checkboxes', array('getOptions'));
-
-		$option1 = new \stdClass;
-		$option1->value = 'red';
-		$option1->text = 'red';
-
-		$option2 = new \stdClass;
-		$option2->value = 'blue';
-		$option2->text = 'blue';
-
-		$optionsReturn = array($option1, $option2);
-		$formFieldCheckboxes->expects($this->any())
-			->method('getOptions')
-			->will($this->returnValue($optionsReturn));
-
-		// Test with two values checked, no checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkboxes">
-			<option value="red">red</option>
-			<option value="blue">blue</option>
-			</field>');
-		TestHelper::setValue($formFieldCheckboxes, 'element', $element);
-		TestHelper::setValue($formFieldCheckboxes, 'id', 'myTestId');
-		TestHelper::setValue($formFieldCheckboxes, 'value', 'yellow,green');
-		TestHelper::setValue($formFieldCheckboxes, 'name', 'myTestName');
-
-		$expected = '<fieldset id="myTestId" class="checkboxes"><ul><li>' .
-			'<input type="checkbox" id="myTestId0" name="myTestName" value="red"/><label for="myTestId0">red</label></li><li>' .
-			'<input type="checkbox" id="myTestId1" name="myTestName" value="blue"/><label for="myTestId1">blue</label></li></ul></fieldset>';
-
-		$this->assertEquals(
-			$expected,
-			TestHelper::invoke($formFieldCheckboxes, 'getInput'),
-			'The field with two values did not produce the right html'
-		);
+		return array(
+			array('<option value="0" onclick="foobar();">No</option>'
+				. '<item value="1">Yes</item>',
+					array(
+						// Format presentInArray#optionNumber => optionArray
+						'1#0' => array(
+							'value' => '0',
+							'text' => 'No',
+							'disable' => false,
+							'class' => '',
+							'onclick' => 'foobar();'
+						),
+						'0#1' => array(
+							'value' => '1',
+							'text' => 'Yes',
+							'disable' => false,
+							'class' => '',
+							'onclick' => ''
+						),
+					),
+				),
+			array('<option value="oof" disabled="true">Foo</option>'
+				. '<option value="rab" class="lorem">Bar</option>',
+					array(
+						'1#0' => array(
+							'value' => 'oof',
+							'text' => 'Foo',
+							'disable' => true,
+							'class' => '',
+							'onclick' => ''
+						),
+						'1#1' => array(
+							'value' => 'rab',
+							'text' => 'Bar',
+							'disable' => false,
+							'class' => 'lorem',
+							'onclick' => ''
+						),
+					),
+				),
+			);
 	}
 
 	/**
 	 * Test the getOptions method.
 	 *
-	 * @since   1.0
+	 * @param   string  $optionTag  @todo
+	 * @param   string  $expected   @todo
 	 *
 	 * @return  void
+	 *
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
-	public function testGetOptions()
+	public function testGetOptions($optionTag, $expected)
 	{
-		$formFieldCheckboxes = new Field_Checkboxes;
+		$field = new CheckboxesField;
 
-		$option1 = new \stdClass;
-		$option1->value = 'yellow';
-		$option1->text = 'yellow';
-		$option1->disable = false;
-		$option1->class = '';
-		$option1->onclick = '';
+		$fieldStartTag = '<field name="myName" type="checkboxes">';
+		$fieldEndTag = '</field>';
 
-		$option2 = new \stdClass;
-		$option2->value = 'green';
-		$option2->text = 'green';
-		$option2->disable = false;
-		$option2->class = '';
-		$option2->onclick = '';
-
-		$optionsExpected = array($option1, $option2);
-
-		// Test with two values checked, no checked element
-		TestHelper::setValue(
-			$formFieldCheckboxes, 'element', simplexml_load_string(
-			'<field name="color" type="checkboxes">
-			<option value="yellow">yellow</option>
-			<option value="green">green</option>
-			</field>')
+		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
+		$this->assertThat(
+			$field->setup($xml, 'value'),
+			$this->isTrue(),
+			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertEquals(
-			$optionsExpected,
-			TestHelper::invoke($formFieldCheckboxes, 'getOptions'),
-			'The field with two values did not produce the right options'
-		);
+		$options = TestHelper::invoke($field, 'getOptions');
+
+		foreach ($expected as $inOrNot => $expectedOption)
+		{
+			$expected = $inOrNot[0] == '1' ? true : false;
+			$i = substr($inOrNot, 2);
+
+			$this->assertEquals(
+				in_array((object) $expectedOption, $options),
+				$expected,
+				'Line:' . __LINE__ . ' The getOption method should compute option #'
+				. $i . ' correctly.'
+			);
+		}
 	}
 }

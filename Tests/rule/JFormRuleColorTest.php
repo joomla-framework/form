@@ -6,99 +6,66 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Rule\Color as RuleColor;
+use SimpleXmlElement;
 
 /**
- * Test class for JForm.
+ * Test class for Joolma Framework Form rule Color.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Color
  * @since  1.0
  */
 class JFormRuleColorTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * set up for testing
-	 *
-	 * @return void
-	 */
-	public function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Tear down test
-	 *
-	 * @return void
-	 */
-	protected function tearDown()
-	{
-	}
-
-	/**
-	 * Test the Joomla\Form\Rule\Color::test method.
-	 *
-	 * @return void
-	 */
-	public function testColor()
-	{
-		$rule = new RuleColor;
-		$xml = simplexml_load_string('<form><field name="color" /></form>');
-
-		// Test fail conditions.
-		$this->assertThat(
-			$rule->test($xml->field[0], 'bogus'),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' The rule should fail and return false.'
-		);
-
-		// Test pass conditions.
-		$this->assertThat(
-			$rule->test($xml->field[0], '#000000'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The basic rule should pass and return true.'
-		);
-	}
-
-	/**
-	 * Test...
+	 * Test data for testing of Joomla\Form\Rule\Color::test method.
 	 *
 	 * @return array
+	 *
+	 * @since __VERSION_NO__
 	 */
-	public function colorData()
+	public function dataColor()
 	{
 		return array(
-			array('#000000', true),
+			// Test fail conditions.
 			array('#', false),
-			array('#000', true),
-			array('#FFFFFF', true),
-			array('#EEE', true),
-			array('#A0A0A0', true),
-			array('#GGGGGG', false),
-			array('FFFFFF', false),
 			array('#GGG', false),
+			array('#GGGGGG', false),
+			array('bogus', false),
+			array('FFFFFF', false),
+			array('#FFFFFFF', false),
+
+			// Test pass conditions.
+			array('#000', true),
+			array('#000000', true),
+			array('#A0A0A0', true),
+			array('#EEE', true),
+			array('#FFFFFF', true),
 			array('', true)
 		);
 	}
 
 	/**
-	 * Test...
+	 * Test the Joomla\Form\Rule\Color::test method.
 	 *
-	 * @param   string  $color           @todo
-	 * @param   string  $expectedResult  @todo
+	 * @param   string   $color           @todo
+	 * @param   boolean  $expectedOutput  @todo
 	 *
-	 * @dataProvider colorData
+	 * @return       void
 	 *
-	 * @return void
+	 * @covers        ::test
+	 * @dataProvider  dataColor
+	 * @since         __VERSION_NO__
 	 */
-	public function testColorData($color, $expectedResult)
+	public function testColor($color, $expectedOutput)
 	{
 		$rule = new RuleColor;
-		$xml = simplexml_load_string('<form><field name="color1" /></form>');
+		$xml = new SimpleXmlElement('<field name="color" />');
 		$this->assertThat(
-			$rule->test($xml->field[0], $color),
-			$this->equalTo($expectedResult),
-			$color . ' should have returned ' . ($expectedResult ? 'true' : 'false') . ' but did not'
+			$rule->test($xml, $color),
+			$this->equalTo($expectedOutput),
+			'Line:' . __LINE__ . ' ' . $color . ' should have returned '
+				. ($expectedOutput ? 'true' : 'false') . ' but did not.'
 		);
 	}
 }

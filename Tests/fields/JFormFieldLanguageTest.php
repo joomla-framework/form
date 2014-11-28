@@ -7,11 +7,14 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestDatabase;
-use Joomla\Form\Field_Language;
+use Joomla\Form\Field\LanguageField;
+use Joomla\Test\TestHelper;
+use SimpleXmlElement;
 
 /**
  * Test class for JFormFieldLanguage.
  *
+ * @coversDefaultClass Joomla\Form\Field\LanguageField
  * @since  1.0
  */
 class JFormFieldLanguageTest extends TestDatabase
@@ -43,63 +46,123 @@ class JFormFieldLanguageTest extends TestDatabase
 	}
 
 	/**
-	 * Test the getInput method.
+	 * Test data for getOptions test
+	 *
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
+	 */
+	public function dataGetOptions()
+	{
+		return array(
+			array('<option value="0" onclick="foobar();">No</option>'
+				. '<item value="1">Yes</item>',
+					array(
+						// Format presentInArray#optionNumber => optionArray
+						'1#0' => array(
+							'value' => '0',
+							'text' => 'No',
+							'disable' => false,
+							'class' => '',
+							'onclick' => 'foobar();'
+						),
+						'0#1' => array(
+							'value' => '1',
+							'text' => 'Yes',
+							'disable' => false,
+							'class' => '',
+							'onclick' => ''
+						),
+						'1#2' => array(
+							'value' => 'en-GB',
+							'text' => 'English (United Kingdom)',
+						),
+					),
+				),
+			array('<option value="oof" disabled="true">Foo</option>'
+				. '<option value="rab" class="lorem">Bar</option>',
+					array(
+						'1#0' => array(
+							'value' => 'oof',
+							'text' => 'Foo',
+							'disable' => true,
+							'class' => '',
+							'onclick' => ''
+						),
+						'1#1' => array(
+							'value' => 'rab',
+							'text' => 'Bar',
+							'disable' => false,
+							'class' => 'lorem',
+							'onclick' => ''
+						),
+					),
+				),
+			);
+	}
+
+	/**
+	 * Test the getOptions method.
+	 *
+	 * @param   string  $optionTag  @todo
+	 * @param   string  $expected   @todo
 	 *
 	 * @return  void
 	 *
-	 * @since   1.0
+	 * @covers        ::getOptions
+	 * @dataProvider  dataGetOptions
+	 * @since         1.0
 	 */
-	public function testGetInput()
+	public function testGetOptions($optionTag, $expected)
 	{
-		$form = new JFormInspector('form1');
+		$field = new LanguageField;
 
-		$this->assertThat(
-			$form->load('<form><field name="language" type="language" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
+		$fieldStartTag = '<field name="myName" type="language" base_path="'
+		. __DIR__ . '/data" >';
+		$fieldEndTag = '</field>';
 
-		$field = new Field_Language($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$xml = new SimpleXmlElement($fieldStartTag . $optionTag . $fieldEndTag);
+		$this->assertTrue(
+			$field->setup($xml, 'value'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->markTestIncomplete('Problems encountered in next assertion');
+		$options = TestHelper::invoke($field, 'getOptions');
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
-		);
+		foreach ($expected as $inOrNot => $expectedOption)
+		{
+			$expected = $inOrNot[0] == '1' ? true : false;
+			$i = substr($inOrNot, 2);
 
-		// TODO: Should check all the attributes have come in properly.
+			$this->assertEquals(
+				in_array((object) $expectedOption, $options),
+				$expected,
+				'Line:' . __LINE__ . ' The getOption method should compute option #'
+				. $i . ' correctly'
+			);
+		}
 	}
 
 	/**
 	 * Test...
 	 *
 	 * @return void
+	 *
+	 * @covers ::createLanguageList
+	 * @since   __VERSION_NO__
 	 */
 	public function testCreateLanguageList()
 	{
-		$field = new Field_Language(new JFormInspector('form1'));
-		$reflection = new \ReflectionClass($field);
-		$method = $reflection->getMethod('createLanguageList');
-		$method->setAccessible(true);
-
-		$list = $method->invokeArgs(
+		$field = new LanguageField;
+		$list = TestHelper::invoke(
 			$field,
-			array(
-				'en-GB',
-				__DIR__ . '/data'
-			)
+			'createLanguageList',
+			'en-GB',
+			__DIR__ . '/data'
 		);
 
 		$listCompareEqual = array(
-			array(
+			(object) array(
 				'text' => 'English (United Kingdom)',
 				'value' => 'en-GB',
 				'selected' => 'selected="selected"'

@@ -6,57 +6,83 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Text;
+use Joomla\Form\Field\TextField;
+use SimpleXMLElement;
 
 /**
  * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\TextField
  * @since  1.0
  */
 class JFormFieldTextTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependancies for the test.
+	 * Test data for getInput test
 	 *
-	 * @return void
+	 * @return  array
+	 *
+	 * @since __VERSION_NO__
 	 */
-	protected function setUp()
+	public function dataGetInput()
 	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
+		return array(
+			array(
+				'<field type="text" id="myId" name="myName" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'text',
+						'id' => 'myId',
+						'name' => 'myName',
+					)
+				),
+			),
+			array(
+				'<field type="text" id="myId" name="myName" size="0" maxlength="0" class="foo bar" readonly="true" disabled="true" onchange="barFoo();" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'text',
+						'id' => 'myId',
+						'size' => '0',
+						'maxlength' => '0',
+						'class' => 'foo bar',
+						'readonly' => 'readonly',
+						'disabled' => 'disabled',
+						'onchange' => 'barFoo();',
+					)
+				),
+			),
+		);
 	}
 
 	/**
 	 * Test the getInput method.
 	 *
+	 * @param   string  $xml              @todo
+	 * @param   string  $expectedTagAttr  @todo
+	 *
 	 * @return void
+	 *
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         __VERSION_NO__
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
-		$form = new JFormInspector('form1');
+		$field = new TextField;
 
-		$this->assertThat(
-			$form->load('<form><field name="text" type="text" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Text($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$xml = new SimpleXMLElement($xml);
+		$this->assertTrue(
+			$field->setup($xml, 'aValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
-
-		// TODO: Should check all the attributes have come in properly.
 	}
 }

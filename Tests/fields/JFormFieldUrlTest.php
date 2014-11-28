@@ -6,61 +6,83 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Url;
+use Joomla\Form\Field\UrlField;
+use SimpleXMLElement;
 
 /**
- * Test class for JFormFieldUrl.
+ * Test class for JFormFieldTel.
  *
+ * @coversDefaultClass Joomla\Form\Field\UrlField
  * @since  1.0
  */
 class JFormFieldUrlTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependencies for the test.
+	 * Test data for getInput test
 	 *
-	 * @return  void
+	 * @return  array
 	 *
-	 * @since   1.0
+	 * @since  __VERSION_NO__
 	 */
-	protected function setUp()
+	public function dataGetInput()
 	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
+		return array(
+			array(
+				'<field type="url" id="myId" name="myName" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'text',
+						'id' => 'myId',
+						'name' => 'myName',
+					)
+				),
+			),
+			array(
+				'<field type="url" id="myId" name="myName" size="0" maxlength="0" class="foo bar" readonly="true" disabled="true" onchange="barFoo();" />',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'text',
+						'id' => 'myId',
+						'size' => '0',
+						'maxlength' => '0',
+						'class' => 'foo bar',
+						'readonly' => 'readonly',
+						'disabled' => 'disabled',
+						'onchange' => 'barFoo();',
+					)
+				),
+			),
+		);
 	}
 
 	/**
 	 * Test the getInput method.
 	 *
-	 * @return  void
+	 * @param   string  $xml              @todo
+	 * @param   string  $expectedTagAttr  @todo
 	 *
-	 * @since   1.0
+	 * @return void
+	 *
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         __VERSION_NO__
 	 */
-	public function testGetInput()
+	public function testGetInput($xml, $expectedTagAttr)
 	{
-		$form = new JFormInspector('form1');
+		$field = new UrlField;
 
-		$this->assertThat(
-			$form->load('<form><field name="url" type="url" /></form>'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' XML string should load successfully.'
-		);
-
-		$field = new Field_Url($form);
-
-		$this->assertThat(
-			$field->setup($form->getXml()->field, 'value'),
-			$this->isTrue(),
+		$xml = new SimpleXMLElement($xml);
+		$this->assertTrue(
+			$field->setup($xml, 'aValue'),
 			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
 
-		$this->assertThat(
-			strlen($field->input),
-			$this->greaterThan(0),
-			'Line:' . __LINE__ . ' The getInput method should return something without error.'
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
-
-		// TODO: Should check all the attributes have come in properly.
 	}
 }

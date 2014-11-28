@@ -6,130 +6,111 @@
 
 namespace Joomla\Form\Tests;
 
-use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Checkbox;
+use Joomla\Form\Field\CheckboxField;
+use SimpleXMLElement;
 
 /**
- * Test class for JFormFieldCheckbox.
+ * Test class for JForm.
  *
+ * @coversDefaultClass Joomla\Form\Field\CheckboxField
  * @since  1.0
  */
 class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up dependencies for the test.
+	 * Test data for getInput test
 	 *
-	 * @return  void
+	 * @return  array
 	 *
-	 * @since   1.0
+	 * @since __VERSION_NO__
 	 */
-	protected function setUp()
+	public function dataGetInput()
 	{
-		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
-	}
-
-	/**
-	 * Test the getInput method where there is no value from the element
-	 * and no checked attribute.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetInputNoValueNoChecked()
-	{
-		$formField = new Field_Checkbox;
-
-		// Test with no checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkbox" value="red" />');
-		TestHelper::setValue($formField, 'element', $element);
-		TestHelper::setValue($formField, 'id', 'myTestId');
-		TestHelper::setValue($formField, 'name', 'myTestName');
-
-		$this->assertEquals(
-			'<input type="checkbox" name="myTestName" id="myTestId" value="red" />',
-			TestHelper::invoke($formField, 'getInput'),
-			'The field with no value and no checked attribute did not produce the right html'
+		return array(
+			array(
+				'<field type="checkbox" id="myId" name="myName" />',
+				'',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId',
+						'name' => 'myName'
+					)
+				),
+			),
+			array(
+				'<field type="checkbox" id="myId" name="myName" checked="true" />',
+				'',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId',
+						'name' => 'myName',
+						'checked' => 'checked'
+					)
+				),
+			),
+			array(
+				'<field type="checkbox" id="myId" name="myName" />',
+				'0',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId',
+						'name' => 'myName',
+						'checked' => 'checked'
+					)
+				),
+			),
+			array(
+				'<field type="checkbox" id="myId" name="myName" value="aVal" class="foo bar" disabled="true" onclick="barFoo();" />',
+				'aValue',
+				array(
+					'tag' => 'input',
+					'attributes' => array(
+						'type' => 'checkbox',
+						'id' => 'myId',
+						'value' => 'aVal',
+						'class' => 'foo bar',
+						'disabled' => 'disabled',
+						'onclick' => 'barFoo();',
+						'checked' => 'checked'
+					)
+				),
+			),
 		);
 	}
 
 	/**
-	 * Test the getInput method where there is a value from the element
-	 * and no checked attribute.
+	 * Test the getInput method.
 	 *
-	 * @return  void
+	 * @param   string  $xml              @todo
+	 * @param   string  $value            @todo
+	 * @param   string  $expectedTagAttr  @todo
 	 *
-	 * @since   1.0
+	 * @return void
+	 *
+	 * @covers        ::getInput
+	 * @dataProvider  dataGetInput
+	 * @since         __VERSION_NO__
 	 */
-	public function testGetInputValueNoChecked()
+	public function testGetInput($xml, $value, $expectedTagAttr)
 	{
-		$formField = new Field_Checkbox;
+		$field = new CheckboxField;
 
-		// Test with no checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkbox" value="red" />');
-		TestHelper::setValue($formField, 'element', $element);
-		TestHelper::setValue($formField, 'id', 'myTestId');
-		TestHelper::setValue($formField, 'name', 'myTestName');
-		TestHelper::setValue($formField, 'value', 'red');
-
-		$this->assertEquals(
-			'<input type="checkbox" name="myTestName" id="myTestId" value="red" checked="checked" />',
-			TestHelper::invoke($formField, 'getInput'),
-			'The field with a value and no checked attribute did not produce the right html'
+		$xml = new SimpleXMLElement($xml);
+		$this->assertTrue(
+			$field->setup($xml, $value),
+			'Line:' . __LINE__ . ' The setup method should return true.'
 		);
-	}
 
-	/**
-	 * Test the getInput method where there is a checked attribute
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetInputNoValueChecked()
-	{
-		$formField = new Field_Checkbox;
-
-		// Test with checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkbox" value="red" checked="checked" />');
-		TestHelper::setValue($formField, 'element', $element);
-		TestHelper::setValue($formField, 'id', 'myTestId');
-		TestHelper::setValue($formField, 'name', 'myTestName');
-
-		$this->assertEquals(
-			'<input type="checkbox" name="myTestName" id="myTestId" value="red" checked="checked" />',
-			TestHelper::invoke($formField, 'getInput'),
-			'The field with no value and the checked attribute did not produce the right html'
-		);
-	}
-
-	/**
-	 * Test the getInput method where the field is disabled
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetInputDisabled()
-	{
-		$formField = new Field_Checkbox;
-
-		// Test with checked element
-		$element = simplexml_load_string(
-			'<field name="color" type="checkbox" value="red" disabled="true" />');
-		TestHelper::setValue($formField, 'element', $element);
-		TestHelper::setValue($formField, 'id', 'myTestId');
-		TestHelper::setValue($formField, 'name', 'myTestName');
-
-		$this->assertEquals(
-			'<input type="checkbox" name="myTestName" id="myTestId" value="red" disabled="disabled" />',
-			TestHelper::invoke($formField, 'getInput'),
-			'The field set to disabled did not produce the right html'
+		$this->assertTag(
+			$expectedTagAttr,
+			$field->input,
+			'Line:' . __LINE__ . ' The getInput method should compute and return attributes correctly.'
 		);
 	}
 }

@@ -8,92 +8,82 @@ namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
 use Joomla\Form\Rule\Boolean as RuleBoolean;
-
+use SimpleXmlElement;
 /**
- * Test class for JForm.
+ * Test class for Joolma Framework Form rule Boolean.
  *
+ * @coversDefaultClass Joomla\Form\Rule\Boolean
  * @since  1.0
  */
 class JFormRuleBooleanTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Test data for testing of Joomla\Form\Rule\Boolean::test method.
+	 *
+	 * @return array
+	 *
+	 * @since __VERSION_NO__
+	 */
+	public function dataBoolean()
+	{
+		return array(
+			// Test fail conditions.
+			array('bogus', false),
+			array('0_anything', false),
+			array('anything_1_anything', false),
+			array('anything_true_anything', false),
+			array('anything_false', false),
+
+			// Test pass conditions.
+			array(0, true),
+			array(1, true),
+			array('0', true),
+			array('1', true),
+			array('true', true),
+			array('false', true),
+			array('TRUE', true),
+			array('FALSE', true),
+		);
+	}
+
+	/**
 	 * Test the Joomla\Form\Rule\Boolean::test method.
 	 *
+	 * @param   string   $value           @todo
+	 * @param   boolean  $expectedOutput  @todo
+	 *
+	 * @dataProvider dataBoolean
+	 *
+	 * @covers ::test
 	 * @return void
 	 */
-	public function testBoolean()
+	public function testBoolean($value, $expectedOutput)
 	{
 		$rule = new RuleBoolean;
-		$xml = simplexml_load_string('<form><field name="foo" /></form>');
+		$xml = new SimpleXmlElement('<field name="foo" />');
 
-		// Test fail conditions.
-
-		$this->assertThat(
-			$rule->test($xml->field, 'bogus'),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' The rule should fail and return false.'
+		$this->assertEquals(
+			$rule->test($xml->field, $value),
+			$expectedOutput,
+			'Line:' . __LINE__ . ' The rule should pass and return '
+				. ($expectedOutput ? 'true' : 'false') . '.'
 		);
+	}
 
-		$this->assertThat(
-			$rule->test($xml->field, '0_anything'),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' The rule should fail and return false.'
-		);
+	/**
+	 * Test the Joomla\Form\Rule\Boolean::test method.
+	 *
+	 * @covers             Joomla\Form\Rule::test
+	 * @expectedException  UnexpectedValueException
+	 * @return void
+	 */
+	public function testRuleEmptyRegexException()
+	{
+		$rule = new RuleBoolean;
+		$xml = new SimpleXmlElement('<field name="foo" />');
 
-		$this->assertThat(
-			$rule->test($xml->field, 'anything_1_anything'),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' The rule should fail and return false.'
-		);
+		TestHelper::setValue($rule, 'regex', '');
 
-		$this->assertThat(
-			$rule->test($xml->field, 'anything_true_anything'),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' The rule should fail and return false.'
-		);
-
-		$this->assertThat(
-			$rule->test($xml->field, 'anything_false'),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' The rule should fail and return false.'
-		);
-
-		// Test pass conditions.
-
-		$this->assertThat(
-			$rule->test($xml->field, 0),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The rule should pass and return true.'
-		);
-
-		$this->assertThat(
-			$rule->test($xml->field, '0'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The rule should pass and return true.'
-		);
-
-		$this->assertThat(
-			$rule->test($xml->field, 1),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The rule should pass and return true.'
-		);
-
-		$this->assertThat(
-			$rule->test($xml->field, '1'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The rule should pass and return true.'
-		);
-
-		$this->assertThat(
-			$rule->test($xml->field, 'true'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The rule should pass and return true.'
-		);
-
-		$this->assertThat(
-			$rule->test($xml->field, 'false'),
-			$this->isTrue(),
-			'Line:' . __LINE__ . ' The rule should pass and return true.'
-		);
+		$rule->test($xml->field, 'true');
 	}
 }
