@@ -19,12 +19,19 @@
         "joomla/database": "Install joomla/database if you would like to use the DatabaseConnection field type."
     },
     "require-dev": {
-        "joomla/test": "~1.0"
+        "joomla/test": "~1.0",
+        "joomla/database": "~1.0",
+        "phpunit/phpunit": "~4.1.0",
+        "phpunit/dbunit": "~1.0"
     },
     "autoload": {
         "psr-4": {
-            "Joomla\\Form\\": "src/",
-            "Joomla\\Form\\Tests\\": "Tests/"
+            "Joomla\\Form\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joomla\\Form\\Tests\\": "Tests"
         }
     },
     "extra": {
