@@ -9,7 +9,7 @@ The Form Package provides an easy interface to create, display, and validate for
 To use the Form Package in your code include:
 
 ```php
-use namespace Joomla\Form\Form
+use Joomla\Form\Form;
 ```
 
 You will now be able to create form objects either programmatically or loading forms from an XML file.
@@ -90,7 +90,7 @@ If the Form is being used to display data you need to populate the form fields. 
 For example using the customer form defined above this can be filled with an array like such:
 
 ```php
-$customer = new array('first_name'=>'John','last_name'=>'Smith'...);
+$customer = new array('first_name'=>'John','last_name'=>'Smith', ...);
 $clientForm->bind($customer);
 ```
 
@@ -174,14 +174,14 @@ Example
 In file "CustomField.php" write
 
 ```php
-namespace Joomla\Form\Field
+namespace Joomla\Form\Field;
 
 class CustomField extends \Joomla\Form\Field
 {
 	// Override this function
 	public function getInput()
 	{
-		return 'field's html string.'
+		return 'field\'s html string.';
 	}
 }
 ```
@@ -200,14 +200,14 @@ Example
 In file "FooField.php" write
 
 ```php
-namespace Bar\Form\Field
+namespace Bar\Form\Field;
 
 class FooField extends \Joomla\Form\Field
 {
 	// Override this function
 	public function getInput()
 	{
-		return 'field's html string.'
+		return 'field\'s html string.';
 	}
 }
 ```
@@ -233,7 +233,7 @@ class FooField extends \Joomla\Form\Field
 	// Override this function
 	public function getInput()
 	{
-		return 'field's html string.'
+		return 'field\'s html string.'
 	}
 }
 ```
