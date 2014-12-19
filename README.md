@@ -226,7 +226,7 @@ Example
 In file "FooField.php" write
 
 ```php
-namespace Joomla\Form\Field\Bar
+namespace Joomla\Form\Field\Bar;
 
 class FooField extends \Joomla\Form\Field
 {
