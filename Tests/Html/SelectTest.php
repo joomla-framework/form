@@ -4,16 +4,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form\Tests;
+namespace Joomla\Form\Tests\Html;
 
 use Joomla\Form\Html\Select;
-use SimpleXMLElement;
 
 /**
- * Test class for JFormFieldTel.
+ * Test class for Joomla\Form\Html\Select.
  *
- * @coversDefaultClass Joomla\Form\Html\Select
- * @since  1.0
+ * @coversDefaultClass  Joomla\Form\Html\Select
  */
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,8 +19,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Generic list dataset
 	 *
 	 * @return  array
-	 *
-	 * @since   3.2
 	 */
 	public function dataGenericlist()
 	{
@@ -171,11 +167,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   mixed    $idtag      Value of the field id or null by default
 	 * @param   boolean  $translate  True to translate
 	 *
-	 * @return  void
-	 *
 	 * @covers        ::genericList
 	 * @dataProvider  dataGenericList
-	 * @since         3.2
 	 */
 	public function testGenericlist($expected, $data, $name, $attribs = null,
 		$optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
@@ -201,8 +194,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Grouped list dataset
 	 *
 	 * @return  array
-	 *
-	 * @since   3.2
 	 */
 	public function dataGroupedlist()
 	{
@@ -304,7 +295,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @covers        ::groupedlist
 	 * @dataProvider  dataGroupedlist
-	 * @since         3.2
 	 */
 	public function testGroupedlist($expected, $data, $name, $options = array())
 	{
@@ -328,8 +318,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Radio list dataset
 	 *
 	 * @return  array
-	 *
-	 * @since   3.2
 	 */
 	public function dataRadiolist()
 	{
@@ -472,11 +460,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   boolean  $idtag      Value of the field id or null by default
 	 * @param   boolean  $translate  True if options will be translated
 	 *
-	 * @return  void
-	 *
 	 * @covers ::radioList
 	 * @dataProvider  dataRadiolist
-	 * @since         3.2
 	 */
 	public function testRadiolist($expected, $data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
 		$translate = false)
@@ -507,8 +492,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Radio list dataset
 	 *
 	 * @return  array
-	 *
-	 * @since   3.2
 	 */
 	public function dataBooleanlist()
 	{
@@ -607,11 +590,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   string  $no        Language key for no
 	 * @param   string  $id        The id for the field
 	 *
-	 * @return  void
-	 *
 	 * @covers ::booleanList
 	 * @dataProvider  dataBooleanlist
-	 * @since         3.2
 	 */
 	public function testBooleanlist($expected, $name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
 	{
@@ -634,8 +614,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Radio list dataset
 	 *
 	 * @return  array
-	 *
-	 * @since   3.2
 	 */
 	public function dataIntegerlist()
 	{
@@ -742,11 +720,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   mixed    $selected  The key that is selected
 	 * @param   string   $format    The printf format to be applied to the number
 	 *
-	 * @return  void
-	 *
 	 * @covers ::integerList
 	 * @dataProvider  dataIntegerlist
-	 * @since         3.2
 	 */
 	public function testIntegerlist($expected, $start, $end, $inc, $name, $attribs = null, $selected = null, $format = '')
 	{
@@ -769,8 +744,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Test...
 	 *
 	 * @return  array
-	 *
-	 * @since   3.1
 	 */
 	public function dataOptions()
 	{
@@ -908,11 +881,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   mixed    $selected   The key that is selected (accepts an array or a string)
 	 * @param   boolean  $translate  Translate the option values.
 	 *
-	 * @return  void
-	 *
 	 * @covers ::options
 	 * @dataProvider  dataOptions
-	 * @since         3.1
 	 */
 	public function testOptions($expected, $arr, $optKey = 'value', $optText = 'text', $selected = null, $translate = false)
 	{
@@ -926,8 +896,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * Options dataset
 	 *
 	 * @return  array
-	 *
-	 * @since   3.1
 	 */
 	public function dataOption()
 	{
@@ -1029,11 +997,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *                              parameter is ignored if an options array is passed.
 	 * @param   boolean  $disable   Not used.
 	 *
-	 * @return  void
-	 *
 	 * @covers ::option
 	 * @dataProvider  dataOption
-	 * @since         3.2
 	 */
 	public function testOption($expected, $value, $text = '', $optKey = 'value',
 		$optText = 'text', $disable = false)
