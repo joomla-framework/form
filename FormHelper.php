@@ -61,6 +61,7 @@ class FormHelper
 	 * @return  mixed  Field object on success, false otherwise.
 	 *
 	 * @since   1.0
+	 * @deprecated  2.0  Field objects should be autoloaded
 	 */
 	public static function loadFieldType($type, $new = true)
 	{
@@ -76,6 +77,7 @@ class FormHelper
 	 * @return  mixed  Rule object on success, false otherwise.
 	 *
 	 * @since   1.0
+	 * @deprecated  2.0  Rule objects should be autoloaded
 	 */
 	public static function loadRuleType($type, $new = true)
 	{
@@ -94,6 +96,7 @@ class FormHelper
 	 * @return  mixed  Entity object on success, false otherwise.
 	 *
 	 * @since   1.0
+	 * @deprecated  2.0  Objects should be autoloaded
 	 */
 	protected static function loadType($entity, $type, $new = true)
 	{
@@ -192,6 +195,10 @@ class FormHelper
 			return $class;
 		}
 
+		/*
+		 * @deprecated 2.0 - Classes should be autoloaded, path lookups will no longer be supported.
+		 */
+
 		// Get the field search path array.
 		$paths = self::addPath($entity);
 
@@ -243,6 +250,7 @@ class FormHelper
 	 * @return  array  The list of paths that have been added.
 	 *
 	 * @since   1.0
+	 * @deprecated  2.0  Field objects should be autoloaded
 	 */
 	public static function addFieldPath($new = null)
 	{
@@ -271,6 +279,7 @@ class FormHelper
 	 * @return  array  The list of paths that have been added.
 	 *
 	 * @since   1.0
+	 * @deprecated  2.0  Rule objects should be autoloaded
 	 */
 	public static function addRulePath($new = null)
 	{
