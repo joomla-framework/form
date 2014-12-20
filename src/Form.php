@@ -470,7 +470,7 @@ class Form
 
 		return $fieldsets;
 	}
-	
+
 	/**
 	 * Method to set the form control. This string serves as a container for all form fields. For
 	 * example, if there is a field named 'foo' and a field named 'bar' and the form control is
@@ -485,7 +485,7 @@ class Form
 	 public function setFormControl($control)
 	 {
 	 	$this->options['control'] = (string) $control;
-	 	
+
 	 	return $this;
 	 }
 
@@ -1637,13 +1637,17 @@ class Form
 		$type = $element['type'] ? (string) $element['type'] : 'text';
 
 		// Load the Field object for the field.
-		$field = FormHelper::loadFieldType($type);
+		$field = FormHelper::loadFieldClass($type);
 
 		// If the object could not be loaded, get a text field object.
 		if ($field === false)
 		{
-			$field = FormHelper::loadFieldType('text');
+			$field = FormHelper::loadFieldClass('text');
 		}
+
+		// Instantiate the Field object
+		/** @var Field $field */
+		$field = new $field;
 
 		/*
 		 * Get the value for the form field if not set.
@@ -1703,17 +1707,6 @@ class Form
 			return false;
 		}
 
-		// Get any addfieldpath attributes from the form definition.
-		$paths = $this->xml->xpath('//*[@addfieldpath]/@addfieldpath');
-		$paths = array_map('strval', $paths ? $paths : array());
-
-		// Add the field paths.
-		foreach ($paths as $path)
-		{
-			$path = JPATH_ROOT . '/' . ltrim($path, '/\\');
-			FormHelper::addFieldPath($path);
-		}
-
 		// Get any addformpath attributes from the form definition.
 		$paths = $this->xml->xpath('//*[@addformpath]/@addformpath');
 		$paths = array_map('strval', $paths ? $paths : array());
@@ -1723,17 +1716,6 @@ class Form
 		{
 			$path = JPATH_ROOT . '/' . ltrim($path, '/\\');
 			FormHelper::addFormPath($path);
-		}
-
-		// Get any addrulepath attributes from the form definition.
-		$paths = $this->xml->xpath('//*[@addrulepath]/@addrulepath');
-		$paths = array_map('strval', $paths ? $paths : array());
-
-		// Add the rule paths.
-		foreach ($paths as $path)
-		{
-			$path = JPATH_ROOT . '/' . ltrim($path, '/\\');
-			FormHelper::addRulePath($path);
 		}
 
 		return true;
@@ -1785,13 +1767,17 @@ class Form
 		if ($type = (string) $element['validate'])
 		{
 			// Load the Rule object for the field.
-			$rule = FormHelper::loadRuleType($type);
+			$rule = FormHelper::loadRuleClass($type);
 
 			// If the object could not be loaded return an error message.
 			if ($rule === false)
 			{
 				throw new \UnexpectedValueException(sprintf('%s::validateField() rule `%s` missing.', get_class($this), $type));
 			}
+
+			// Instantiate the Rule object
+			/** @var Rule $rule */
+			$rule = new $rule;
 
 			// Run the field validation rule test.
 			$valid = $rule->test($element, $value, $group, $input, $this);

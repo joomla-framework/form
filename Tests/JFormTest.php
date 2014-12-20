@@ -2102,27 +2102,7 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$fieldPaths = FormHelper::addFieldPath();
 		$formPaths = FormHelper::addFormPath();
-		$rulePaths = FormHelper::addRulePath();
-
-		$this->assertContains(
-			dirname(__DIR__) . '/field1',
-			$fieldPaths,
-			'Line:' . __LINE__ . ' The field path from the XML file should be present.'
-		);
-
-		$this->assertContains(
-			dirname(__DIR__) . '/field2',
-			$fieldPaths,
-			'Line:' . __LINE__ . ' The field path from the XML file should be present.'
-		);
-
-		$this->assertContains(
-			dirname(__DIR__) . '/field3',
-			$fieldPaths,
-			'Line:' . __LINE__ . ' The field path from the XML file should be present.'
-		);
 
 		$this->assertContains(
 			dirname(__DIR__) . '/form1',
@@ -2140,24 +2120,6 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			dirname(__DIR__) . '/form3',
 			$formPaths,
 			'Line:' . __LINE__ . ' The form path from the XML file should be present.'
-		);
-
-		$this->assertContains(
-			dirname(__DIR__) . '/rule1',
-			$rulePaths,
-			'Line:' . __LINE__ . ' The rule path from the XML file should be present.'
-		);
-
-		$this->assertContains(
-			dirname(__DIR__) . '/rule2',
-			$rulePaths,
-			'Line:' . __LINE__ . ' The rule path from the XML file should be present.'
-		);
-
-		$this->assertContains(
-			dirname(__DIR__) . '/rule3',
-			$rulePaths,
-			'Line:' . __LINE__ . ' The rule path from the XML file should be present.'
 		);
 	}
 

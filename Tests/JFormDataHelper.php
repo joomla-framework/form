@@ -507,9 +507,9 @@ class JFormDataHelper
 </form>';
 
 	public static $syncPathsDocument = '<form>
-	<fields name="foo" addfieldpath="/field2" addformpath="form2" addrulepath="/rule2">
-		<fieldset name="bar" addfieldpath="/field3" addformpath="/form3" addrulepath="rule3">
-			<field name="hum" addfieldpath="field1" addformpath="/form1" addrulepath="/rule1" />
+	<fields name="foo" addformpath="form2">
+		<fieldset name="bar" addformpath="/form3">
+			<field name="hum" addformpath="/form1" />
 		</fieldset>
 	</fields>
 </form>';

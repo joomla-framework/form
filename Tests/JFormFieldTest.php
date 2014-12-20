@@ -13,17 +13,31 @@ use Joomla\Test\TestHelper;
 /**
  * Test class for JFormField.
  *
- * @coversDefaultClass Joomla\Form\Field
+ * @coversDefaultClass  Joomla\Form\Field
  * @since  1.0
  */
 class JFormFieldTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * This method is called before the first test of this test class is run.
+	 *
+	 * @return  void
+	 */
+	public static function setUpBeforeClass()
+	{
+		/** @var \Composer\Autoload\ClassLoader $loader */
+		$loader = include dirname(__DIR__) . '/vendor/autoload.php';
+
+		// Add our test fields to the autoload paths for testing
+		$loader->addPsr4('Foo\\Form\\Field\\', __DIR__ . '/_testfields');
+	}
+
+	/**
 	 * set up for testing
 	 *
 	 * @return void
 	 *
-	 * @since __VERSION_NO__
+	 * @since __DEPLOY_VERSION__
 	 */
 	public function setUp()
 	{
@@ -39,7 +53,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::__construct
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testConstruct()
 	{
@@ -63,11 +77,10 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The internal form should be identical to the variable passed in the contructor.'
 		);
 
-		// Add custom path.
-		FormHelper::addFieldPath(__DIR__ . '/_testfields');
+		$class = FormHelper::loadFieldClass('foo.bar');
 
-		FormHelper::loadFieldType('foo.bar');
-		$field = new \Foo\Form\Field\BarField($form);
+		/** @var \Foo\Form\Field\BarField $field */
+		$field = new $class($form);
 		$this->assertEquals(
 			$field->type,
 			'Foo\Field\BarField',
@@ -91,19 +104,13 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The internal form should be identical to the variable passed in the contructor.'
 		);
 
-		FormHelper::loadFieldType('foo');
-		$field = new \Joomla\Form\Field\FooField($form);
-		$this->assertEquals(
-			$field->type,
-			'Joomla\Field\FooField',
-			'Line:' . __LINE__ . ' The field type should have been guessed by the constructor.'
-		);
+		$class = FormHelper::loadFieldClass('foo.modal\\bar');
 
-		FormHelper::loadFieldType('modal\\foo');
-		$field = new \Joomla\Form\Field\Modal\FooField($form);
+		/** @var \Foo\Form\Field\Modal\BarField $field */
+		$field = new $class($form);
 		$this->assertEquals(
 			$field->type,
-			'Joomla\Field\Modal\FooField',
+			'Foo\Field\Modal\BarField',
 			'Line:' . __LINE__ . ' The field type should have been guessed by the constructor.'
 		);
 	}
@@ -113,7 +120,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @since __VERSION_NO__
+	 * @since __DEPLOY_VERSION__
 	 */
 	public function testGet()
 	{
@@ -126,7 +133,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::getId
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testGetId()
 	{
@@ -200,7 +207,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @since __VERSION_NO__
+	 * @since __DEPLOY_VERSION__
 	 */
 	public function testGetInput()
 	{
@@ -213,7 +220,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::getLabel
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testGetLabel()
 	{
@@ -282,7 +289,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::getTitle
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testGetTitle()
 	{
@@ -333,7 +340,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::setForm
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testSetForm()
 	{
@@ -357,7 +364,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @covers             ::setup
 	 * @expectedException  \PHPUnit_Framework_Error
-	 * @since              __VERSION_NO__
+	 * @since              __DEPLOY_VERSION__
 	 */
 	public function testSetupInvalidArgument()
 	{
@@ -376,7 +383,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::setup
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testSetupInvalidElement()
 	{
@@ -397,7 +404,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @covers  ::__get
 	 * @covers  ::setup
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testSetup()
 	{
@@ -602,7 +609,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::getName
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testGetName()
 	{
@@ -660,7 +667,7 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers  ::getFieldName
-	 * @since   __VERSION_NO__
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function testGetFieldName()
 	{

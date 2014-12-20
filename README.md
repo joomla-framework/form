@@ -244,12 +244,6 @@ To use above field just write
 <form type="bar\foo" name="myName" id="myId" />
 ```
 
-One more thing, just make sure that the directory in which field file is present, is included field path. If not, you can add the path using FormHelper
-
-```php
-\Joomla\Form\FormHelper::addFieldPath(<absolute path to the directory containg field>);
-```
-
 ## Installation via Composer
 
 Add `"joomla/form": "~1.0"` to the require block in your composer.json and then run `composer install`.

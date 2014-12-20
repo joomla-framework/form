@@ -54,80 +54,6 @@ class FormHelper
 	protected static $entities = array();
 
 	/**
-	 * Method to load a form field object given a type.
-	 *
-	 * @param   string   $type  The field type.
-	 * @param   boolean  $new   Flag to toggle whether we should get a new instance of the object.
-	 *
-	 * @return  mixed  Field object on success, false otherwise.
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Field objects should be autoloaded
-	 */
-	public static function loadFieldType($type, $new = true)
-	{
-		return self::loadType('field', $type, $new);
-	}
-
-	/**
-	 * Method to load a form rule object given a type.
-	 *
-	 * @param   string   $type  The rule type.
-	 * @param   boolean  $new   Flag to toggle whether we should get a new instance of the object.
-	 *
-	 * @return  mixed  Rule object on success, false otherwise.
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Rule objects should be autoloaded
-	 */
-	public static function loadRuleType($type, $new = true)
-	{
-		return self::loadType('rule', $type, $new);
-	}
-
-	/**
-	 * Method to load a form entity object given a type.
-	 * Each type is loaded only once and then used as a prototype for other objects of same type.
-	 * Please, use this method only with those entities which support types (forms don't support them).
-	 *
-	 * @param   string   $entity  The entity.
-	 * @param   string   $type    The entity type.
-	 * @param   boolean  $new     Flag to toggle whether we should get a new instance of the object.
-	 *
-	 * @return  mixed  Entity object on success, false otherwise.
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Objects should be autoloaded
-	 */
-	protected static function loadType($entity, $type, $new = true)
-	{
-		// Reference to an array with current entity's type instances
-		$types = &self::$entities[$entity];
-
-		$key = md5($type);
-
-		// Return an entity object if it already exists and we don't need a new one.
-		if (isset($types[$key]) && $new === false)
-		{
-			return $types[$key];
-		}
-
-		$class = self::loadClass($entity, $type);
-
-		if ($class !== false)
-		{
-			// Instantiate a new type object.
-			$types[$key] = new $class;
-
-			return $types[$key];
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	/**
 	 * Attempt to import the Field class file if it isn't already imported.
 	 * You can use this method outside of Joomla\Form for loading a field for inheritance or composition.
 	 *
@@ -159,6 +85,7 @@ class FormHelper
 
 	/**
 	 * Load a class for one of the form's entities of a particular type.
+	 *
 	 * Currently, it makes sense to use this method for the "field" and "rule" entities
 	 * (but you can support more entities in your subclass).
 	 *
@@ -185,7 +112,7 @@ class FormHelper
 		// If type is complex like modal\foo, do uppercase each term
 		if (strpos($type, '\\'))
 		{
-			$class .=  '\\' . String::ucfirst($type,'\\');
+			$class .=  '\\' . String::ucfirst($type, '\\');
 		}
 		else
 		{
@@ -197,71 +124,8 @@ class FormHelper
 			$class .= ucfirst($entity);
 		}
 
-		if (class_exists($class))
-		{
-			return $class;
-		}
-
-		/*
-		 * @deprecated 2.0 - Classes should be autoloaded, path lookups will no longer be supported.
-		 */
-
-		// Get the field search path array.
-		$paths = self::addPath($entity);
-
-		// If the type is complex, add the base type to the paths.
-		if ($pos = strpos($type, '\\'))
-		{
-			// Add the complex type prefix to the paths.
-			for ($i = 0, $n = count($paths); $i < $n; $i++)
-			{
-				// Derive the new path.
-				$path = $paths[$i] . '/' . strtolower(substr($type, 0, $pos));
-
-				// If the path does not exist, add it.
-				if (!in_array($path, $paths))
-				{
-					$paths[] = $path;
-				}
-			}
-
-			// Break off the end of the complex type.
-			$type = substr($type, $pos + 1);
-		}
-
-		// Try to find the class file.
-		$type = strtolower($type) . '.php';
-
-		foreach ($paths as $path)
-		{
-			if ($file = Path::find($path, $type))
-			{
-				require_once $file;
-
-				if (class_exists($class))
-				{
-					break;
-				}
-			}
-		}
-
 		// Check for all if the class exists.
 		return class_exists($class) ? $class : false;
-	}
-
-	/**
-	 * Method to add a path to the list of field include paths.
-	 *
-	 * @param   mixed  $new  A path or array of paths to add.
-	 *
-	 * @return  array  The list of paths that have been added.
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Field objects should be autoloaded
-	 */
-	public static function addFieldPath($new = null)
-	{
-		return self::addPath('field', $new);
 	}
 
 	/**
@@ -276,21 +140,6 @@ class FormHelper
 	public static function addFormPath($new = null)
 	{
 		return self::addPath('form', $new);
-	}
-
-	/**
-	 * Method to add a path to the list of rule include paths.
-	 *
-	 * @param   mixed  $new  A path or array of paths to add.
-	 *
-	 * @return  array  The list of paths that have been added.
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Rule objects should be autoloaded
-	 */
-	public static function addRulePath($new = null)
-	{
-		return self::addPath('rule', $new);
 	}
 
 	/**
