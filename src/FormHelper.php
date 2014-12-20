@@ -38,22 +38,6 @@ class FormHelper
 	protected static $paths;
 
 	/**
-	 * Static array of Joomla\Form's entity objects for re-use.
-	 * Prototypes for all fields and rules are here.
-	 *
-	 * Array's structure:
-	 * <code>
-	 * entities:
-	 * {ENTITY_NAME}:
-	 * {KEY}: {OBJECT}
-	 * </code>
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected static $entities = array();
-
-	/**
 	 * Attempt to import the Field class file if it isn't already imported.
 	 * You can use this method outside of Joomla\Form for loading a field for inheritance or composition.
 	 *
