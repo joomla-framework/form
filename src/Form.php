@@ -72,7 +72,7 @@ class Form
 	/**
 	 * Form instances.
 	 *
-	 * @var    array
+	 * @var    Form[]
 	 * @since  1.0
 	 */
 	protected static $forms = array();
@@ -353,6 +353,7 @@ class Form
 		}
 
 		// Build the result array from the found field elements.
+		/** @var \SimpleXMLElement $element */
 		foreach ($elements as $element)
 		{
 			// Get the field groups for the element.
@@ -530,6 +531,7 @@ class Form
 		}
 
 		// Build the result array from the found field elements.
+		/** @var \SimpleXMLElement $element */
 		foreach ($elements as $element)
 		{
 			// Get the field groups for the element.
@@ -637,10 +639,10 @@ class Form
 	 * field being loaded.  If it is false, then the new field being loaded will be ignored and the
 	 * method will move on to the next field to load.
 	 *
-	 * @param   string  $data     The name of an XML string or object.
-	 * @param   string  $replace  Flag to toggle whether form fields should be replaced if a field
-	 *                            already exists with the same group/name.
-	 * @param   string  $xpath    An optional xpath to search for the fields.
+	 * @param   string       $data     The name of an XML string or object.
+	 * @param   boolean      $replace  Flag to toggle whether form fields should be replaced if a field
+	 *                                 already exists with the same group/name.
+	 * @param   bool|string  $xpath    An optional xpath to search for the fields.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -760,10 +762,10 @@ class Form
 	 * fields in the new XML file unless the $reset parameter has been set
 	 * to false.
 	 *
-	 * @param   string  $file   The filesystem path of an XML file.
-	 * @param   string  $reset  Flag to toggle whether form fields should be replaced if a field
-	 *                          already exists with the same group/name.
-	 * @param   string  $xpath  An optional xpath to search for the fields.
+	 * @param   string       $file   The filesystem path of an XML file.
+	 * @param   boolean      $reset  Flag to toggle whether form fields should be replaced if a field
+	 *                               already exists with the same group/name.
+	 * @param   bool|string  $xpath  An optional xpath to search for the fields.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -1362,6 +1364,7 @@ class Form
 			$elements = &$this->findGroup($group);
 
 			// Get all of the field elements with the correct name for the fields elements.
+			/** @var \SimpleXMLElement $element */
 			foreach ($elements as $element)
 			{
 				// If there are matching field elements add them to the fields array.
@@ -1380,6 +1383,7 @@ class Form
 			// Use the first correct match in the given group.
 			$groupNames = explode('.', $group);
 
+			/** @var \SimpleXMLElement $field */
 			foreach ($fields as &$field)
 			{
 				// Get the group names as strings for ancestor fields elements.
@@ -1487,6 +1491,7 @@ class Form
 			$elements = &$this->findGroup($group);
 
 			// Get all of the field elements for the fields elements.
+			/** @var \SimpleXMLElement $element */
 			foreach ($elements as $element)
 			{
 				// If there are field elements add them to the return result.
@@ -1579,6 +1584,7 @@ class Form
 				$tmp = array();
 
 				// Check to make sure that there are no parent groups for each element.
+				/** @var \SimpleXMLElement $element */
 				foreach ($current as $element)
 				{
 					// Get any fields elements with the correct group name.
@@ -1816,12 +1822,12 @@ class Form
 	/**
 	 * Method to get an instance of a form.
 	 *
-	 * @param   string  $name     The name of the form.
-	 * @param   string  $data     The name of an XML file or string to load as the form definition.
-	 * @param   array   $options  An array of form options.
-	 * @param   string  $replace  Flag to toggle whether form fields should be replaced if a field
-	 *                            already exists with the same group/name.
-	 * @param   string  $xpath    An optional xpath to search for the fields.
+	 * @param   string       $name     The name of the form.
+	 * @param   string       $data     The name of an XML file or string to load as the form definition.
+	 * @param   array        $options  An array of form options.
+	 * @param   boolean      $replace  Flag to toggle whether form fields should be replaced if a field
+	 *                                 already exists with the same group/name.
+	 * @param   bool|string  $xpath    An optional xpath to search for the fields.
 	 *
 	 * @return  Form   Instance of this class.
 	 *
@@ -1936,6 +1942,7 @@ class Form
 		// The assumption is that the inputs are at the same relative level.
 		// So we just have to scan the children and deal with them.
 
+		/** @var \SimpleXMLElement $child */
 		foreach ($new->children() as $child)
 		{
 			$type = $child->getName();

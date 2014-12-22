@@ -41,6 +41,7 @@ class GroupedListField extends \Joomla\Form\Field
 		$groups = array();
 		$label = 0;
 
+		/** @var \SimpleXMLElement $element */
 		foreach ($this->element->children() as $element)
 		{
 			switch ($element->getName())
@@ -85,6 +86,7 @@ class GroupedListField extends \Joomla\Form\Field
 					}
 
 					// Iterate through the children and build an array of options.
+					/** @var \SimpleXMLElement $option */
 					foreach ($element->children() as $option)
 					{
 						// Only add <option /> elements.
