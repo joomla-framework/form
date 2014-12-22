@@ -49,6 +49,7 @@ class FormHelper
 	 *
 	 * @var    array
 	 * @since  1.0
+	 * @deprecated  2.0  Objects should be autoloaded
 	 */
 	protected static $entities = array();
 
