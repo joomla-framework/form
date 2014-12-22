@@ -743,7 +743,7 @@ class Form
 			}
 
 			// Merge the new field data into the existing XML document.
-			self::addNode($this->xml, $element);
+			static::addNode($this->xml, $element);
 		}
 
 		// Synchronize any paths found in the load.
@@ -922,13 +922,13 @@ class Form
 			// If an appropriate fields element was found for the group, add the element.
 			if (isset($fields[0]) && ($fields[0] instanceof \SimpleXMLElement))
 			{
-				self::addNode($fields[0], $element);
+				static::addNode($fields[0], $element);
 			}
 		}
 		else
 		{
 			// Set the new field to the form.
-			self::addNode($this->xml, $element);
+			static::addNode($this->xml, $element);
 		}
 
 		// Synchronize any paths found in the load.
@@ -1832,7 +1832,7 @@ class Form
 	public static function getInstance($name, $data = null, $options = array(), $replace = true, $xpath = false)
 	{
 		// Reference to array with form instances
-		$forms = &self::$forms;
+		$forms = &static::$forms;
 
 		// Only instantiate the form if it does not already exist.
 		if (!isset($forms[$name]))
@@ -1845,7 +1845,7 @@ class Form
 			}
 
 			// Instantiate the form.
-			$forms[$name] = new self($name, $options);
+			$forms[$name] = new static($name, $options);
 
 			// Load the data.
 			if (substr(trim($data), 0, 1) == '<')
@@ -1891,7 +1891,7 @@ class Form
 		// Add any children of the new node.
 		foreach ($new->children() as $child)
 		{
-			self::addNode($node, $child);
+			static::addNode($node, $child);
 		}
 	}
 
@@ -1947,7 +1947,7 @@ class Form
 			if (empty($fields))
 			{
 				// This node does not exist, so add it.
-				self::addNode($source, $child);
+				static::addNode($source, $child);
 			}
 			else
 			{
@@ -1955,11 +1955,11 @@ class Form
 				switch ($type)
 				{
 					case 'field':
-						self::mergeNode($fields[0], $child);
+						static::mergeNode($fields[0], $child);
 						break;
 
 					default:
-						self::mergeNodes($fields[0], $child);
+						static::mergeNodes($fields[0], $child);
 						break;
 				}
 			}
