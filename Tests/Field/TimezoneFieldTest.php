@@ -6,8 +6,10 @@
 
 namespace Joomla\Form\Tests\Field;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\TimezoneField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
+use Joomla\Test\TestHelper;
 
 /**
  * Test class for Joomla\Form\Field\TimezoneField.
@@ -17,6 +19,13 @@ use Joomla\Form\Field\TimezoneField;
 class TimezoneFieldTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
 	 * Sets up dependancies for the test.
 	 */
 	protected function setUp()
@@ -24,6 +33,9 @@ class TimezoneFieldTest extends \PHPUnit_Framework_TestCase
 		parent::setUp();
 
 		include_once dirname(__DIR__) . '/inspectors.php';
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
 	}
 
 	/**
@@ -34,6 +46,7 @@ class TimezoneFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetGroups()
 	{
 		$field = new TimezoneField;
+		$field->setText($this->text);
 		$element = new \SimpleXmlElement('<field name="myName" id="myId" />');
 		$this->assertTrue(
 			$field->setup($element, 'value'),

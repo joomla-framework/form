@@ -9,7 +9,6 @@
 namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
-use Joomla\Language\Text;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -79,12 +78,13 @@ class CheckboxesField extends \Joomla\Form\Field
 
 			// Initialize some JavaScript option attributes.
 			$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
+			$label   = $this->translateLabel ? $this->getText()->translate($option->text) : $option->text;
 
 			$html[] = '<li>';
 			$html[] = '<input type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
-			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>' . Text::_($option->text) . '</label>';
+			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>' . $label . '</label>';
 			$html[] = '</li>';
 		}
 
@@ -106,6 +106,9 @@ class CheckboxesField extends \Joomla\Form\Field
 	protected function getOptions()
 	{
 		$options = array();
+
+		// Inject the Text object into HtmlSelect
+		HtmlSelect::$text = $this->getText();
 
 		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)

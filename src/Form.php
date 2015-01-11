@@ -62,6 +62,14 @@ class Form
 	protected $options = array();
 
 	/**
+	 * Container for the Text object
+	 *
+	 * @var    Text
+	 * @since  __DEPLOY_VERSION__
+	 */
+	private $text;
+
+	/**
 	 * The form XML definition.
 	 *
 	 * @var    \SimpleXMLElement
@@ -260,7 +268,7 @@ class Form
 	 * @param   string  $group  The optional dot-separated form group path on which to find the field.
 	 * @param   mixed   $value  The optional value to use as the default for the field.
 	 *
-	 * @return  mixed  The Field object for the field or boolean false on error.
+	 * @return  Field|boolean  The Field object for the field or boolean false on error.
 	 *
 	 * @since   1.0
 	 */
@@ -473,6 +481,24 @@ class Form
 	}
 
 	/**
+	 * Retrieves the Text object
+	 *
+	 * @return  Text
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @throws  \RuntimeException
+	 */
+	public function getText()
+	{
+		if (!($this->text instanceof Text))
+		{
+			throw new \RuntimeException('A Joomla\\Language\\Text object is not set.');
+		}
+
+		return $this->text;
+	}
+
+	/**
 	 * Method to set the form control. This string serves as a container for all form fields. For
 	 * example, if there is a field named 'foo' and a field named 'bar' and the form control is
 	 * empty the fields will be rendered like: <input name="foo" /> and <input name="bar" />.  If
@@ -565,6 +591,8 @@ class Form
 		// Attempt to get the form field.
 		if ($field = $this->getField($name, $group, $value))
 		{
+			$field->setText($this->getText());
+
 			return $field->input;
 		}
 
@@ -1026,6 +1054,23 @@ class Form
 		$this->syncPaths();
 
 		return $return;
+	}
+
+	/**
+	 * Sets the Text object
+	 *
+	 * @param   Text  $text  The Text object to store
+	 *
+	 * @return  Form  Instance of this class.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @throws  \RuntimeException
+	 */
+	public function setText(Text $text)
+	{
+		$this->text = $text;
+
+		return $this;
 	}
 
 	/**
@@ -1627,7 +1672,7 @@ class Form
 	 * @param   string  $group    The optional dot-separated form group path on which to find the field.
 	 * @param   mixed   $value    The optional value to use as the default for the field.
 	 *
-	 * @return  mixed  The FormField object for the field or boolean false on error.
+	 * @return  Field|boolean  The Field object for the field or boolean false on error.
 	 *
 	 * @since   1.0
 	 */
@@ -1655,6 +1700,16 @@ class Form
 		/** @var Field $field */
 		$field = new $field;
 
+		// Try to inject the text object into the field
+		try
+		{
+			$field->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
+
 		/*
 		 * Get the value for the form field if not set.
 		 * Default to the translated version of the 'default' attribute
@@ -1665,20 +1720,28 @@ class Form
 		{
 			$default = (string) $element['default'];
 
-			if (($translate = $element['translate_default']) && ((string) $translate == 'true' || (string) $translate == '1'))
+			// Try to translate the default value if translations are enabled
+			try
 			{
-				$lang = Language::getInstance();
+				$lang = $this->getText()->getLanguage();
 
-				if ($lang->hasKey($default))
+				if (($translate = $element['translate_default']) && ((string) $translate == 'true' || (string) $translate == '1'))
 				{
-					$debug = $lang->setDebug(false);
-					$default = Text::_($default);
-					$lang->setDebug($debug);
+					if ($lang->hasKey($default))
+					{
+						$debug = $lang->setDebug(false);
+						$default = $this->getText()->translate($default);
+						$lang->setDebug($debug);
+					}
+					else
+					{
+						$default = $this->getText()->translate($default);
+					}
 				}
-				else
-				{
-					$default = Text::_($default);
-				}
+			}
+			catch (\RuntimeException $exception)
+			{
+				// A Text object wasn't set to extract a Language object from, use our non-translated default
 			}
 
 			$value = $this->getValue((string) $element['name'], $group, $default);
@@ -1754,16 +1817,26 @@ class Form
 			// If the field is required and the value is empty return an error message.
 			if (($value === '') || ($value === null))
 			{
+				$translate = $element['translate_default'] && ((string) $translate == 'true' || (string) $translate == '1');
+
 				if ($element['label'])
 				{
-					$message = Text::_($element['label']);
+					$message = $translate ? $this->getText()->translate($element['label']) : $element['label'];
 				}
 				else
 				{
-					$message = Text::_($element['name']);
+					$message = $translate ? $this->getText()->translate($element['name']) : $element['name'];
 				}
 
-				$message = Text::sprintf('JLIB_FORM_VALIDATE_FIELD_REQUIRED', $message);
+				// TODO - Language strings for our packages should be defined and loaded into the language object
+				if ($translate)
+				{
+					$message = $this->getText()->sprintf('Field required: %s', $message);
+				}
+				else
+				{
+					$message = sprintf('Field required: %s', $message);
+				}
 
 				return new \RuntimeException($message);
 			}
@@ -1799,18 +1872,28 @@ class Form
 		if ($valid === false)
 		{
 			// Does the field have a defined error message?
-			$message = (string) $element['message'];
+			$message   = (string) $element['message'];
+			$translate = $element['translate_default'] && ((string) $translate == 'true' || (string) $translate == '1');
 
 			if ($message)
 			{
-				$message = Text::_($element['message']);
+				$message = $translate ? $this->getText()->translate($element['message']) : $element['message'];
 
 				return new \UnexpectedValueException($message);
 			}
 			else
 			{
-				$message = Text::_($element['label']);
-				$message = Text::sprintf('JLIB_FORM_VALIDATE_FIELD_INVALID', $message);
+				$message = $translate ? $this->getText()->translate($element['label']) : $element['label'];
+
+				// TODO - Language strings for our packages should be defined and loaded into the language object
+				if ($translate)
+				{
+					$message = $this->getText()->sprintf('Invalid field: %s', $message);
+				}
+				else
+				{
+					$message = sprintf('Invalid field: %s', $message);
+				}
 
 				return new \UnexpectedValueException($message);
 			}

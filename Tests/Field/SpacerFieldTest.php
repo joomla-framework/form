@@ -7,6 +7,8 @@
 namespace Joomla\Form\Tests\Field;
 
 use Joomla\Form\Field\SpacerField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
 
 /**
  * Test class for Joomla\Form\Field\SpacerField.
@@ -16,6 +18,24 @@ use Joomla\Form\Field\SpacerField;
 class SpacerFieldTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
+	 * Set up for testing
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+	}
+
+	/**
 	 * Test the getInput method.
 	 *
 	 * @covers  ::getInput
@@ -23,6 +43,7 @@ class SpacerFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetInput()
 	{
 		$field = new SpacerField;
+		$field->setText($this->text);
 
 		$xml = new \SimpleXmlElement('<field name="spacer" type="spacer" />');
 		$this->assertTrue(
@@ -77,6 +98,7 @@ class SpacerFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetLabel($xml, $expectedOutput)
 	{
 		$field = new SpacerField;
+		$field->setText($this->text);
 
 		$xml = new \SimpleXMLElement($xml);
 		$this->assertTrue(

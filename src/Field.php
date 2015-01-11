@@ -195,6 +195,14 @@ abstract class Field
 	protected $labelClass;
 
 	/**
+	 * Container for the Text object
+	 *
+	 * @var    Text
+	 * @since  __DEPLOY_VERSION__
+	 */
+	private $text;
+
+	/**
 	 * The count value for generated name field
 	 *
 	 * @var    integer
@@ -476,6 +484,24 @@ abstract class Field
 	abstract protected function getInput();
 
 	/**
+	 * Retrieves the Text object
+	 *
+	 * @return  Text
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @throws  \RuntimeException
+	 */
+	public function getText()
+	{
+		if (!($this->text instanceof Text))
+		{
+			throw new \RuntimeException('A Joomla\\Language\\Text object is not set.');
+		}
+
+		return $this->text;
+	}
+
+	/**
 	 * Method to get the field title.
 	 *
 	 * @return  string  The field title.
@@ -493,7 +519,7 @@ abstract class Field
 
 		// Get the label text from the XML element, defaulting to the element name.
 		$title = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-		$title = $this->translateLabel ? Text::_($title) : $title;
+		$title = $this->translateLabel ? $this->getText()->translate($title) : $title;
 
 		return $title;
 	}
@@ -516,7 +542,7 @@ abstract class Field
 
 		// Get the label text from the XML element, defaulting to the element name.
 		$text = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-		$text = $this->translateLabel ? Text::_($text) : $text;
+		$text = $this->translateLabel ? $this->getText()->translate($text) : $text;
 
 		// Build the class for the label.
 		$class = !empty($this->description) ? 'hasTip' : '';
@@ -531,7 +557,7 @@ abstract class Field
 		{
 			$label .= ' title="'
 				. htmlspecialchars(
-				trim($text, ':') . '::' . ($this->translateDescription ? Text::_($this->description) : $this->description),
+				trim($text, ':') . '::' . ($this->translateDescription ? $this->getText()->translate($this->description) : $this->description),
 				ENT_COMPAT, 'UTF-8'
 			) . '"';
 		}
@@ -632,5 +658,22 @@ abstract class Field
 
 			return self::$generated_fieldname . self::$count;
 		}
+	}
+
+	/**
+	 * Sets the Text object
+	 *
+	 * @param   Text  $text  The Text object to store
+	 *
+	 * @return  Field  Instance of this class.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @throws  \RuntimeException
+	 */
+	public function setText(Text $text)
+	{
+		$this->text = $text;
+
+		return $this;
 	}
 }

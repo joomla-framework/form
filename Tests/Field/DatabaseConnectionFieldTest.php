@@ -6,9 +6,11 @@
 
 namespace Joomla\Form\Tests\Field;
 
-use Joomla\Test\TestHelper;
-use Joomla\Form\Field\DatabaseConnectionField;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Form\Field\DatabaseConnectionField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
+use Joomla\Test\TestHelper;
 
 /**
  * Test class for Joomla\Form\Field\DatabaseConnectionField.
@@ -17,6 +19,24 @@ use Joomla\Database\DatabaseDriver;
  */
 class DatabaseConnectionFieldTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
+	 * Set up for testing
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+	}
+
 	/**
 	 * Test data for getOptions test
 	 *
@@ -73,6 +93,7 @@ class DatabaseConnectionFieldTest extends \PHPUnit_Framework_TestCase
 		$element = new \SimpleXmlElement($xml);
 
 		$field = new DatabaseConnectionField;
+		$field->setText($this->text);
 
 		$this->assertTrue(
 			$field->setup($element, 'aValue'),

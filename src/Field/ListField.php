@@ -9,7 +9,6 @@
 namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
-use Joomla\Language\Text;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -39,6 +38,9 @@ class ListField extends \Joomla\Form\Field
 	{
 		$html = array();
 		$attr = '';
+
+		// Inject the Text object into HtmlSelect
+		HtmlSelect::$text = $this->getText();
 
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
@@ -79,6 +81,7 @@ class ListField extends \Joomla\Form\Field
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
+	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
@@ -96,7 +99,9 @@ class ListField extends \Joomla\Form\Field
 			// Create a new option object based on the <option /> element.
 			$tmp = HtmlSelect::option(
 				(string) $option['value'],
-				Text::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
+				$this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)),
+				'value',
+				'text',
 				((string) $option['disabled'] == 'true')
 			);
 

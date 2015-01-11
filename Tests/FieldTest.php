@@ -8,6 +8,8 @@ namespace Joomla\Form\Tests;
 
 use Joomla\Form\Form;
 use Joomla\Form\FormHelper;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
 use Joomla\Test\TestHelper;
 
 /**
@@ -17,6 +19,13 @@ use Joomla\Test\TestHelper;
  */
 class FieldTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
 	/**
 	 * This method is called before the first test of this test class is run.
 	 */
@@ -37,6 +46,9 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		parent::setUp();
 
 		include_once 'inspectors.php';
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(__DIR__));
 	}
 
 	/**
@@ -184,6 +196,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetLabel()
 	{
 		$form = new Form('form1');
+		$form->setText($this->text);
 
 		$this->assertTrue(
 			$form->load(DataHelper::$loadFieldDocument),
@@ -191,6 +204,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$field = new JFormFieldInspector($form);
+		$field->setText($this->text);
 
 		// Standard usage.
 
@@ -250,6 +264,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetTitle()
 	{
 		$form = new Form('form1');
+		$form->setText($this->text);
 
 		$this->assertTrue(
 			$form->load(DataHelper::$loadFieldDocument),
@@ -257,6 +272,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$field = new JFormFieldInspector($form);
+		$field->setText($this->text);
 
 		// Standard usage.
 
@@ -360,6 +376,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$field = new JFormFieldInspector($form);
+		$field->setText($this->text);
 
 		// Standard usage.
 

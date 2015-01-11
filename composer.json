@@ -7,7 +7,7 @@
     "license": "GPL-2.0+",
     "require": {
         "php": ">=5.3.10",
-        "joomla/language": "~1.0",
+        "joomla/language": "~2.0@dev",
         "joomla/string": "~1.0",
         "joomla/uri": "~1.0",
         "joomla/filter": "~1.0",
@@ -15,14 +15,14 @@
         "joomla/registry": "~1.0",
         "joomla/utilities": "~1.0"
     },
-    "suggest": {
-        "joomla/database": "Install joomla/database if you would like to use the DatabaseConnection field type."
-    },
     "require-dev": {
-        "joomla/test": "~1.0",
         "joomla/database": "~1.0",
+        "joomla/test": "~1.0",
         "phpunit/phpunit": "~4.1.0",
         "phpunit/dbunit": "~1.0"
+    },
+    "suggest": {
+        "joomla/database": "Install joomla/database if you would like to use the DatabaseConnection field type."
     },
     "autoload": {
         "psr-4": {

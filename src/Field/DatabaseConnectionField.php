@@ -8,7 +8,6 @@
 
 namespace Joomla\Form\Field;
 
-use Joomla\Language\Text;
 use Joomla\Database\DatabaseDriver;
 
 /**
@@ -33,12 +32,13 @@ class DatabaseConnectionField extends ListField
 	 * Method to get the list of database options.
 	 *
 	 * This method produces a drop down list of available databases supported
-	 * by JDatabaseDriver classes that are also supported by the application.
+	 * by DatabaseDriver classes that are also supported by the application.
 	 *
 	 * @return  array    The field option objects.
 	 *
 	 * @since   1.0
 	 * @see		Joomla\Database\DatabaseDriver
+	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
@@ -61,7 +61,7 @@ class DatabaseConnectionField extends ListField
 			{
 				if (in_array(ucfirst($support), $available))
 				{
-					$options[lcfirst($support)] = Text::_(ucfirst($support));
+					$options[lcfirst($support)] = $this->getText()->translate(ucfirst($support));
 				}
 			}
 		}
@@ -69,7 +69,7 @@ class DatabaseConnectionField extends ListField
 		{
 			foreach ($available as $support)
 			{
-				$options[lcfirst($support)] = Text::_(ucfirst($support));
+				$options[lcfirst($support)] = $this->getText()->translate(ucfirst($support));
 			}
 		}
 
@@ -77,7 +77,7 @@ class DatabaseConnectionField extends ListField
 		// a database that is not available on the server.
 		if (empty($options))
 		{
-			$options[''] = Text::_('JNONE');
+			$options[''] = $this->getText()->translate('JNONE');
 		}
 
 		return $options;

@@ -8,7 +8,7 @@
 
 namespace Joomla\Form\Field;
 
-use Joomla\Form\Html\Select;
+use Joomla\Form\Html\Select as HtmlSelect;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -45,6 +45,9 @@ class TimezoneField extends GroupedListField
 	{
 		$groups = array();
 
+		// Inject the Text object into HtmlSelect
+		HtmlSelect::$text = $this->getText();
+
 		// Get the list of time zones from the server.
 		$zones = \DateTimeZone::listIdentifiers();
 
@@ -72,7 +75,7 @@ class TimezoneField extends GroupedListField
 				// Only add options where a locale exists.
 				if (!empty($locale))
 				{
-					$groups[$group][$zone] = Select::option($zone, str_replace('_', ' ', $locale), 'value', 'text', false);
+					$groups[$group][$zone] = HtmlSelect::option($zone, str_replace('_', ' ', $locale), 'value', 'text', false);
 				}
 			}
 		}

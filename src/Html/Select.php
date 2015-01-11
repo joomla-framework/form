@@ -43,6 +43,14 @@ abstract class Select
 			'option.text.toHtml' => true));
 
 	/**
+	 * Container for the Text object
+	 *
+	 * @var    Text
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static $text;
+
+	/**
 	 * Generates a yes/no radio list.
 	 *
 	 * @param   string  $name      The value of the HTML name attribute
@@ -59,7 +67,7 @@ abstract class Select
 	 */
 	public static function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
 	{
-		$arr = array(self::option('0', Text::_($no)), self::option('1', Text::_($yes)));
+		$arr = array(self::option('0', self::$text->translate($no)), self::option('1', self::$text->translate($yes)));
 
 		return self::radiolist($arr, $name, $attribs, 'value', 'text', (int) $selected, $id);
 	}
@@ -166,7 +174,7 @@ abstract class Select
 	 *                            list.select: either the value of one selected option or an array
 	 *                            of selected options. Default: none.
 	 *                            list.translate: Boolean. If set, text and labels are translated via
-	 *                            Text::_().
+	 *                            self::$text->translate().
 	 *
 	 * @return  string  HTML for the select list
 	 *
@@ -466,7 +474,7 @@ abstract class Select
 	 *                               -list.select: either the value of one selected option or an array
 	 *                                of selected options. Default: none.
 	 *                               -list.translate: Boolean. If set, text and labels are translated via
-	 *                                Text::_(). Default is false.
+	 *                                self::$text->translate(). Default is false.
 	 *                               -option.id: The property in each option array to use as the
 	 *                                selection id attribute. Defaults to none.
 	 *                               -option.key: The property in each option array to use as the
@@ -575,7 +583,7 @@ abstract class Select
 
 			if ($options['groups'] && $key == '<OPTGROUP>')
 			{
-				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? Text::_($text) : $text) . '">' . $options['format.eol'];
+				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? self::$text->translate($text) : $text) . '">' . $options['format.eol'];
 				$baseIndent = str_repeat($options['format.indent'], ++$options['format.depth']);
 			}
 			elseif ($options['groups'] && $key == '</OPTGROUP>')
@@ -596,7 +604,7 @@ abstract class Select
 
 				if ($options['list.translate'] && !empty($label))
 				{
-					$label = Text::_($label);
+					$label = self::$text->translate($label);
 				}
 
 				if ($options['option.label.toHtml'])
@@ -635,7 +643,7 @@ abstract class Select
 
 				if ($options['list.translate'])
 				{
-					$text = Text::_($text);
+					$text = self::$text->translate($text);
 				}
 
 				// Generate the option, encoding as required
@@ -681,7 +689,7 @@ abstract class Select
 		foreach ($data as $obj)
 		{
 			$k = $obj->$optKey;
-			$t = $translate ? Text::_($obj->$optText) : $obj->$optText;
+			$t = $translate ? self::$text->translate($obj->$optText) : $obj->$optText;
 			$id = (isset($obj->id) ? $obj->id : null);
 
 			$extra = '';

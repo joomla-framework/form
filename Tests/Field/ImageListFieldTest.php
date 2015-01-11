@@ -6,8 +6,10 @@
 
 namespace Joomla\Form\Tests\Field;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\ImageListField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
+use Joomla\Test\TestHelper;
 
 /**
  * Test class for Joomla\Form\Field\ImageListField.
@@ -16,6 +18,24 @@ use Joomla\Form\Field\ImageListField;
  */
 class ImageListFieldTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
+	 * Set up for testing
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+	}
+
 	/**
 	 * Test the getInput method.
 	 *
@@ -26,6 +46,7 @@ class ImageListFieldTest extends \PHPUnit_Framework_TestCase
 		$xml = '<field name="imagelist" type="imagelist" />';
 
 		$field = new ImageListField;
+		$field->setText($this->text);
 
 		$xml = new \SimpleXmlElement($xml);
 
