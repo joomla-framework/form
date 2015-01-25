@@ -6,8 +6,10 @@
 
 namespace Joomla\Form\Tests\Field;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\CheckboxesField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
+use Joomla\Test\TestHelper;
 
 /**
  * Test class for Joomla\Form\Field\CheckboxesField.
@@ -16,6 +18,24 @@ use Joomla\Form\Field\CheckboxesField;
  */
 class CheckboxesFieldTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
+	 * Set up for testing
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+	}
+
 	/**
 	 * Test data for getInput test
 	 *
@@ -110,6 +130,7 @@ class CheckboxesFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetInput($xml, $value, $expectedTagAttr)
 	{
 		$field = new CheckboxesField;
+		$field->setText($this->text);
 
 		$xml = new \SimpleXMLElement($xml);
 		$this->assertTrue(
@@ -186,6 +207,7 @@ class CheckboxesFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetOptions($optionTag, $expected)
 	{
 		$field = new CheckboxesField;
+		$field->setText($this->text);
 
 		$fieldStartTag = '<field name="myName" type="checkboxes">';
 		$fieldEndTag = '</field>';

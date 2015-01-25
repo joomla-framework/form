@@ -6,8 +6,10 @@
 
 namespace Joomla\Form\Tests\Field;
 
-use Joomla\Test\TestHelper;
 use Joomla\Form\Field\GroupedListField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
+use Joomla\Test\TestHelper;
 
 /**
  * Test class for Joomla\Form\Field\GroupedListField.
@@ -16,6 +18,24 @@ use Joomla\Form\Field\GroupedListField;
  */
 class GroupedListFieldTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
+	 * Set up for testing
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+	}
+
 	/**
 	 * Test data for getGroups test
 	 *
@@ -121,15 +141,16 @@ class GroupedListFieldTest extends \PHPUnit_Framework_TestCase
 		// Configure the stub.
 		$field->expects($this->any())
 			->method('getGroups')
-			->will(
-				$this->returnValue(
-					array(
+			->willReturn(
+				array(
 					'barfoo' => array(
 							(object) array('value' => 'oof', 'text' => 'Foo')
-						)
 					)
 				)
 			);
+		$field->expects($this->any())
+			->method('getText')
+			->willReturn($this->text);
 
 		$xml = new \SimpleXmlElement($xml);
 
@@ -252,6 +273,7 @@ class GroupedListFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetGroups($optionTag, $expected)
 	{
 		$field = new GroupedListField;
+		$field->setText($this->text);
 
 		$fieldStartTag = '<field name="myName" type="groupedlist">';
 		$fieldEndTag = '</field>';
@@ -283,6 +305,7 @@ class GroupedListFieldTest extends \PHPUnit_Framework_TestCase
 	public function testGetGroupsUnknownChildException()
 	{
 		$field = new GroupedListField;
+		$field->setText($this->text);
 
 		$fieldStartTag = '<field name="myName" type="groupedlist">';
 		$optionTag = '<item value="foo">Bar</item>';

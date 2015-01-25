@@ -9,7 +9,6 @@
 namespace Joomla\Form\Field;
 
 use stdClass;
-use Joomla\Language\Text;
 
 /**
  * Form Field class for the Joomla Framework.
@@ -63,7 +62,7 @@ class RadioField extends \Joomla\Form\Field
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
 			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>'
-				. Text::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . '</label>';
+				. $this->getText()->alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . '</label>';
 		}
 
 		// End the radio field output.
@@ -78,6 +77,7 @@ class RadioField extends \Joomla\Form\Field
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
+	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{

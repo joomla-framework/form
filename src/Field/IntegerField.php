@@ -37,6 +37,9 @@ class IntegerField extends ListField
 	{
 		$options = array();
 
+		// Inject the Text object into HtmlSelect
+		HtmlSelect::$text = $this->getText();
+
 		// Initialize some field attributes.
 		$first = (int) $this->element['first'];
 		$last = (int) $this->element['last'];

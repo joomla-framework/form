@@ -8,8 +8,6 @@
 
 namespace Joomla\Form\Field;
 
-use Joomla\Language\Text;
-
 /**
  * Form Field class for the Joomla Framework.
  * Provides spacer markup to be used in form layouts.
@@ -67,7 +65,7 @@ class SpacerField extends \Joomla\Form\Field
 
 			// Get the label text from the XML element, defaulting to the element name.
 			$text = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-			$text = $this->translateLabel ? Text::_($text) : $text;
+			$text = $this->translateLabel ? $this->getText()->translate($text) : $text;
 
 			// Build the class for the label.
 			$class = !empty($this->description) ? 'hasTip' : '';
@@ -81,7 +79,7 @@ class SpacerField extends \Joomla\Form\Field
 			{
 				$label .= ' title="'
 					. htmlspecialchars(
-					trim($text, ':') . '::' . ($this->translateDescription ? Text::_($this->description) : $this->description),
+					trim($text, ':') . '::' . ($this->translateDescription ? $this->getText()->translate($this->description) : $this->description),
 					ENT_COMPAT, 'UTF-8'
 				) . '"';
 			}

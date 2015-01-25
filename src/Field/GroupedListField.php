@@ -9,7 +9,6 @@
 namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
-use Joomla\Language\Text;
 use UnexpectedValueException;
 
 /**
@@ -41,6 +40,9 @@ class GroupedListField extends \Joomla\Form\Field
 		$groups = array();
 		$label = 0;
 
+		// Inject the Text object into HtmlSelect
+		HtmlSelect::$text = $this->getText();
+
 		/** @var \SimpleXMLElement $element */
 		foreach ($this->element->children() as $element)
 		{
@@ -57,7 +59,7 @@ class GroupedListField extends \Joomla\Form\Field
 					// Create a new option object based on the <option /> element.
 					$tmp = HtmlSelect::option(
 						($element['value']) ? (string) $element['value'] : trim((string) $element),
-						Text::alt(trim((string) $element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
+						$this->getText()->alt(trim((string) $element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
 						((string) $element['disabled'] == 'true')
 					);
 
@@ -76,7 +78,7 @@ class GroupedListField extends \Joomla\Form\Field
 					// Get the group label.
 					if ($groupLabel = (string) $element['label'])
 					{
-						$label = Text::_($groupLabel);
+						$label = $this->translateLabel ? $this->getText()->translate($groupLabel) : $groupLabel;
 					}
 
 					// Initialize the group if necessary.
@@ -97,8 +99,8 @@ class GroupedListField extends \Joomla\Form\Field
 
 						// Create a new option object based on the <option /> element.
 						$tmp = HtmlSelect::option(
-							($option['value']) ? (string) $option['value'] : Text::_(trim((string) $option)),
-							Text::_(trim((string) $option)), 'value', 'text', ((string) $option['disabled'] == 'true')
+							($option['value']) ? (string) $option['value'] : $this->getText()->translate(trim((string) $option)),
+							$this->getText()->translate(trim((string) $option)), 'value', 'text', ((string) $option['disabled'] == 'true')
 						);
 
 						// Set some option attributes.

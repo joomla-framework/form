@@ -6,8 +6,10 @@
 
 namespace Joomla\Form\Tests\Field;
 
-use Joomla\Test\TestDatabase;
 use Joomla\Form\Field\LanguageField;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
+use Joomla\Test\TestDatabase;
 use Joomla\Test\TestHelper;
 
 /**
@@ -19,6 +21,13 @@ use Joomla\Test\TestHelper;
 class LanguageFieldTest extends TestDatabase
 {
 	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
 	 * Sets up dependencies for the test.
 	 */
 	protected function setUp()
@@ -26,6 +35,9 @@ class LanguageFieldTest extends TestDatabase
 		parent::setUp();
 
 		include_once dirname(__DIR__) . '/inspectors.php';
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
 	}
 
 	/**
@@ -104,6 +116,7 @@ class LanguageFieldTest extends TestDatabase
 	public function testGetOptions($optionTag, $expected)
 	{
 		$field = new LanguageField;
+		$field->setText($this->text);
 
 		$fieldStartTag = '<field name="myName" type="language" base_path="'
 		. __DIR__ . '/data" >';
@@ -139,6 +152,8 @@ class LanguageFieldTest extends TestDatabase
 	public function testCreateLanguageList()
 	{
 		$field = new LanguageField;
+		$field->setText($this->text);
+
 		$list = TestHelper::invoke(
 			$field,
 			'createLanguageList',

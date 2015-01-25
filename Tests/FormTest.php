@@ -22,6 +22,13 @@ use Joomla\Registry\Registry;
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
 	 * Set up for testing
 	 *
 	 * @return  void
@@ -31,6 +38,9 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		parent::setUp();
 
 		include_once 'inspectors.php';
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(__DIR__));
 	}
 
 	/**
@@ -1013,6 +1023,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 	public function testGetInput()
 	{
 		$form = new Form('form1');
+		$form->setText($this->text);
 
 		$this->assertTrue(
 			$form->load(DataHelper::$loadFieldDocument),
@@ -1034,15 +1045,16 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			'<fieldset id="params_show_title" class="radio">' .
 				'<input type="radio" id="params_show_title0" name="params[show_title]" value="1"/>' .
-				'<label for="params_show_title0">' . Text::_('JYes') . '</label>' .
+				'<label for="params_show_title0">' . $form->getText()->translate('JYes') . '</label>' .
 				'<input type="radio" id="params_show_title1" name="params[show_title]" value="0" checked="checked"/>' .
-				'<label for="params_show_title1">' . Text::_('JNo') . '</label>' .
+				'<label for="params_show_title1">' . $form->getText()->translate('JNo') . '</label>' .
 			'</fieldset>',
 			$form->getInput('show_title', 'params', '0'),
 			'Line:' . __LINE__ . ' The method should return a radio list.'
 		);
 
 		$form = new Form('form1', array('control' => 'jform'));
+		$form->setText($this->text);
 
 		$this->assertTrue(
 			$form->load(DataHelper::$loadFieldDocument),
@@ -1068,7 +1080,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 			' The method should return a simple input text field whose value is untranslated since the DEFAULT_KEY does not exist in the language.'
 		);
 
-		$lang = Language::getInstance();
+		$lang = $form->getText()->getLanguage();
 		$debug = $lang->setDebug(true);
 		$this->assertEquals(
 			'<input type="text" name="jform[translate_default]" id="jform_translate_default" value="??DEFAULT_KEY??"/>',
@@ -1093,6 +1105,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 	public function testGetLabel()
 	{
 		$form = new Form('form1');
+		$form->setText($this->text);
 
 		$this->assertTrue(
 			$form->load(DataHelper::$loadFieldDocument),
