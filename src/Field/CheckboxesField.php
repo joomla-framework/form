@@ -107,8 +107,17 @@ class CheckboxesField extends \Joomla\Form\Field
 	{
 		$options = array();
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)
@@ -120,7 +129,7 @@ class CheckboxesField extends \Joomla\Form\Field
 			}
 
 			// Create a new option object based on the <option /> element.
-			$tmp = HtmlSelect::option(
+			$tmp = $select->option(
 				(string) $option['value'], trim((string) $option), 'value', 'text', ((string) $option['disabled'] == 'true')
 			);
 

@@ -45,8 +45,17 @@ class TimezoneField extends GroupedListField
 	{
 		$groups = array();
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		// Get the list of time zones from the server.
 		$zones = \DateTimeZone::listIdentifiers();
@@ -75,7 +84,7 @@ class TimezoneField extends GroupedListField
 				// Only add options where a locale exists.
 				if (!empty($locale))
 				{
-					$groups[$group][$zone] = HtmlSelect::option($zone, str_replace('_', ' ', $locale), 'value', 'text', false);
+					$groups[$group][$zone] = $select->option($zone, str_replace('_', ' ', $locale), 'value', 'text', false);
 				}
 			}
 		}

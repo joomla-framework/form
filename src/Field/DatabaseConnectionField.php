@@ -38,7 +38,6 @@ class DatabaseConnectionField extends ListField
 	 *
 	 * @since   1.0
 	 * @see		Joomla\Database\DatabaseDriver
-	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
@@ -61,7 +60,7 @@ class DatabaseConnectionField extends ListField
 			{
 				if (in_array(ucfirst($support), $available))
 				{
-					$options[lcfirst($support)] = $this->getText()->translate(ucfirst($support));
+					$options[lcfirst($support)] = $this->translateOptions ? $this->getText()->translate(ucfirst($support)) : ucfirst($support);
 				}
 			}
 		}
@@ -69,6 +68,7 @@ class DatabaseConnectionField extends ListField
 		{
 			foreach ($available as $support)
 			{
+				$options[lcfirst($support)] = $this->translateOptions ? $this->getText()->translate(ucfirst($support)) : ucfirst($support);
 				$options[lcfirst($support)] = $this->getText()->translate(ucfirst($support));
 			}
 		}
@@ -77,7 +77,7 @@ class DatabaseConnectionField extends ListField
 		// a database that is not available on the server.
 		if (empty($options))
 		{
-			$options[''] = $this->getText()->translate('JNONE');
+			$options[''] = $this->translateOptions ? $this->getText()->translate('JNONE') : 'None';
 		}
 
 		return $options;

@@ -36,14 +36,22 @@ class FileListField extends ListField
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
-	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
 		$options = array();
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		// Initialize some field attributes.
 		$filter = (string) $this->element['filter'];
@@ -63,18 +71,20 @@ class FileListField extends ListField
 		// Prepend some default options based on field attributes.
 		if (!$hideNone)
 		{
-			$options[] = HtmlSelect::option(
-				'-1',
-				$this->getText()->alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
-			);
+			$text = $this->translateOptions
+				? $this->getText()->alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: '- None Selected -';
+
+			$options[] = $select->option('-1', $text);
 		}
 
 		if (!$hideDefault)
 		{
-			$options[] = HtmlSelect::option(
-				'',
-				$this->getText()->alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
-			);
+			$text = $this->translateOptions
+				? $this->getText()->alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: '- Use Default -';
+
+			$options[] = $select->option('', $text);
 		}
 
 		// Get a list of files in the search path with the given filter.
@@ -100,7 +110,7 @@ class FileListField extends ListField
 					$file = File::stripExt($file);
 				}
 
-				$options[] = HtmlSelect::option($file, $file);
+				$options[] = $select->option($file, $file);
 			}
 		}
 

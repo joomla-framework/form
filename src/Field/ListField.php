@@ -39,8 +39,17 @@ class ListField extends \Joomla\Form\Field
 		$html = array();
 		$attr = '';
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
@@ -63,13 +72,13 @@ class ListField extends \Joomla\Form\Field
 		// Create a read-only list (no name) with a hidden input to store the value.
 		if ((string) $this->element['readonly'] == 'true')
 		{
-			$html[] = HtmlSelect::genericlist($options, '', trim($attr), 'value', 'text', $this->value, $this->id);
+			$html[] = $select->genericlist($options, '', trim($attr), 'value', 'text', $this->value, $this->id);
 			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
 		}
 		else
 		// Create a regular list.
 		{
-			$html[] = HtmlSelect::genericlist($options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+			$html[] = $select->genericlist($options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
 		}
 
 		return implode($html);
@@ -81,11 +90,22 @@ class ListField extends \Joomla\Form\Field
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
-	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
 		$options = array();
+
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)
@@ -96,14 +116,12 @@ class ListField extends \Joomla\Form\Field
 				continue;
 			}
 
+			$text = $this->translateOptions
+				? $this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: trim((string) $option);
+
 			// Create a new option object based on the <option /> element.
-			$tmp = HtmlSelect::option(
-				(string) $option['value'],
-				$this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)),
-				'value',
-				'text',
-				((string) $option['disabled'] == 'true')
-			);
+			$tmp = $select->option((string) $option['value'], $text, 'value', 'text', ((string) $option['disabled'] == 'true'));
 
 			// Set some option attributes.
 			$tmp->class = (string) $option['class'];

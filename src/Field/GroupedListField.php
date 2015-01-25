@@ -40,8 +40,17 @@ class GroupedListField extends \Joomla\Form\Field
 		$groups = array();
 		$label = 0;
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		/** @var \SimpleXMLElement $element */
 		foreach ($this->element->children() as $element)
@@ -57,7 +66,7 @@ class GroupedListField extends \Joomla\Form\Field
 					}
 
 					// Create a new option object based on the <option /> element.
-					$tmp = HtmlSelect::option(
+					$tmp = $select->option(
 						($element['value']) ? (string) $element['value'] : trim((string) $element),
 						$this->getText()->alt(trim((string) $element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
 						((string) $element['disabled'] == 'true')
@@ -98,7 +107,7 @@ class GroupedListField extends \Joomla\Form\Field
 						}
 
 						// Create a new option object based on the <option /> element.
-						$tmp = HtmlSelect::option(
+						$tmp = $select->option(
 							($option['value']) ? (string) $option['value'] : $this->getText()->translate(trim((string) $option)),
 							$this->getText()->translate(trim((string) $option)), 'value', 'text', ((string) $option['disabled'] == 'true')
 						);
@@ -143,6 +152,18 @@ class GroupedListField extends \Joomla\Form\Field
 		$html = array();
 		$attr = '';
 
+		$select = new HtmlSelect;
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
+
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 		$attr .= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
@@ -158,7 +179,7 @@ class GroupedListField extends \Joomla\Form\Field
 		// Create a read-only list (no name) with a hidden input to store the value.
 		if ((string) $this->element['readonly'] == 'true')
 		{
-			$html[] = HtmlSelect::groupedlist(
+			$html[] = $select->groupedlist(
 				$groups,
 				null,
 				array(
@@ -171,7 +192,7 @@ class GroupedListField extends \Joomla\Form\Field
 		else
 		// Create a regular list.
 		{
-			$html[] = HtmlSelect::groupedlist(
+			$html[] = $select->groupedlist(
 				$groups,
 				$this->name,
 				array(
