@@ -7,24 +7,24 @@
 namespace Joomla\Form\Tests\Rule;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Rule\Equals as RuleEquals;
+use Joomla\Form\Rule\EqualsRule;
 use Joomla\Registry\Registry;
 
 /**
- * Test class for Joomla\Form\Rule\Equals.
+ * Test class for Joomla\Form\Rule\EqualsRule.
  *
- * @coversDefaultClass  Joomla\Form\Rule\Equals
+ * @coversDefaultClass  Joomla\Form\Rule\EqualsRule
  */
-class EqualsTest extends \PHPUnit_Framework_TestCase
+class EqualsRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test the Joomla\Form\Rule\Equals::test method.
+	 * Test the Joomla\Form\Rule\EqualsRule::test method.
 	 *
 	 * @covers  ::test
 	 */
 	public function testEquals()
 	{
-		$rule = new RuleEquals;
+		$rule = new EqualsRule;
 		$field = new \SimpleXmlElement('<field name="foo" field="bar" />');
 
 		// Test fail conditions.
@@ -43,14 +43,14 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Equals::test method.
+	 * Test the Joomla\Form\Rule\EqualsRule::test method.
 	 *
 	 * @covers             ::test
 	 * @expectedException  UnexpectedValueException
 	 */
 	public function testEqualsNoField()
 	{
-		$rule = new RuleEquals;
+		$rule = new EqualsRule;
 		$field = new \SimpleXmlElement('<field name="foo" />');
 
 		// Test fail conditions.
@@ -59,14 +59,14 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Equals::test method.
+	 * Test the Joomla\Form\Rule\EqualsRule::test method.
 	 *
 	 * @covers             ::test
 	 * @expectedException  InvalidArgumentException
 	 */
 	public function testEqualsNullRegistry()
 	{
-		$rule = new RuleEquals;
+		$rule = new EqualsRule;
 		$field = new \SimpleXmlElement('<field name="foo" field="bar" />');
 
 		// Test fail conditions.

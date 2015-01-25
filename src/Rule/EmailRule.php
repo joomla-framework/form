@@ -18,7 +18,7 @@ use SimpleXMLElement;
  *
  * @since  1.0
  */
-class Email extends Rule
+class EmailRule extends Rule
 {
 	/**
 	 * The regular expression to use in testing a form field value.

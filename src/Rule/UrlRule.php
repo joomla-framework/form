@@ -20,7 +20,7 @@ use SimpleXMLElement;
  *
  * @since  1.0
  */
-class Url extends Rule
+class UrlRule extends Rule
 {
 	/**
 	 * Method to test an external url for a valid parts.

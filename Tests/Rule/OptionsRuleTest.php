@@ -7,24 +7,23 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Rule\Options as RuleOptions;
+use Joomla\Form\Rule\OptionsRule;
 
 /**
- * Test class for Joomla\Form\Rule\Options.
+ * Test class for Joomla\Form\Rule\OptionsRule.
  *
- * @coversDefaultClass  Joomla\Form\Rule\Options
- * @since  1.0
+ * @coversDefaultClass  Joomla\Form\Rule\OptionsRule
  */
-class OptionsTest extends \PHPUnit_Framework_TestCase
+class OptionsRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test the Joomla\Form\Rule\Options::test method.
+	 * Test the Joomla\Form\Rule\OptionsRule::test method.
 	 *
 	 * @covers ::test
 	 */
 	public function testOptions()
 	{
-		$rule = new RuleOptions;
+		$rule = new OptionsRule;
 		$xml = new \SimpleXmlElement(
 			'<field name="field1"><option value="value1">Value1</option><option value="value2">Value2</option></field>'
 		);

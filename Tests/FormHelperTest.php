@@ -102,13 +102,13 @@ class FormHelperTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			"Joomla\\Form\\Rule\\Email",
+			"Joomla\\Form\\Rule\\EmailRule",
 			FormHelper::loadRuleClass('email'),
 			'Line:' . __LINE__ . ' loadRuleClass should return the correct class.'
 		);
 
 		$this->assertEquals(
-			"Joomla\\Form\\Rule\\Url",
+			"Joomla\\Form\\Rule\\UrlRule",
 			FormHelper::loadRuleClass('joomla.url'),
 			'Line:' . __LINE__ . ' loadRuleClass should return the correct class.'
 		);

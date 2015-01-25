@@ -18,7 +18,7 @@ use SimpleXMLElement;
  *
  * @since  1.0
  */
-class Tel extends Rule
+class TelRule extends Rule
 {
 	/**
 	 * Method to test the url for a valid parts.

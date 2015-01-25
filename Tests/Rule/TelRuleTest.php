@@ -7,17 +7,17 @@
 namespace Joomla\Form\Tests\Rule;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Rule\Tel as RuleTel;
+use Joomla\Form\Rule\TelRule;
 
 /**
- * Test class for Joomla\Form\Rule\Tel.
+ * Test class for Joomla\Form\Rule\TelRule.
  *
- * @coversDefaultClass  Joomla\Form\Rule\Tel
+ * @coversDefaultClass  Joomla\Form\Rule\TelRule
  */
-class TelTest extends \PHPUnit_Framework_TestCase
+class TelRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test data for testing of Joomla\Form\Rule\Tel::test method.
+	 * Test data for testing of Joomla\Form\Rule\TelRule::test method.
 	 *
 	 * @return  array
 	 */
@@ -192,7 +192,7 @@ class TelTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Tel::test method.
+	 * Test the Joomla\Form\Rule\TelRule::test method.
 	 *
 	 * @param   string  $xml         @todo
 	 * @param   array   $assertions  @todo
@@ -202,7 +202,7 @@ class TelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testTel($xml, $assertions)
 	{
-		$rule = new RuleTel;
+		$rule = new TelRule;
 		$field = new \SimpleXmlElement($xml);
 
 		foreach ($assertions as $assertion)

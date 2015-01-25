@@ -17,7 +17,7 @@ use Joomla\Registry\Registry;
  *
  * @since  1.0
  */
-class Color extends Rule
+class ColorRule extends Rule
 {
 	/**
 	 * Method to test for a valid color in hexadecimal.

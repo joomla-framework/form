@@ -6,17 +6,17 @@
 
 namespace Joomla\Form\Tests\Rule;
 
-use Joomla\Form\Rule\Color as RuleColor;
+use Joomla\Form\Rule\ColorRule;
 
 /**
- * Test class for Joomla\Form\Rule\Color.
+ * Test class for Joomla\Form\Rule\ColorRule.
  *
- * @coversDefaultClass  Joomla\Form\Rule\Color
+ * @coversDefaultClass  Joomla\Form\Rule\ColorRule
  */
-class ColorTest extends \PHPUnit_Framework_TestCase
+class ColorRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test data for testing of Joomla\Form\Rule\Color::test method.
+	 * Test data for testing of Joomla\Form\Rule\ColorRule::test method.
 	 *
 	 * @return  array
 	 */
@@ -42,7 +42,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Color::test method.
+	 * Test the Joomla\Form\Rule\ColorRule::test method.
 	 *
 	 * @param   string   $color           @todo
 	 * @param   boolean  $expectedOutput  @todo
@@ -52,7 +52,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testColor($color, $expectedOutput)
 	{
-		$rule = new RuleColor;
+		$rule = new ColorRule;
 		$xml = new \SimpleXmlElement('<field name="color" />');
 		$this->assertThat(
 			$rule->test($xml, $color),

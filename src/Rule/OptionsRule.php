@@ -3,7 +3,7 @@
  * Part of the Joomla Framework Form Package
  *
  * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Form\Rule;
@@ -12,20 +12,17 @@ use Joomla\Form\Rule;
 use Joomla\Form\Form;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
-use UnexpectedValueException;
-use InvalidArgumentException;
 
 /**
  * Form Rule class for the Joomla Framework.
+ * Requires the value entered be one of the options in a field of type="list"
  *
  * @since  1.0
  */
-class Equals extends Rule
+class OptionsRule extends Rule
 {
 	/**
-	 * Method to test if two values are equal. To use this rule, the form
-	 * XML needs a validate attribute of equals and a field attribute
-	 * that is equal to the field to test against.
+	 * Method to test the value.
 	 *
 	 * @param   SimpleXMLElement  $element  The SimpleXMLElement object representing the <field /> tag for the form field object.
 	 * @param   mixed             $value    The form field value to validate.
@@ -38,28 +35,16 @@ class Equals extends Rule
 	 * @return  boolean  True if the value is valid, false otherwise.
 	 *
 	 * @since   1.0
-	 * @throws  InvalidArgumentException
-	 * @throws  UnexpectedValueException
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null, Form $form = null)
 	{
-		$field = (string) $element['field'];
-
-		// Check that a validation field is set.
-		if (!$field)
+		// Check each value and return true if we get a match
+		foreach ($element->option as $option)
 		{
-			throw new UnexpectedValueException(sprintf('$field empty in %s::test', get_class($this)));
-		}
-
-		if (is_null($input))
-		{
-			throw new InvalidArgumentException(sprintf('The value for $input must not be null in %s', get_class($this)));
-		}
-
-		// Test the two values against each other.
-		if ($value == $input->get($field))
-		{
-			return true;
+			if ($value == (string) $option->attributes()->value)
+			{
+				return true;
+			}
 		}
 
 		return false;

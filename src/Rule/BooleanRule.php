@@ -15,7 +15,7 @@ use Joomla\Form\Rule;
  *
  * @since  1.0
  */
-class Boolean extends Rule
+class BooleanRule extends Rule
 {
 	/**
 	 * The regular expression to use in testing a form field value.

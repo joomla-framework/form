@@ -103,10 +103,7 @@ class FormHelper
 			$class .=  '\\' . ucfirst($type);
 		}
 
-		if ($entity === 'field')
-		{
-			$class .= ucfirst($entity);
-		}
+		$class .= ucfirst($entity);
 
 		// Check for all if the class exists.
 		return class_exists($class) ? $class : false;
