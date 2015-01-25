@@ -379,9 +379,9 @@ abstract class Field
 		$readonly = (string) $element['readonly'];
 
 		// Set the required, disabled and validation options.
-		$this->required = ($required == 'true' || $required == 'required' || $required == '1');
-		$this->disabled = ($disabled == 'true' || $disabled == 'disabled' || $disabled == '1');
-		$this->readonly = ($readonly == 'true' || $readonly == 'readonly' || $readonly == '1');
+		$this->required = $required == 'true';
+		$this->disabled = $disabled == 'true';
+		$this->readonly = $readonly == 'true';
 		$this->validate = (string) $element['validate'];
 
 		// Add the required class if the field is required.
@@ -416,10 +416,9 @@ abstract class Field
 		$this->hidden = ((string) $element['type'] == 'hidden' || (string) $element['hidden'] == 'true');
 
 		// Determine whether to translate the field label, description, and options.
-		$this->translateLabel = !((string) $this->element['translate_label'] == 'false' || (string) $this->element['translate_label'] == '0');
-		$this->translateDescription = !((string) $this->element['translate_description'] == 'false'
-			|| (string) $this->element['translate_description'] == '0');
-		$this->translateOptions = !((string) $this->element['translate_options'] == 'false' || (string) $this->element['translate_options'] == '0');
+		$this->translateLabel = !(string) $this->element['translate_label'] == 'false';
+		$this->translateDescription = !(string) $this->element['translate_description'] == 'false';
+		$this->translateOptions = !(string) $this->element['translate_options'] == 'false';
 
 		// Set the group of the field.
 		$this->group = $group;
