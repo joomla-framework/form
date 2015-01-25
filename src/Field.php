@@ -384,22 +384,6 @@ abstract class Field
 		$this->readonly = $readonly == 'true';
 		$this->validate = (string) $element['validate'];
 
-		// Add the required class if the field is required.
-		if ($this->required)
-		{
-			if ($class)
-			{
-				if (strpos($class, 'required') === false)
-				{
-					$this->element['class'] = $class . ' required';
-				}
-			}
-			else
-			{
-				$this->element->addAttribute('class', 'required');
-			}
-		}
-
 		// Set the multiple values option.
 		$this->multiple = ($multiple == 'true' || $multiple == 'multiple');
 
@@ -576,14 +560,7 @@ abstract class Field
 		}
 
 		// Add the label text and closing tag.
-		if ($this->required)
-		{
-			$label .= '>' . $text . '<span class="star">&#160;*</span></label>';
-		}
-		else
-		{
-			$label .= '>' . $text . '</label>';
-		}
+		$label .= '>' . $text . '</label>';
 
 		return $label;
 	}

@@ -217,7 +217,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" ' .
-			'title="Title::The title.">Title<span class="star">&#160;*</span></label>';
+			'title="Title::The title.">Title</label>';
 
 		$this->assertEquals(
 			$equals,
@@ -407,7 +407,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			'inputbox required',
+			'inputbox',
 			(string) $title['class'],
 			'Line:' . __LINE__ . ' The property should be set from the XML.'
 		);
@@ -434,8 +434,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" title="Title::The title.">' .
-			'Title<span class="star">&#160;*</span></label>';
+		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" title="Title::The title.">Title</label>';
 
 		$this->assertEquals(
 			$equals,
@@ -558,7 +557,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			'required',
+			'',
 			$field->element['class'],
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);

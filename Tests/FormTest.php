@@ -1037,7 +1037,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			'<input type="text" name="title" id="title_id" value="The Title" class="inputbox required"/>',
+			'<input type="text" name="title" id="title_id" value="The Title" class="inputbox"/>',
 			$form->getInput('title', null, 'The Title'),
 			'Line:' . __LINE__ . ' The method should return a simple input text field.'
 		);
@@ -1120,7 +1120,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			'<label id="title_id-lbl" for="title_id" class="hasTip required" ' .
-				'title="Title::The title.">Title<span class="star">&#160;*</span></label>',
+				'title="Title::The title.">Title</label>',
 			$form->getLabel('title'),
 			'Line:' . __LINE__ . ' The method should return a simple label field.'
 		);
