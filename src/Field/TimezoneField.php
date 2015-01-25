@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -11,7 +11,9 @@ namespace Joomla\Form\Field;
 use Joomla\Form\Html\Select as HtmlSelect;
 
 /**
- * Form Field class for the Joomla Framework.
+ * Timezone Form Field class for the Joomla! Framework.
+ *
+ * Supports a grouped list of timezones.
  *
  * @since  1.0
  */
@@ -29,7 +31,6 @@ class TimezoneField extends GroupedListField
 	 * The list of available timezone groups to use.
 	 *
 	 * @var    array
-	 *
 	 * @since  1.0
 	 */
 	protected static $zones = array('Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');

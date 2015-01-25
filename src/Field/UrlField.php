@@ -1,19 +1,20 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 /**
- * Form Field class for the Joomla Framework.
- * Supports a URL text field
+ * URL Form Field class for the Joomla! Framework.
+ *
+ * Supports an HTML5 URL text field
  *
  * @link   http://www.w3.org/TR/html-markup/input.url.html#input.url
- * @see    \Joomla\Form\Rule\Url for validation of full urls
+ * @see    \Joomla\Form\Rule\UrlRule for validation of full urls
  * @since  1.0
  */
 class UrlField extends TextField

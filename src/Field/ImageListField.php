@@ -1,15 +1,17 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 /**
- * Supports an HTML select list of image
+ * File List Form Field class for the Joomla! Framework.
+ *
+ * Supports an HTML select list of images
  *
  * @since  1.0
  */
@@ -25,6 +27,7 @@ class ImageListField extends FileListField
 
 	/**
 	 * Method to get the list of images field options.
+	 *
 	 * Use the filter attribute to specify allowable file extensions.
 	 *
 	 * @return  array  The field option objects.

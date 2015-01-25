@@ -1,15 +1,16 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 /**
- * Form Field class for the Joomla Framework.
+ * Text Form Field class for the Joomla! Framework.
+ *
  * Supports a one line text field.
  *
  * @link   http://www.w3.org/TR/html-markup/input.text.html#input.text
@@ -45,7 +46,7 @@ class TextField extends \Joomla\Form\Field
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
+		return '<input type="' . strtolower($this->type) . '" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
 			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $onchange . $maxLength . '/>';
 	}
 }

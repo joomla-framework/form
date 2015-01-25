@@ -1,19 +1,20 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 /**
- * Form Field class for the Joomla Framework.
+ * E-mail Form Field class for the Joomla! Framework.
+ *
  * Provides and input field for e-mail addresses
  *
  * @link   http://www.w3.org/TR/html-markup/input.email.html#input.email
- * @see    \Joomla\Form\Rule\Email
+ * @see    \Joomla\Form\Rule\EmailRule
  * @since  1.0
  */
 class EmailField extends \Joomla\Form\Field

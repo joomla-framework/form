@@ -1,10 +1,9 @@
 <?php
 /**
- * Unit test runner bootstrap file for the Joomla Framework.
+ * Part of the Joomla Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
- * @link       http://www.phpunit.de/manual/current/en/installation.html
  */
 
 // Fix magic quotes.

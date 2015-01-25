@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -11,11 +11,11 @@ namespace Joomla\Form\Field;
 use Joomla\Database\DatabaseDriver;
 
 /**
- * Form Field class for the Joomla Framework.
- * Provides a list of available database connections, optionally limiting to
- * a given list.
+ * Database Connection Form Field class for the Joomla! Framework.
  *
- * @see    Joomla\Database\DatabaseDriver
+ * Provides a list of available database connections, optionally limiting to a given list.
+ *
+ * @see    \Joomla\Database\DatabaseDriver
  * @since  1.0
  */
 class DatabaseConnectionField extends ListField
@@ -32,12 +32,12 @@ class DatabaseConnectionField extends ListField
 	 * Method to get the list of database options.
 	 *
 	 * This method produces a drop down list of available databases supported
-	 * by DatabaseDriver classes that are also supported by the application.
+	 * by {@link \Joomla\Database\DatabaseDriver} classes that are also supported by the application.
 	 *
 	 * @return  array    The field option objects.
 	 *
 	 * @since   1.0
-	 * @see		Joomla\Database\DatabaseDriver
+	 * @see		\Joomla\Database\DatabaseDriver
 	 */
 	protected function getOptions()
 	{

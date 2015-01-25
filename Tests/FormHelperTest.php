@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -24,8 +24,9 @@ class FormHelperTest extends \PHPUnit_Framework_TestCase
 		/** @var \Composer\Autoload\ClassLoader $loader */
 		$loader = include dirname(__DIR__) . '/vendor/autoload.php';
 
-		// Add our test fields to the autoload paths for testing
+		// Add our test fields and rules to the autoload paths for testing
 		$loader->addPsr4('Foo\\Form\\Field\\', __DIR__ . '/_testfields');
+		$loader->addPsr4('Foo\\Form\\Rule\\', __DIR__ . '/_testrules');
 	}
 
 	/**
@@ -111,6 +112,12 @@ class FormHelperTest extends \PHPUnit_Framework_TestCase
 			"Joomla\\Form\\Rule\\UrlRule",
 			FormHelper::loadRuleClass('joomla.url'),
 			'Line:' . __LINE__ . ' loadRuleClass should return the correct class.'
+		);
+
+		$this->assertEquals(
+			"Foo\\Form\\Rule\\CustomRule",
+			FormHelper::loadRuleClass('foo.custom'),
+			'Line:' . __LINE__ . ' loadRuleClass should return the correct custom class.'
 		);
 	}
 }

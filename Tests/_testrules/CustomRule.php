@@ -1,17 +1,17 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form\Rule;
+namespace Foo\Form\Rule;
 
 /**
  * Form Rule class for the Joomla Framework.
  *
  * @since  1.0
  */
-class Custom extends \Joomla\Form\Rule
+class CustomRule extends \Joomla\Form\Rule
 {
 	/**
 	 * The regular expression to use in testing a form field value.

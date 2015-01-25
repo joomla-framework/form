@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,7 +13,9 @@ use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
 /**
- * Supports an HTML select list of files
+ * File List Form Field class for the Joomla! Framework.
+ *
+ * Supports an HTML select list of files.
  *
  * @since  1.0
  */
@@ -29,6 +31,7 @@ class FileListField extends ListField
 
 	/**
 	 * Method to get the list of files for the field options.
+	 *
 	 * Specify the target directory with a directory attribute
 	 * Attributes allow an exclude mask and stripping of extensions from file name.
 	 * Default attribute may optionally be set to null (no file) or -1 (use a default).

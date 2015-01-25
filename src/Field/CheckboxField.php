@@ -1,17 +1,17 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 /**
- * Form Field class for the Joomla Framework.
- * Single check box field.
- * This is a boolean field with null for false and the specified option for true
+ * Checkbox Form Field class for the Joomla! Framework.
+ *
+ * Single check box field. This is a boolean field with null for false and the specified option for true.
  *
  * @link   http://www.w3.org/TR/html-markup/input.checkbox.html#input.checkbox
  * @see    \Joomla\Form\Field\CheckboxesField

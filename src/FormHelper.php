@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,6 +13,7 @@ use Joomla\String\String;
 
 /**
  * Helper class for the Form package.
+ *
  * Provides a storage for filesystem's paths where Joomla\Form entities reside and methods for creating those entities.
  * Also stores objects with entities' prototypes for further reusing.
  *
@@ -39,6 +40,7 @@ class FormHelper
 
 	/**
 	 * Attempt to import the Field class file if it isn't already imported.
+	 *
 	 * You can use this method outside of Joomla\Form for loading a field for inheritance or composition.
 	 *
 	 * @param   string  $type  Type of a field whose class should be loaded.
@@ -54,6 +56,7 @@ class FormHelper
 
 	/**
 	 * Attempt to import the Rule class file if it isn't already imported.
+	 *
 	 * You can use this method outside of Joomla\Form for loading a rule for inheritance or composition.
 	 *
 	 * @param   string  $type  Type of a rule whose class should be loaded.
@@ -76,7 +79,7 @@ class FormHelper
 	 * @param   string  $entity  One of the form entities (field or rule).
 	 * @param   string  $type    Type of an entity.
 	 *
-	 * @return  mixed  Class name on success or false otherwise.
+	 * @return  boolean|string  Class name on success or false otherwise.
 	 *
 	 * @since   1.0
 	 */

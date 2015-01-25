@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,7 +13,9 @@ use Joomla\Form\Form;
 use Joomla\Registry\Registry;
 
 /**
- * Form Rule class for the Joomla Framework.
+ * Color Form Rule class for the Joomla! Framework.
+ *
+ * Validates that a value is a valid hexadecimal color code.
  *
  * @since  1.0
  */

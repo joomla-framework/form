@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -17,11 +17,10 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
 /**
- * Form Class for the Joomla Framework.
+ * Form Class for the Joomla! Framework.
  *
  * This class implements a robust API for constructing, populating, filtering, and validating forms.
- * It uses XML definitions to construct form fields and a variety of field and rule classes to
- * render and validate the form.
+ * It uses XML definitions to construct form fields and a variety of field and rule classes to render and validate the form.
  *
  * @link   http://www.w3.org/TR/html4/interact/forms.html
  * @link   http://www.w3.org/TR/html5/forms.html
@@ -32,7 +31,7 @@ class Form
 	/**
 	 * The Registry data store for form fields during display.
 	 *
-	 * @var    object
+	 * @var    Registry
 	 * @since  1.0
 	 */
 	protected $data;
@@ -330,12 +329,11 @@ class Form
 	}
 
 	/**
-	 * Method to get an array of FormField objects in a given fieldset by name.  If no name is
-	 * given then all fields are returned.
+	 * Method to get an array of Field objects in a given fieldset by name.  If no name is given then all fields are returned.
 	 *
 	 * @param   string  $set  The optional name of the fieldset.
 	 *
-	 * @return  array  The array of FormField objects in the fieldset.
+	 * @return  Field[]  An array of Field objects in the fieldset.
 	 *
 	 * @since   1.0
 	 */
@@ -499,13 +497,14 @@ class Form
 	}
 
 	/**
-	 * Method to set the form control. This string serves as a container for all form fields. For
-	 * example, if there is a field named 'foo' and a field named 'bar' and the form control is
-	 * empty the fields will be rendered like: <input name="foo" /> and <input name="bar" />.  If
-	 * the form control is set to 'joomla' however, the fields would be rendered like:
-	 * <input name="joomla[foo]" /> and <input name="joomla[bar]" />.
+	 * Method to set the form control
 	 *
-	 * @return  static
+	 * This string serves as a container for all form fields. For example, if there is a field named 'foo'
+	 * and a field named 'bar' and the form control is empty the fields will be rendered like:
+	 * <input name="foo" /> and <input name="bar" />.  If the form control is set to 'joomla' however, the fields
+	 * would be rendered like: <input name="joomla[foo]" /> and <input name="joomla[bar]" />.
+	 *
+	 * @return  Form
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
@@ -517,11 +516,12 @@ class Form
 	 }
 
 	/**
-	 * Method to get the form control. This string serves as a container for all form fields. For
-	 * example, if there is a field named 'foo' and a field named 'bar' and the form control is
-	 * empty the fields will be rendered like: <input name="foo" /> and <input name="bar" />.  If
-	 * the form control is set to 'joomla' however, the fields would be rendered like:
-	 * <input name="joomla[foo]" /> and <input name="joomla[bar]" />.
+	 * Method to get the form control.
+	 *
+	 * This string serves as a container for all form fields. For example, if there is a field named 'foo'
+	 * and a field named 'bar' and the form control is empty the fields will be rendered like:
+	 * <input name="foo" /> and <input name="bar" />.  If the form control is set to 'joomla' however, the fields
+	 * would be rendered like: <input name="joomla[foo]" /> and <input name="joomla[bar]" />.
 	 *
 	 * @return  string  The form control string.
 	 *
@@ -533,13 +533,13 @@ class Form
 	}
 
 	/**
-	 * Method to get an array of FormField objects in a given field group by name.
+	 * Method to get an array of Field objects in a given field group by name.
 	 *
 	 * @param   string   $group   The dot-separated form group path for which to get the form fields.
 	 * @param   boolean  $nested  True to also include fields in nested groups that are inside of the
 	 *                            group for which to find fields.
 	 *
-	 * @return  array    The array of FormField objects in the field group.
+	 * @return  Field[]  The array of Field objects in the field group.
 	 *
 	 * @since   1.0
 	 */
@@ -675,10 +675,10 @@ class Form
 	 * field being loaded.  If it is false, then the new field being loaded will be ignored and the
 	 * method will move on to the next field to load.
 	 *
-	 * @param   string       $data     The name of an XML string or object.
-	 * @param   boolean      $replace  Flag to toggle whether form fields should be replaced if a field
-	 *                                 already exists with the same group/name.
-	 * @param   bool|string  $xpath    An optional xpath to search for the fields.
+	 * @param   string          $data     The name of an XML string or object.
+	 * @param   boolean         $replace  Flag to toggle whether form fields should be replaced if a field
+	 *                                    already exists with the same group/name.
+	 * @param   boolean|string  $xpath    An optional xpath to search for the fields.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -798,10 +798,10 @@ class Form
 	 * fields in the new XML file unless the $reset parameter has been set
 	 * to false.
 	 *
-	 * @param   string       $file   The filesystem path of an XML file.
-	 * @param   boolean      $reset  Flag to toggle whether form fields should be replaced if a field
-	 *                               already exists with the same group/name.
-	 * @param   bool|string  $xpath  An optional xpath to search for the fields.
+	 * @param   string          $file   The filesystem path of an XML file.
+	 * @param   boolean         $reset  Flag to toggle whether form fields should be replaced if a field
+	 *                                  already exists with the same group/name.
+	 * @param   boolean|string  $xpath  An optional xpath to search for the fields.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -1395,7 +1395,7 @@ class Form
 	 * @param   string  $name   The name of the form field.
 	 * @param   string  $group  The optional dot-separated form group path on which to find the field.
 	 *
-	 * @return  mixed  The XML element object for the field or boolean false on error.
+	 * @return  \SimpleXMLElement|boolean  Boolean false on error or a SimpleXMLElement object.
 	 *
 	 * @since   1.0
 	 */
@@ -1488,7 +1488,7 @@ class Form
 	 *
 	 * @param   string  $name  The name of the fieldset.
 	 *
-	 * @return  mixed  Boolean false on error or array of SimpleXMLElement objects.
+	 * @return  \SimpleXMLElement[]|boolean  Boolean false on error or array of SimpleXMLElement objects.
 	 *
 	 * @since   1.0
 	 */
@@ -1522,7 +1522,7 @@ class Form
 	 * @param   boolean  $nested  True to also include fields in nested groups that are inside of the
 	 *                            group for which to find fields.
 	 *
-	 * @return  mixed  Boolean false on error or array of SimpleXMLElement objects.
+	 * @return  \SimpleXMLElement[]|boolean  Boolean false on error or array of SimpleXMLElement objects.
 	 *
 	 * @since   1.0
 	 */
@@ -1595,7 +1595,7 @@ class Form
 	 *
 	 * @param   string  $group  The dot-separated form group path on which to find the group.
 	 *
-	 * @return  mixed  An array of XML element objects for the group or boolean false on error.
+	 * @return  \SimpleXMLElement[]|boolean  Boolean false on error or array of SimpleXMLElement objects.
 	 *
 	 * @since   1.0
 	 */
@@ -1807,7 +1807,7 @@ class Form
 	 * @param   Registry           $input    An optional Registry object with the entire data set to validate
 	 *                                       against the entire form.
 	 *
-	 * @return  mixed  Boolean true if field value is valid, Exception on failure.
+	 * @return  \Exception|boolean  Boolean true if field value is valid, Exception on failure.
 	 *
 	 * @since   1.0
 	 * @throws  \InvalidArgumentException

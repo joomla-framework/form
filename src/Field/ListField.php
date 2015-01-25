@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -11,7 +11,8 @@ namespace Joomla\Form\Field;
 use Joomla\Form\Html\Select as HtmlSelect;
 
 /**
- * Form Field class for the Joomla Framework.
+ * List Form Field class for the Joomla! Framework.
+ *
  * Supports a generic list of options.
  *
  * @since  1.0
@@ -28,6 +29,7 @@ class ListField extends \Joomla\Form\Field
 
 	/**
 	 * Method to get the field input markup for a generic list.
+	 *
 	 * Use the multiple attribute to enable multiselect.
 	 *
 	 * @return  string  The field input markup.

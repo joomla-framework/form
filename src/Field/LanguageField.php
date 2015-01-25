@@ -1,17 +1,18 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
-use Joomla\Language\Language;
+use Joomla\Language\LanguageHelper;
 
 /**
- * Form Field class for the Joomla Framework.
+ * Language Form Field class for the Joomla! Framework.
+ *
  * Supports a list of installed application languages
  *
  * @since  1.0
@@ -60,8 +61,8 @@ class LanguageField extends ListField
 	{
 		$list = array();
 
-		// Cache activation
-		$langs = Language::getKnownLanguages($basePath);
+		$langHelper = new LanguageHelper;
+		$langs      = $langHelper->getKnownLanguages($basePath);
 
 		foreach ($langs as $lang => $metadata)
 		{

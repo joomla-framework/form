@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -15,7 +15,7 @@ use Joomla\Language\Text;
 use SimpleXMLElement;
 
 /**
- * Abstract Form Field class for the Joomla Framework.
+ * Abstract Form Field class for the Joomla! Framework.
  *
  * @since  1.0
  */
@@ -110,8 +110,9 @@ abstract class Field
 	protected $label;
 
 	/**
-	 * The multiple state for the form field.  If true then multiple values are allowed for the
-	 * field.  Most often used for list field types.
+	 * The multiple state for the form field.
+	 *
+	 * If true then multiple values are allowed for the field.  Most often used for list field types.
 	 *
 	 * @var    boolean
 	 * @since  1.0
@@ -143,8 +144,9 @@ abstract class Field
 	protected $group;
 
 	/**
-	 * The required state for the form field.  If true then there must be a value for the field to
-	 * be considered valid.
+	 * The required state for the form field.
+	 *
+	 * If true then there must be a value for the field to be considered valid.
 	 *
 	 * @var    boolean
 	 * @since  1.0
@@ -152,8 +154,9 @@ abstract class Field
 	protected $required = false;
 
 	/**
-	 * The disabled state for the form field.  If true then there must not be a possibility
-	 * to change the pre-selected value, and the value must not be submitted by the browser.
+	 * The disabled state for the form field.
+	 *
+	 * If true then there must not be a possibility to change the pre-selected value, and the value must not be submitted by the browser.
 	 *
 	 * @var    boolean
 	 * @since  1.0
@@ -161,8 +164,9 @@ abstract class Field
 	protected $disabled = false;
 
 	/**
-	 * The readonly state for the form field.  If true then there must not be a possibility
-	 * to change the pre-selected value, and the value must submitted by the browser.
+	 * The readonly state for the form field.
+	 *
+	 * If true then there must not be a possibility to change the pre-selected value, and the value must submitted by the browser.
 	 *
 	 * @var    boolean
 	 * @since  1.0
@@ -178,8 +182,9 @@ abstract class Field
 	protected $type;
 
 	/**
-	 * The validation method for the form field.  This value will determine which method is used
-	 * to validate the value for a field.
+	 * The validation method for the form field.
+	 *
+	 * This value will determine which method is used to validate the value for a field.
 	 *
 	 * @var    string
 	 * @since  1.0
