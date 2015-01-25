@@ -591,7 +591,15 @@ class Form
 		// Attempt to get the form field.
 		if ($field = $this->getField($name, $group, $value))
 		{
-			$field->setText($this->getText());
+			// Try to inject the text object into the field
+			try
+			{
+				$field->setText($this->getText());
+			}
+			catch (\RuntimeException $exception)
+			{
+				// A Text object was not set, ignore the error and try to continue processing
+			}
 
 			return $field->input;
 		}

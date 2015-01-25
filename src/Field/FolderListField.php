@@ -38,7 +38,16 @@ class FolderListField extends ListField
 		$options = array();
 
 		$select = new HtmlSelect;
-		$select->setText($this->getText());
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		// Initialize some field attributes.
 		$filter = (string) $this->element['filter'];

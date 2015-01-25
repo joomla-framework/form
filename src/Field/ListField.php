@@ -40,7 +40,16 @@ class ListField extends \Joomla\Form\Field
 		$attr = '';
 
 		$select = new HtmlSelect;
-		$select->setText($this->getText());
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
@@ -87,7 +96,16 @@ class ListField extends \Joomla\Form\Field
 		$options = array();
 
 		$select = new HtmlSelect;
-		$select->setText($this->getText());
+
+		// Try to inject the text object into the field
+		try
+		{
+			$select->setText($this->getText());
+		}
+		catch (\RuntimeException $exception)
+		{
+			// A Text object was not set, ignore the error and try to continue processing
+		}
 
 		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)
