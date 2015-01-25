@@ -13,7 +13,7 @@ namespace Joomla\Form\Field;
  * Supports a URL text field
  *
  * @link   http://www.w3.org/TR/html-markup/input.url.html#input.url
- * @see    JFormRuleUrl for validation of full urls
+ * @see    \Joomla\Form\Rule\Url for validation of full urls
  * @since  1.0
  */
 class UrlField extends TextField

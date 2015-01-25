@@ -13,8 +13,7 @@ namespace Joomla\Form\Field;
  * Supports a text field telephone numbers.
  *
  * @link   http://www.w3.org/TR/html-markup/input.tel.html
- * @see    JFormRuleTel for telephone number validation
- * @see    JHtmlTel for rendering of telephone numbers
+ * @see    \Joomla\Form\Rule\Tel for telephone number validation
  * @since  1.0
  */
 class TelField extends TextField

@@ -13,7 +13,7 @@ namespace Joomla\Form\Field;
  * Text field for passwords
  *
  * @link   http://www.w3.org/TR/html-markup/input.password.html#input.password
- * @note   Two password fields may be validated as matching using JFormRuleEquals
+ * @note   Two password fields may be validated as matching using {@link \Joomla\Form\Rule\Equals}
  * @since  1.0
  */
 class PasswordField extends \Joomla\Form\Field

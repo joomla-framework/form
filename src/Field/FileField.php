@@ -35,7 +35,6 @@ class FileField extends \Joomla\Form\Field
 	 * @since   1.0
 	 *
 	 * @note    The field does not include an upload mechanism.
-	 * @see     JFormFieldMedia
 	 */
 	protected function getInput()
 	{

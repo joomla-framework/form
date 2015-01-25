@@ -13,7 +13,7 @@ namespace Joomla\Form\Field;
  * Provides and input field for e-mail addresses
  *
  * @link   http://www.w3.org/TR/html-markup/input.email.html#input.email
- * @see    JFormRuleEmail
+ * @see    \Joomla\Form\Rule\Email
  * @since  1.0
  */
 class EmailField extends \Joomla\Form\Field

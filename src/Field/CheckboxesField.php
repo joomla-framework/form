@@ -15,7 +15,7 @@ use Joomla\Form\Html\Select as HtmlSelect;
  * Displays options as a list of check boxes.
  * Multiselect may be forced to be true.
  *
- * @see    JFormFieldCheckbox
+ * @see    \Joomla\Form\Field\CheckboxField
  * @since  1.0
  */
 class CheckboxesField extends \Joomla\Form\Field

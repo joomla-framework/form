@@ -14,7 +14,6 @@ use Joomla\Language\Language;
  * Form Field class for the Joomla Framework.
  * Supports a list of installed application languages
  *
- * @see    JFormFieldContentLanguage for a select list of content languages.
  * @since  1.0
  */
 class LanguageField extends ListField

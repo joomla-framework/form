@@ -14,7 +14,7 @@ namespace Joomla\Form\Field;
  * This is a boolean field with null for false and the specified option for true
  *
  * @link   http://www.w3.org/TR/html-markup/input.checkbox.html#input.checkbox
- * @see    JFormFieldCheckboxes
+ * @see    \Joomla\Form\Field\CheckboxesField
  * @since  1.0
  */
 class CheckboxField extends \Joomla\Form\Field

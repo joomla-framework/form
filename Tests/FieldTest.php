@@ -69,7 +69,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$field instanceof \Joomla\Form\Field,
-			'Line:' . __LINE__ . ' The JFormField constuctor should return a JFormField object.'
+			'Line:' . __LINE__ . ' The \\Joomla\\Form\\Field constuctor should return a \\Joomla\\Form\\Field object.'
 		);
 
 		$this->assertThat(

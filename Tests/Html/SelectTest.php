@@ -172,8 +172,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   mixed    $attribs    Additional HTML attributes for the <select> tag. This
 	 *                               can be an array of attributes, or an array of options. Treated as options
 	 *                               if it is the last argument passed. Valid options are:
-	 *                               Format options, see {@see JHtml::$formatOptions}.
-	 *                               Selection options, see {@see JHtml$select->options()}.
+	 *                               Format options, see {@see Joomla\Form\Html\Select::$formatOptions}.
+	 *                               Selection options, see {@see Joomla\Form\Html\Select::options()}.
 	 *                               list.attr, string|array: Additional attributes for the select
 	 *                               element.
 	 *                               id, string: Value to use as the select element id attribute.
@@ -885,7 +885,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   mixed    $optKey     If a string, this is the name of the object variable for
 	 *                               the option value. If null, the index of the array of objects is used. If
 	 *                               an array, this is a set of options, as key/value pairs. Valid options are:
-	 *                               -Format options, {@see JHtml::$formatOptions}.
+	 *                               -Format options, {@see \Joomla\Form\Html\Select::$formatOptions}.
 	 *                               -groups: Boolean. If set, looks for keys with the value
 	 *                                "&lt;optgroup>" and synthesizes groups from them. Deprecated. Defaults
 	 *                                true for backwards compatibility.
