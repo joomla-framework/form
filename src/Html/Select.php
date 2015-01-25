@@ -71,7 +71,18 @@ class Select
 	 */
 	public function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
 	{
-		$arr = array($this->option('0', $this->text->translate($no)), $this->option('1', $this->text->translate($yes)));
+		try
+		{
+			$optionNoText  = $this->getText()->translate($no);
+			$optionYesText = $this->getText()->translate($yes);
+		}
+		catch (\RuntimeException $exception)
+		{
+			$optionNoText  = $no;
+			$optionYesText = $yes;
+		}
+
+		$arr = array($this->option('0', $optionNoText), $this->option('1', $optionYesText));
 
 		return $this->radiolist($arr, $name, $attribs, 'value', 'text', (int) $selected, $id);
 	}
@@ -196,7 +207,7 @@ class Select
 	 *                            list.select: either the value of one selected option or an array
 	 *                            of selected options. Default: none.
 	 *                            list.translate: Boolean. If set, text and labels are translated via
-	 *                            $this->text->translate().
+	 *                            {@see \Joomla\Language\Text::translate()}.
 	 *
 	 * @return  string  HTML for the select list
 	 *
@@ -496,7 +507,7 @@ class Select
 	 *                               -list.select: either the value of one selected option or an array
 	 *                                of selected options. Default: none.
 	 *                               -list.translate: Boolean. If set, text and labels are translated via
-	 *                                $this->text->translate(). Default is false.
+	 *                                {@see \Joomla\Language\Text::translate()}. Default is false.
 	 *                               -option.id: The property in each option array to use as the
 	 *                                selection id attribute. Defaults to none.
 	 *                               -option.key: The property in each option array to use as the
@@ -605,7 +616,7 @@ class Select
 
 			if ($options['groups'] && $key == '<OPTGROUP>')
 			{
-				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? $this->text->translate($text) : $text) . '">' . $options['format.eol'];
+				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? $this->getText()->translate($text) : $text) . '">' . $options['format.eol'];
 				$baseIndent = str_repeat($options['format.indent'], ++$options['format.depth']);
 			}
 			elseif ($options['groups'] && $key == '</OPTGROUP>')
@@ -626,7 +637,7 @@ class Select
 
 				if ($options['list.translate'] && !empty($label))
 				{
-					$label = $this->text->translate($label);
+					$label = $this->getText()->translate($label);
 				}
 
 				if ($options['option.label.toHtml'])
@@ -665,7 +676,7 @@ class Select
 
 				if ($options['list.translate'])
 				{
-					$text = $this->text->translate($text);
+					$text = $this->getText()->translate($text);
 				}
 
 				// Generate the option, encoding as required
@@ -711,7 +722,7 @@ class Select
 		foreach ($data as $obj)
 		{
 			$k = $obj->$optKey;
-			$t = $translate ? $this->text->translate($obj->$optText) : $obj->$optText;
+			$t = $translate ? $this->getText()->translate($obj->$optText) : $obj->$optText;
 			$id = (isset($obj->id) ? $obj->id : null);
 
 			$extra = '';
@@ -750,7 +761,7 @@ class Select
 	 *
 	 * @param   Text  $text  The Text object to store
 	 *
-	 * @return  Field  Instance of this class.
+	 * @return  Select  Instance of this class.
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
