@@ -16,11 +16,12 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since  1.0
  */
-abstract class Select
+class Select
 {
 	/**
-	 * Option values related to the generation of HTML output. Recognized
-	 * options are:
+	 * Option values related to the generation of HTML output.
+	 *
+	 * Recognized options are:
 	 *     fmtDepth, integer. The current indent depth.
 	 *     fmtEol, string. The end of line string, default is linefeed.
 	 *     fmtIndent, string. The string to use for indentation, default is
@@ -29,7 +30,7 @@ abstract class Select
 	 * @var    array
 	 * @since  1.0
 	 */
-	protected static $formatOptions = array('format.depth' => 0, 'format.eol' => "\n", 'format.indent' => "\t");
+	protected $formatOptions = array('format.depth' => 0, 'format.eol' => "\n", 'format.indent' => "\t");
 
 	/**
 	 * Default values for options. Organized by option group.
@@ -37,10 +38,13 @@ abstract class Select
 	 * @var     array
 	 * @since   1.0
 	 */
-	static protected $optionDefaults = array(
-		'option' => array('option.attr' => null, 'option.disable' => 'disable', 'option.id' => null, 'option.key' => 'value',
+	protected $optionDefaults = array(
+		'option' => array(
+			'option.attr' => null, 'option.disable' => 'disable', 'option.id' => null, 'option.key' => 'value',
 			'option.key.toHtml' => true, 'option.label' => null, 'option.label.toHtml' => true, 'option.text' => 'text',
-			'option.text.toHtml' => true));
+			'option.text.toHtml' => true
+		)
+	);
 
 	/**
 	 * Container for the Text object
@@ -48,7 +52,7 @@ abstract class Select
 	 * @var    Text
 	 * @since  __DEPLOY_VERSION__
 	 */
-	public static $text;
+	private $text;
 
 	/**
 	 * Generates a yes/no radio list.
@@ -62,14 +66,14 @@ abstract class Select
 	 *
 	 * @return  string  HTML for the radio list
 	 *
-	 * @see     \Joomla\Form\Field\Radio
+	 * @see     \Joomla\Form\Field\RadioField
 	 * @since   1.0
 	 */
-	public static function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
+	public function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
 	{
-		$arr = array(self::option('0', self::$text->translate($no)), self::option('1', self::$text->translate($yes)));
+		$arr = array($this->option('0', $this->text->translate($no)), $this->option('1', $this->text->translate($yes)));
 
-		return self::radiolist($arr, $name, $attribs, 'value', 'text', (int) $selected, $id);
+		return $this->radiolist($arr, $name, $attribs, 'value', 'text', (int) $selected, $id);
 	}
 
 	/**
@@ -99,11 +103,11 @@ abstract class Select
 	 *
 	 * @since   1.0
 	 */
-	public static function genericlist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
+	public function genericlist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
 		$translate = false)
 	{
 		// Set default options
-		$options = array_merge(self::$formatOptions, array('format.depth' => 0, 'id' => false));
+		$options = array_merge($this->formatOptions, array('format.depth' => 0, 'id' => false));
 
 		if (is_array($attribs) && func_num_args() == 3)
 		{
@@ -145,9 +149,27 @@ abstract class Select
 
 		$baseIndent = str_repeat($options['format.indent'], $options['format.depth']++);
 		$html = $baseIndent . '<select' . ($id !== '' ? ' id="' . $id . '"' : '') . ' name="' . $name . '"' . $attribs . '>' . $options['format.eol']
-			. self::options($data, $options) . $baseIndent . '</select>' . $options['format.eol'];
+			. $this->options($data, $options) . $baseIndent . '</select>' . $options['format.eol'];
 
 		return $html;
+	}
+
+	/**
+	 * Retrieves the Text object
+	 *
+	 * @return  Text
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @throws  \RuntimeException
+	 */
+	public function getText()
+	{
+		if (!($this->text instanceof Text))
+		{
+			throw new \RuntimeException('A Joomla\\Language\\Text object is not set.');
+		}
+
+		return $this->text;
 	}
 
 	/**
@@ -174,18 +196,18 @@ abstract class Select
 	 *                            list.select: either the value of one selected option or an array
 	 *                            of selected options. Default: none.
 	 *                            list.translate: Boolean. If set, text and labels are translated via
-	 *                            self::$text->translate().
+	 *                            $this->text->translate().
 	 *
 	 * @return  string  HTML for the select list
 	 *
 	 * @since   1.0
 	 * @throws  \RuntimeException If a group has contents that cannot be processed.
 	 */
-	public static function groupedlist($data, $name, $options = array())
+	public function groupedlist($data, $name, $options = array())
 	{
 		// Set default options and overwrite with anything passed in
 		$options = array_merge(
-			self::$formatOptions,
+			$this->formatOptions,
 			array('format.depth' => 0, 'group.items' => 'items', 'group.label' => 'text', 'group.label.toHtml' => true, 'id' => false),
 			$options
 		);
@@ -277,13 +299,13 @@ abstract class Select
 
 			if ($noGroup)
 			{
-				$html .= self::options($subList, $options);
+				$html .= $this->options($subList, $options);
 			}
 			else
 			{
 				$html .= $groupIndent . '<optgroup' . (empty($id) ? '' : ' id="' . $id . '"') . ' label="'
 					. ($options['group.label.toHtml'] ? htmlspecialchars($label, ENT_COMPAT, 'UTF-8') : $label) . '">' . $options['format.eol']
-					. self::options($subList, $options) . $groupIndent . '</optgroup>' . $options['format.eol'];
+					. $this->options($subList, $options) . $groupIndent . '</optgroup>' . $options['format.eol'];
 			}
 		}
 
@@ -309,10 +331,10 @@ abstract class Select
 	 *
 	 * @since   1.0
 	 */
-	public static function integerlist($start, $end, $inc, $name, $attribs = null, $selected = null, $format = '')
+	public function integerlist($start, $end, $inc, $name, $attribs = null, $selected = null, $format = '')
 	{
 		// Set default options
-		$options = array_merge(self::$formatOptions, array('format.depth' => 0, 'option.format' => '', 'id' => null));
+		$options = array_merge($this->formatOptions, array('format.depth' => 0, 'option.format' => '', 'id' => null));
 
 		if (is_array($attribs) && func_num_args() == 5)
 		{
@@ -372,7 +394,7 @@ abstract class Select
 		// Tell genericlist() to use array keys
 		$options['option.key'] = null;
 
-		return self::genericlist($data, $name, $options);
+		return $this->genericlist($data, $name, $options);
 	}
 
 	/**
@@ -406,7 +428,7 @@ abstract class Select
 	 *
 	 * @since   1.0
 	 */
-	public static function option($value, $text = '', $optKey = 'value', $optText = 'text', $disable = false)
+	public function option($value, $text = '', $optKey = 'value', $optText = 'text', $disable = false)
 	{
 		$options = array('attr' => null, 'disable' => false, 'option.attr' => null, 'option.disable' => 'disable', 'option.key' => 'value',
 			'option.label' => null, 'option.text' => 'text');
@@ -474,7 +496,7 @@ abstract class Select
 	 *                               -list.select: either the value of one selected option or an array
 	 *                                of selected options. Default: none.
 	 *                               -list.translate: Boolean. If set, text and labels are translated via
-	 *                                self::$text->translate(). Default is false.
+	 *                                $this->text->translate(). Default is false.
 	 *                               -option.id: The property in each option array to use as the
 	 *                                selection id attribute. Defaults to none.
 	 *                               -option.key: The property in each option array to use as the
@@ -502,11 +524,11 @@ abstract class Select
 	 *
 	 * @since   1.0
 	 */
-	public static function options($arr, $optKey = 'value', $optText = 'text', $selected = null, $translate = false)
+	public function options($arr, $optKey = 'value', $optText = 'text', $selected = null, $translate = false)
 	{
 		$options = array_merge(
-			self::$formatOptions,
-			self::$optionDefaults['option'],
+			$this->formatOptions,
+			$this->optionDefaults['option'],
 			array('format.depth' => 0, 'groups' => true, 'list.select' => null, 'list.translate' => false)
 		);
 
@@ -583,7 +605,7 @@ abstract class Select
 
 			if ($options['groups'] && $key == '<OPTGROUP>')
 			{
-				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? self::$text->translate($text) : $text) . '">' . $options['format.eol'];
+				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? $this->text->translate($text) : $text) . '">' . $options['format.eol'];
 				$baseIndent = str_repeat($options['format.indent'], ++$options['format.depth']);
 			}
 			elseif ($options['groups'] && $key == '</OPTGROUP>')
@@ -604,7 +626,7 @@ abstract class Select
 
 				if ($options['list.translate'] && !empty($label))
 				{
-					$label = self::$text->translate($label);
+					$label = $this->text->translate($label);
 				}
 
 				if ($options['option.label.toHtml'])
@@ -643,7 +665,7 @@ abstract class Select
 
 				if ($options['list.translate'])
 				{
-					$text = self::$text->translate($text);
+					$text = $this->text->translate($text);
 				}
 
 				// Generate the option, encoding as required
@@ -673,7 +695,7 @@ abstract class Select
 	 *
 	 * @since   1.0
 	 */
-	public static function radiolist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
+	public function radiolist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
 		$translate = false)
 	{
 		reset($data);
@@ -689,7 +711,7 @@ abstract class Select
 		foreach ($data as $obj)
 		{
 			$k = $obj->$optKey;
-			$t = $translate ? self::$text->translate($obj->$optText) : $obj->$optText;
+			$t = $translate ? $this->text->translate($obj->$optText) : $obj->$optText;
 			$id = (isset($obj->id) ? $obj->id : null);
 
 			$extra = '';
@@ -721,5 +743,21 @@ abstract class Select
 		$html .= "\n";
 
 		return $html;
+	}
+
+	/**
+	 * Sets the Text object
+	 *
+	 * @param   Text  $text  The Text object to store
+	 *
+	 * @return  Field  Instance of this class.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function setText(Text $text)
+	{
+		$this->text = $text;
+
+		return $this;
 	}
 }

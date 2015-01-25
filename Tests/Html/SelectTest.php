@@ -7,6 +7,8 @@
 namespace Joomla\Form\Tests\Html;
 
 use Joomla\Form\Html\Select;
+use Joomla\Language\Language;
+use Joomla\Language\Text;
 
 /**
  * Test class for Joomla\Form\Html\Select.
@@ -15,6 +17,24 @@ use Joomla\Form\Html\Select;
  */
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Text object for injection
+	 *
+	 * @var  Text
+	 */
+	private $text;
+
+	/**
+	 * Set up for testing
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		// Prepare a Text object to be injected into test objects
+		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+	}
+
 	/**
 	 * Generic list dataset
 	 *
@@ -153,7 +173,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 *                               can be an array of attributes, or an array of options. Treated as options
 	 *                               if it is the last argument passed. Valid options are:
 	 *                               Format options, see {@see JHtml::$formatOptions}.
-	 *                               Selection options, see {@see JHtmlSelect::options()}.
+	 *                               Selection options, see {@see JHtml$select->options()}.
 	 *                               list.attr, string|array: Additional attributes for the select
 	 *                               element.
 	 *                               id, string: Value to use as the select element id attribute.
@@ -174,18 +194,21 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 		$optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
 		$translate = false)
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		if (func_num_args() == 4)
 		{
 			$this->assertTag(
 				$expected,
-				Select::genericlist($data, $name, $attribs)
+				$select->genericlist($data, $name, $attribs)
 			);
 		}
 		else
 		{
 			$this->assertTag(
 				$expected,
-				Select::genericlist($data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate)
+				$select->genericlist($data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate)
 			);
 		}
 	}
@@ -271,8 +294,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 * @param   array   $data      An array of groups, each of which is an array of options.
 	 * @param   string  $name      The value of the HTML name attribute
 	 * @param   array   $options   Options, an array of key/value pairs. Valid options are:
-	 *                             Format options, {@see Select::$formatOptions}.
-	 *                             Selection options. See {@see Select::options()}.
+	 *                             Format options, {@see $select->$formatOptions}.
+	 *                             Selection options. See {@see $select->options()}.
 	 *                             group.id: The property in each group to use as the group id
 	 *                             attribute. Defaults to none.
 	 *                             group.label: The property in each group to use as the group
@@ -298,18 +321,21 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGroupedlist($expected, $data, $name, $options = array())
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		if (func_num_args() == 3)
 		{
 			$this->assertTag(
 				$expected,
-				Select::groupedlist($data, $name)
+				$select->groupedlist($data, $name)
 			);
 		}
 		else
 		{
 			$this->assertTag(
 				$expected,
-				Select::groupedlist($data, $name, $options)
+				$select->groupedlist($data, $name, $options)
 			);
 		}
 	}
@@ -466,6 +492,9 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	public function testRadiolist($expected, $data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
 		$translate = false)
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		foreach ($data as $arr)
 		{
 			$dataObject[] = (object) $arr;
@@ -475,11 +504,11 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
 		if (func_num_args() == 4)
 		{
-			$html = Select::radiolist((object) $data, $name, $attribs);
+			$html = $select->radiolist((object) $data, $name, $attribs);
 		}
 		else
 		{
-			$html = Select::radiolist((object) $data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate);
+			$html = $select->radiolist((object) $data, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate);
 		}
 
 		foreach ($expected as $tag)
@@ -595,13 +624,16 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBooleanlist($expected, $name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		if (func_num_args() == 3)
 		{
-			$html = Select::booleanlist($name, $attribs);
+			$html = $select->booleanlist($name, $attribs);
 		}
 		else
 		{
-			$html = Select::booleanlist($name, $attribs, $selected, $yes, $no, $id);
+			$html = $select->booleanlist($name, $attribs, $selected, $yes, $no, $id);
 		}
 
 		foreach ($expected as $tag)
@@ -725,13 +757,16 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testIntegerlist($expected, $start, $end, $inc, $name, $attribs = null, $selected = null, $format = '')
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		if (func_num_args() == 6)
 		{
-			$html = Select::integerlist($start, $end, $inc, $name, $attribs);
+			$html = $select->integerlist($start, $end, $inc, $name, $attribs);
 		}
 		else
 		{
-			$html = Select::integerlist($start, $end, $inc, $name, $attribs, $selected, $format);
+			$html = $select->integerlist($start, $end, $inc, $name, $attribs, $selected, $format);
 		}
 
 		foreach ($expected as $tag)
@@ -886,9 +921,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testOptions($expected, $arr, $optKey = 'value', $optText = 'text', $selected = null, $translate = false)
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		$this->assertEquals(
 			$expected,
-			Select::options($arr, $optKey, $optText, $selected, $translate)
+			$select->options($arr, $optKey, $optText, $selected, $translate)
 		);
 	}
 
@@ -1003,9 +1041,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 	public function testOption($expected, $value, $text = '', $optKey = 'value',
 		$optText = 'text', $disable = false)
 	{
+		$select = new Select;
+		$select->setText($this->text);
+
 		$this->assertEquals(
 			(object) $expected,
-			Select::option($value, $text, $optKey, $optText, $disable)
+			$select->option($value, $text, $optKey, $optText, $disable)
 		);
 	}
 }

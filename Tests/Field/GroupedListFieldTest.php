@@ -148,9 +148,7 @@ class GroupedListFieldTest extends \PHPUnit_Framework_TestCase
 					)
 				)
 			);
-		$field->expects($this->any())
-			->method('getText')
-			->willReturn($this->text);
+		$field->setText($this->text);
 
 		$xml = new \SimpleXmlElement($xml);
 

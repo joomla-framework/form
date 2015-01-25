@@ -39,8 +39,8 @@ class ListField extends \Joomla\Form\Field
 		$html = array();
 		$attr = '';
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+		$select->setText($this->getText());
 
 		// Initialize some field attributes.
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
@@ -63,13 +63,13 @@ class ListField extends \Joomla\Form\Field
 		// Create a read-only list (no name) with a hidden input to store the value.
 		if ((string) $this->element['readonly'] == 'true')
 		{
-			$html[] = HtmlSelect::genericlist($options, '', trim($attr), 'value', 'text', $this->value, $this->id);
+			$html[] = $select->genericlist($options, '', trim($attr), 'value', 'text', $this->value, $this->id);
 			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
 		}
 		else
 		// Create a regular list.
 		{
-			$html[] = HtmlSelect::genericlist($options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+			$html[] = $select->genericlist($options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
 		}
 
 		return implode($html);
@@ -87,6 +87,9 @@ class ListField extends \Joomla\Form\Field
 	{
 		$options = array();
 
+		$select = new HtmlSelect;
+		$select->setText($this->getText());
+
 		/** @var \SimpleXMLElement $option */
 		foreach ($this->element->children() as $option)
 		{
@@ -97,7 +100,7 @@ class ListField extends \Joomla\Form\Field
 			}
 
 			// Create a new option object based on the <option /> element.
-			$tmp = HtmlSelect::option(
+			$tmp = $select->option(
 				(string) $option['value'],
 				$this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)),
 				'value',

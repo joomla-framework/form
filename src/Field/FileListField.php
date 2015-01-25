@@ -42,8 +42,8 @@ class FileListField extends ListField
 	{
 		$options = array();
 
-		// Inject the Text object into HtmlSelect
-		HtmlSelect::$text = $this->getText();
+		$select = new HtmlSelect;
+		$select->setText($this->getText());
 
 		// Initialize some field attributes.
 		$filter = (string) $this->element['filter'];
@@ -63,7 +63,7 @@ class FileListField extends ListField
 		// Prepend some default options based on field attributes.
 		if (!$hideNone)
 		{
-			$options[] = HtmlSelect::option(
+			$options[] = $select->option(
 				'-1',
 				$this->getText()->alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
 			);
@@ -71,7 +71,7 @@ class FileListField extends ListField
 
 		if (!$hideDefault)
 		{
-			$options[] = HtmlSelect::option(
+			$options[] = $select->option(
 				'',
 				$this->getText()->alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
 			);
@@ -100,7 +100,7 @@ class FileListField extends ListField
 					$file = File::stripExt($file);
 				}
 
-				$options[] = HtmlSelect::option($file, $file);
+				$options[] = $select->option($file, $file);
 			}
 		}
 

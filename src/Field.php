@@ -668,7 +668,6 @@ abstract class Field
 	 * @return  Field  Instance of this class.
 	 *
 	 * @since   __DEPLOY_VERSION__
-	 * @throws  \RuntimeException
 	 */
 	public function setText(Text $text)
 	{
