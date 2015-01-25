@@ -28,7 +28,7 @@ class UrlFieldTest extends \PHPUnit_Framework_TestCase
 				array(
 					'tag' => 'input',
 					'attributes' => array(
-						'type' => 'text',
+						'type' => 'url',
 						'id' => 'myId',
 						'name' => 'myName',
 					)
@@ -39,7 +39,7 @@ class UrlFieldTest extends \PHPUnit_Framework_TestCase
 				array(
 					'tag' => 'input',
 					'attributes' => array(
-						'type' => 'text',
+						'type' => 'url',
 						'id' => 'myId',
 						'size' => '0',
 						'maxlength' => '0',

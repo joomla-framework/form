@@ -28,7 +28,7 @@ class TelFieldTest extends \PHPUnit_Framework_TestCase
 				array(
 					'tag' => 'input',
 					'attributes' => array(
-						'type' => 'text',
+						'type' => 'tel',
 						'id' => 'myId',
 						'name' => 'myName',
 					)
@@ -39,7 +39,7 @@ class TelFieldTest extends \PHPUnit_Framework_TestCase
 				array(
 					'tag' => 'input',
 					'attributes' => array(
-						'type' => 'text',
+						'type' => 'tel',
 						'id' => 'myId',
 						'size' => '0',
 						'maxlength' => '0',
