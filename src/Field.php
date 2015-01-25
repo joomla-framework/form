@@ -78,6 +78,14 @@ abstract class Field
 	protected $translateDescription = true;
 
 	/**
+	 * True to translate the field's options.
+	 *
+	 * @var    boolean
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $translateOptions = true;
+
+	/**
 	 * The document id for the form field.
 	 *
 	 * @var    string
@@ -402,10 +410,11 @@ abstract class Field
 		// Set the visibility.
 		$this->hidden = ((string) $element['type'] == 'hidden' || (string) $element['hidden'] == 'true');
 
-		// Determine whether to translate the field label and/or description.
+		// Determine whether to translate the field label, description, and options.
 		$this->translateLabel = !((string) $this->element['translate_label'] == 'false' || (string) $this->element['translate_label'] == '0');
 		$this->translateDescription = !((string) $this->element['translate_description'] == 'false'
 			|| (string) $this->element['translate_description'] == '0');
+		$this->translateOptions = !((string) $this->element['translate_options'] == 'false' || (string) $this->element['translate_options'] == '0');
 
 		// Set the group of the field.
 		$this->group = $group;

@@ -32,7 +32,6 @@ class FolderListField extends ListField
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
-	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
@@ -58,18 +57,20 @@ class FolderListField extends ListField
 		// Prepend some default options based on field attributes.
 		if (!$hideNone)
 		{
-			$options[] = $select->option(
-				'-1',
-				$this->getText()->alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
-			);
+			$text = $this->translateOptions
+				? $this->getText()->alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: '- None Selected -';
+
+			$options[] = $select->option('-1', $text);
 		}
 
 		if (!$hideDefault)
 		{
-			$options[] = $select->option(
-				'',
-				$this->getText()->alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
-			);
+			$text = $this->translateOptions
+				? $this->getText()->alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: '- Use Default -';
+
+			$options[] = $select->option('', $text);
 		}
 
 		// Get a list of folders in the search path with the given filter.

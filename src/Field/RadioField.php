@@ -61,8 +61,7 @@ class RadioField extends \Joomla\Form\Field
 			$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
-			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>'
-				. $this->getText()->alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . '</label>';
+			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>' . $option->text . '</label>';
 		}
 
 		// End the radio field output.
@@ -77,7 +76,6 @@ class RadioField extends \Joomla\Form\Field
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
-	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
@@ -92,10 +90,14 @@ class RadioField extends \Joomla\Form\Field
 				continue;
 			}
 
+			$text = $this->translateOptions
+				? $this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: trim((string) $option);
+
 			// Set up option elements.
 			$tmp = new stdClass;
 			$tmp->value = (string) $option['value'];
-			$tmp->text = trim((string) $option);
+			$tmp->text = $text;
 			$tmp->disable = ((string) $option['disabled'] == 'true');
 			$tmp->class = (string) $option['class'];
 			$tmp->onclick = (string) $option['onclick'];

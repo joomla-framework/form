@@ -81,7 +81,6 @@ class ListField extends \Joomla\Form\Field
 	 * @return  array  The field option objects.
 	 *
 	 * @since   1.0
-	 * @todo    Add support for a translate_options element
 	 */
 	protected function getOptions()
 	{
@@ -99,14 +98,12 @@ class ListField extends \Joomla\Form\Field
 				continue;
 			}
 
+			$text = $this->translateOptions
+				? $this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname))
+				: trim((string) $option);
+
 			// Create a new option object based on the <option /> element.
-			$tmp = $select->option(
-				(string) $option['value'],
-				$this->getText()->alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)),
-				'value',
-				'text',
-				((string) $option['disabled'] == 'true')
-			);
+			$tmp = $select->option((string) $option['value'], $text, 'value', 'text', ((string) $option['disabled'] == 'true'));
 
 			// Set some option attributes.
 			$tmp->class = (string) $option['class'];
