@@ -189,7 +189,7 @@ class CustomField extends \Joomla\Form\Field
 To use above field in your form, write
 
 ```xml
-<form type="custom" name="myName" id="myId" />
+<field type="custom" name="myName" id="myId" />
 ```
 
 ### Field in a different namespace
@@ -215,7 +215,7 @@ class FooField extends \Joomla\Form\Field
 To use above field just write
 
 ```xml
-<form type="bar.foo" name="myName" id="myId" />
+<field type="bar.foo" name="myName" id="myId" />
 ```
 
 ### Field in a sub-namespace
@@ -241,17 +241,17 @@ class FooField extends \Joomla\Form\Field
 To use above field just write
 
 ```xml
-<form type="bar\foo" name="myName" id="myId" />
+<field type="bar\foo" name="myName" id="myId" />
 ```
 
 ## Installation via Composer
 
-Add `"joomla/form": "~1.0"` to the require block in your composer.json and then run `composer install`.
+Add `"joomla/form": "2.0@dev"` to the require block in your composer.json and then run `composer install`.
 
 ```json
 {
 	"require": {
-		"joomla/form": "~1.0"
+		"joomla/form": "2.0@dev"
 	}
 }
 ```
@@ -259,5 +259,5 @@ Add `"joomla/form": "~1.0"` to the require block in your composer.json and then 
 Alternatively, you can simply run the following from the command line:
 
 ```sh
-composer require joomla/form "~1.0"
+composer require joomla/form "2.0@dev"
 ```
