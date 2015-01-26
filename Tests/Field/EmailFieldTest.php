@@ -28,10 +28,9 @@ class EmailFieldTest extends \PHPUnit_Framework_TestCase
 				array(
 					'tag' => 'input',
 					'attributes' => array(
-						'type' => 'text',
+						'type' => 'email',
 						'id' => 'myId',
-						'name' => 'myName',
-						'class' => 'validate-email'
+						'name' => 'myName'
 					)
 				),
 			),
@@ -40,11 +39,11 @@ class EmailFieldTest extends \PHPUnit_Framework_TestCase
 				array(
 					'tag' => 'input',
 					'attributes' => array(
-						'type' => 'text',
+						'type' => 'email',
 						'id' => 'myId',
 						'size' => '0',
 						'maxlength' => '0',
-						'class' => 'validate-email foo bar',
+						'class' => 'foo bar',
 						'readonly' => 'readonly',
 						'disabled' => 'disabled',
 						'onchange' => 'barFoo();',

@@ -22,7 +22,6 @@ class TextField extends \Joomla\Form\Field
 	 * The form field type.
 	 *
 	 * @var    string
-	 *
 	 * @since  1.0
 	 */
 	protected $type = 'Text';
