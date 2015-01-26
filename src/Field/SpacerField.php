@@ -1,15 +1,16 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 /**
- * Form Field class for the Joomla Framework.
+ * Spacer Form Field class for the Joomla! Framework.
+ *
  * Provides spacer markup to be used in form layouts.
  *
  * @since  1.0

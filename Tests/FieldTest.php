@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -69,7 +69,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$field instanceof \Joomla\Form\Field,
-			'Line:' . __LINE__ . ' The JFormField constuctor should return a JFormField object.'
+			'Line:' . __LINE__ . ' The \\Joomla\\Form\\Field constuctor should return a \\Joomla\\Form\\Field object.'
 		);
 
 		$this->assertThat(
@@ -217,7 +217,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" ' .
-			'title="Title::The title.">Title<span class="star">&#160;*</span></label>';
+			'title="Title::The title.">Title</label>';
 
 		$this->assertEquals(
 			$equals,
@@ -407,7 +407,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			'inputbox required',
+			'inputbox',
 			(string) $title['class'],
 			'Line:' . __LINE__ . ' The property should be set from the XML.'
 		);
@@ -434,8 +434,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);
 
-		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" title="Title::The title.">' .
-			'Title<span class="star">&#160;*</span></label>';
+		$equals = '<label id="title_id-lbl" for="title_id" class="hasTip required" title="Title::The title.">Title</label>';
 
 		$this->assertEquals(
 			$equals,
@@ -558,7 +557,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			'required',
+			'',
 			$field->element['class'],
 			'Line:' . __LINE__ . ' The property should be computed from the XML.'
 		);

@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -11,11 +11,13 @@ namespace Joomla\Form\Rule;
 use Joomla\Form\Rule;
 
 /**
- * Form Rule class for the Joomla Framework.
+ * Boolean Form Rule class for the Joomla! Framework.
+ *
+ * Validates that a form field matches a boolean value
  *
  * @since  1.0
  */
-class Boolean extends Rule
+class BooleanRule extends Rule
 {
 	/**
 	 * The regular expression to use in testing a form field value.

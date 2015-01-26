@@ -1,18 +1,18 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
 use Joomla\Form\Html\Select as HtmlSelect;
-use UnexpectedValueException;
 
 /**
- * Form Field class for the Joomla Framework.
+ * Grouped List Form Field class for the Joomla! Framework.
+ *
  * Provides a grouped list select field.
  *
  * @since  1.0
@@ -33,7 +33,7 @@ class GroupedListField extends \Joomla\Form\Field
 	 * @return  array  The field option objects as a nested array in groups.
 	 *
 	 * @since   1.0
-	 * @throws  UnexpectedValueException
+	 * @throws  \UnexpectedValueException
 	 */
 	protected function getGroups()
 	{
@@ -130,7 +130,10 @@ class GroupedListField extends \Joomla\Form\Field
 
 				// Unknown element type.
 				default:
-					throw new UnexpectedValueException(sprintf('Unsupported element %s in JFormFieldGroupedList', $element->getName()), 500);
+					throw new \UnexpectedValueException(
+						sprintf('Unsupported element %1$s in %2$s', $element->getName(), __CLASS__),
+						500
+					);
 			}
 		}
 

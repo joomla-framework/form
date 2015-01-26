@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -11,11 +11,11 @@ namespace Joomla\Form\Field;
 use Joomla\Form\Html\Select as HtmlSelect;
 
 /**
- * Form Field class for the Joomla Framework.
- * Displays options as a list of check boxes.
- * Multiselect may be forced to be true.
+ * Checkboxes Form Field class for the Joomla! Framework.
  *
- * @see    JFormFieldCheckbox
+ * Displays options as a list of check boxes. Multiselect may be forced to be true.
+ *
+ * @see    \Joomla\Form\Field\CheckboxField
  * @since  1.0
  */
 class CheckboxesField extends \Joomla\Form\Field

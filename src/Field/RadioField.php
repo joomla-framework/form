@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of the Joomla Framework Form Package
+ * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -11,8 +11,9 @@ namespace Joomla\Form\Field;
 use stdClass;
 
 /**
- * Form Field class for the Joomla Framework.
- * Provides radio button inputs
+ * Radio Form Field class for the Joomla! Framework.
+ *
+ * Provides radio button inputs.
  *
  * @link   http://www.w3.org/TR/html-markup/command.radio.html#command.radio
  * @since  1.0

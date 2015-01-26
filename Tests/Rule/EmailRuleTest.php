@@ -1,29 +1,29 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Tests\Rule;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Rule\Email as RuleEmail;
+use Joomla\Form\Rule\EmailRule;
 
 /**
- * Test class for Joomla\Form\Rule\Email.
+ * Test class for Joomla\Form\Rule\EmailRule.
  *
- * @coversDefaultClass Joomla\Form\Rule\Email
+ * @coversDefaultClass Joomla\Form\Rule\EmailRule
  */
-class EmailTest extends \PHPUnit_Framework_TestCase
+class EmailRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test the Joomla\Form\Rule\Email::test method.
+	 * Test the Joomla\Form\Rule\EmailRule::test method.
 	 *
 	 * @covers  ::test
 	 */
 	public function testEmail()
 	{
-		$rule = new RuleEmail;
+		$rule = new EmailRule;
 		$xml = simplexml_load_string('<form><field name="email1" /><field name="email2" unique="true" /></form>');
 
 		// Test fail conditions.
@@ -87,7 +87,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEmailData($emailAddress, $expectedResult)
 	{
-		$rule = new RuleEmail;
+		$rule = new EmailRule;
 		$xml = simplexml_load_string('<form><field name="email1" /></form>');
 		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
@@ -122,7 +122,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEmailData2($emailAddress, $expectedResult)
 	{
-		$rule = new RuleEmail;
+		$rule = new EmailRule;
 		$xml = simplexml_load_string('<form><field name="email1" multiple="multiple" /></form>');
 		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),
@@ -158,7 +158,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEmailData3($emailAddress, $expectedResult)
 	{
-		$rule = new RuleEmail;
+		$rule = new EmailRule;
 		$xml = simplexml_load_string('<form><field name="email1" tld="tld" /></form>');
 		$this->assertEquals(
 			$rule->test($xml->field[0], $emailAddress),

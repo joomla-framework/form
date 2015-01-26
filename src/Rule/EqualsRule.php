@@ -6,41 +6,25 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Form;
+namespace Joomla\Form\Rule;
 
+use Joomla\Form\Form;
+use Joomla\Form\Rule;
 use Joomla\Registry\Registry;
 
-// Detect if we have full UTF-8 and unicode PCRE support.
-if (!defined('JCOMPAT_UNICODE_PROPERTIES'))
-{
-	define('JCOMPAT_UNICODE_PROPERTIES', (bool) @preg_match('/\pL/u', 'a'));
-}
-
 /**
- * Form Rule class for the Joomla! Framework.
+ * Equals Form Rule class for the Joomla! Framework.
+ *
+ * Validates that two values are equal.
  *
  * @since  1.0
  */
-abstract class Rule
+class EqualsRule extends Rule
 {
 	/**
-	 * The regular expression to use in testing a form field value.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $regex;
-
-	/**
-	 * The regular expression modifiers to use when testing a form field value.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $modifiers;
-
-	/**
-	 * Method to test the value.
+	 * Method to test if two values are equal. To use this rule, the form
+	 * XML needs a validate attribute of equals and a field attribute
+	 * that is equal to the field to test against.
 	 *
 	 * @param   \SimpleXMLElement  $element  The SimpleXMLElement object representing the <field /> tag for the form field object.
 	 * @param   mixed              $value    The form field value to validate.
@@ -53,24 +37,26 @@ abstract class Rule
 	 * @return  boolean  True if the value is valid, false otherwise.
 	 *
 	 * @since   1.0
-	 * @throws  \UnexpectedValueException if rule is invalid.
+	 * @throws  \InvalidArgumentException
+	 * @throws  \UnexpectedValueException
 	 */
 	public function test(\SimpleXMLElement $element, $value, $group = null, Registry $input = null, Form $form = null)
 	{
-		// Check for a valid regex.
-		if (empty($this->regex))
+		$field = (string) $element['field'];
+
+		// Check that a validation field is set.
+		if (!$field)
 		{
-			throw new \UnexpectedValueException(sprintf('%s has invalid regex.', get_class($this)));
+			throw new \UnexpectedValueException(sprintf('$field empty in %s::test', get_class($this)));
 		}
 
-		// Add unicode property support if available.
-		if (JCOMPAT_UNICODE_PROPERTIES)
+		if (is_null($input))
 		{
-			$this->modifiers = (strpos($this->modifiers, 'u') !== false) ? $this->modifiers : $this->modifiers . 'u';
+			throw new \InvalidArgumentException(sprintf('The value for $input must not be null in %s', get_class($this)));
 		}
 
-		// Test the value against the regular expression.
-		if (preg_match(chr(1) . $this->regex . chr(1) . $this->modifiers, $value))
+		// Test the two values against each other.
+		if ($value == $input->get($field))
 		{
 			return true;
 		}

@@ -1,21 +1,21 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Tests\Rule;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Rule\Boolean as RuleBoolean;
+use Joomla\Form\Rule\BooleanRule;
 
 /**
- * Test class for Joomla\Form\Rule\Boolean.
+ * Test class for Joomla\Form\Rule\BooleanRule.
  *
- * @coversDefaultClass  Joomla\Form\Rule\Boolean
+ * @coversDefaultClass  Joomla\Form\Rule\BooleanRule
  * @since  1.0
  */
-class BooleanTest extends \PHPUnit_Framework_TestCase
+class BooleanRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * Test data for testing of Joomla\Form\Rule\Boolean::test method.
@@ -45,7 +45,7 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Boolean::test method.
+	 * Test the Joomla\Form\Rule\BooleanRule::test method.
 	 *
 	 * @param   string   $value           @todo
 	 * @param   boolean  $expectedOutput  @todo
@@ -56,7 +56,7 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBoolean($value, $expectedOutput)
 	{
-		$rule = new RuleBoolean;
+		$rule = new BooleanRule;
 		$xml = new \SimpleXmlElement('<field name="foo" />');
 
 		$this->assertEquals(
@@ -68,14 +68,14 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Boolean::test method.
+	 * Test the Joomla\Form\Rule\BooleanRule::test method.
 	 *
 	 * @covers             Joomla\Form\Rule::test
 	 * @expectedException  UnexpectedValueException
 	 */
 	public function testRuleEmptyRegexException()
 	{
-		$rule = new RuleBoolean;
+		$rule = new BooleanRule;
 		$xml = new \SimpleXmlElement('<field name="foo" />');
 
 		TestHelper::setValue($rule, 'regex', '');

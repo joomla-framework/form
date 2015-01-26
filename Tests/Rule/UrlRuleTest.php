@@ -1,23 +1,23 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Tests\Rule;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Rule\Url as RuleUrl;
+use Joomla\Form\Rule\UrlRule;
 
 /**
- * Test class for Joomla\Form\Rule\Url.
+ * Test class for Joomla\Form\Rule\UrlRule.
  *
- * @coversDefaultClass  Joomla\Form\Rule\Url
+ * @coversDefaultClass  Joomla\Form\Rule\UrlRule
  */
-class UrlTest extends \PHPUnit_Framework_TestCase
+class UrlRuleTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test data for testing of Joomla\Form\Rule\Url::test method.
+	 * Test data for testing of Joomla\Form\Rule\UrlRule::test method.
 	 *
 	 * @return  array
 	 */
@@ -64,7 +64,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the Joomla\Form\Rule\Url::test method.
+	 * Test the Joomla\Form\Rule\UrlRule::test method.
 	 *
 	 * @param   string   $caseDescription  @todo
 	 * @param   int      $xmlfield         @todo
@@ -76,7 +76,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testUrl($caseDescription, $xmlfield, $url, $expected)
 	{
-		$rule = new RuleUrl;
+		$rule = new UrlRule;
 
 		// The field allows you to optionally limit the accepted schemes to a specific list.
 		// Url1 tests without a list, Url2 tests with a list.
