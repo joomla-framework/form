@@ -33,7 +33,7 @@ class CheckboxesFieldTest extends \PHPUnit_Framework_TestCase
 		parent::setUp();
 
 		// Prepare a Text object to be injected into test objects
-		$this->text = new Text(Language::getInstance(dirname(__DIR__)));
+		$this->text = new Text(Language::getInstance('en-GB', dirname(__DIR__)));
 	}
 
 	/**
