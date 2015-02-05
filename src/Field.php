@@ -250,7 +250,7 @@ abstract class Field
 		// Detect the field type if not set
 		if (!isset($this->type))
 		{
-			$parts = explode('\\',get_called_class());
+			$parts = explode('\\', get_called_class());
 
 			if ($parts[0] != 'J')
 			{
@@ -261,9 +261,10 @@ abstract class Field
 				$this->type = '';
 			}
 
-			for($i=1; $i < count($parts) && $parts[$i] != "Field"; $i++);
+			for($i = 1; $i < count($parts) && $parts[$i] != "Field"; $i++);
 
-			for(; $i < count($parts); $i++){
+			for(; $i < count($parts); $i++)
+			{
 				$this->type .= '\\' . String::ucfirst($parts[$i]);
 			}
 		}

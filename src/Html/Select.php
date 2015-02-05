@@ -616,7 +616,10 @@ class Select
 
 			if ($options['groups'] && $key == '<OPTGROUP>')
 			{
-				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? $this->getText()->translate($text) : $text) . '">' . $options['format.eol'];
+				$html .= $baseIndent . '<optgroup label="' .
+					($options['list.translate'] ? $this->getText()->translate($text) : $text) .
+					'">' . $options['format.eol'];
+
 				$baseIndent = str_repeat($options['format.indent'], ++$options['format.depth']);
 			}
 			elseif ($options['groups'] && $key == '</OPTGROUP>')
