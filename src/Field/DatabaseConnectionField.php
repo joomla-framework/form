@@ -44,6 +44,9 @@ class DatabaseConnectionField extends ListField
 		// This gets the connectors available in the platform and supported by the server.
 		$available = DatabaseDriver::getConnectors();
 
+		// Initialise the array to return
+		$options = array();
+
 		/**
 		 * This gets the list of database types supported by the application.
 		 * This should be entered in the form definition as a comma separated list.
