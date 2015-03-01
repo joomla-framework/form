@@ -12,7 +12,7 @@
         "joomla/uri": "~1.0",
         "joomla/filter": "~1.0",
         "joomla/filesystem": "~1.0",
-        "joomla/registry": "~1.0",
+        "joomla/registry": "~2.0@dev",
         "joomla/utilities": "~1.0"
     },
     "require-dev": {
