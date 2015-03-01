@@ -458,8 +458,8 @@ class Select
 		}
 
 		$obj = new \stdClass;
-		$obj->$options['option.key'] = $value;
-		$obj->$options['option.text'] = trim($text) ? $text : $value;
+		$obj->{$options['option.key']} = $value;
+		$obj->{$options['option.text']} = trim($text) ? $text : $value;
 
 		/*
 		 * If a label is provided, save it. If no label is provided and there is
@@ -474,19 +474,19 @@ class Select
 		}
 		elseif ($hasProperty)
 		{
-			$obj->$options['option.label'] = '';
+			$obj->{$options['option.label']} = '';
 		}
 
 		// Set attributes only if there is a property and a value
 		if ($options['attr'] !== null)
 		{
-			$obj->$options['option.attr'] = $options['attr'];
+			$obj->{$options['option.attr']} = $options['attr'];
 		}
 
 		// Set disable only if it has a property and a value
 		if ($options['disable'] !== null)
 		{
-			$obj->$options['option.disable'] = $options['disable'];
+			$obj->{$options['option.disable']} = $options['disable'];
 		}
 
 		return $obj;
