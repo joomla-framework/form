@@ -7,12 +7,12 @@
     "license": "GPL-2.0+",
     "require": {
         "php": ">=5.3.10",
-        "joomla/language": "~2.0@dev",
+        "joomla/language": "2.0.*@dev",
         "joomla/string": "~1.0",
         "joomla/uri": "~1.0",
         "joomla/filter": "~1.0",
         "joomla/filesystem": "~1.0",
-        "joomla/registry": "~2.0@dev",
+        "joomla/registry": "2.0.*@dev",
         "joomla/utilities": "~1.0"
     },
     "require-dev": {
