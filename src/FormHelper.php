@@ -8,7 +8,6 @@
 
 namespace Joomla\Form;
 
-use Joomla\Filesystem\Path;
 use Joomla\String\String;
 
 /**
