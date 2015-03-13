@@ -12,7 +12,7 @@
         "joomla/uri": "~1.0",
         "joomla/filter": "~1.0",
         "joomla/filesystem": "~1.0",
-        "joomla/registry": "2.0.*@dev",
+        "joomla/registry": "~1.0|2.0.*@dev",
         "joomla/utilities": "~1.0"
     },
     "require-dev": {
@@ -39,5 +39,6 @@
         "branch-alias": {
             "dev-master": "2.x-dev"
         }
-    }
+    },
+    "prefer-stable": true
 }
