@@ -10,7 +10,7 @@ namespace Joomla\Form\Rule;
 
 use Joomla\Form\Form;
 use Joomla\Form\Rule;
-use Joomla\String\String;
+use Joomla\String\StringHelper;
 use Joomla\Uri\UriHelper;
 use Joomla\Registry\Registry;
 
@@ -38,7 +38,7 @@ class UrlRule extends Rule
 	 *
 	 * @since   1.0
 	 * @link    http://www.w3.org/Addressing/URL/url-spec.txt
-	 * @see	    \Joomla\String\String
+	 * @see	    \Joomla\String\StringHelper
 	 */
 	public function test(\SimpleXMLElement $element, $value, $group = null, Registry $input = null, Form $form = null)
 	{
@@ -92,7 +92,7 @@ class UrlRule extends Rule
 
 		// The best we can do for the rest is make sure that the strings are valid UTF-8
 		// and the port is an integer.
-		if (array_key_exists('host', $urlParts) && !String::valid((string) $urlParts['host']))
+		if (array_key_exists('host', $urlParts) && !StringHelper::valid((string) $urlParts['host']))
 		{
 			return false;
 		}
@@ -102,7 +102,7 @@ class UrlRule extends Rule
 			return false;
 		}
 
-		if (array_key_exists('path', $urlParts) && !String::valid((string) $urlParts['path']))
+		if (array_key_exists('path', $urlParts) && !StringHelper::valid((string) $urlParts['path']))
 		{
 			return false;
 		}

@@ -8,7 +8,7 @@
 
 namespace Joomla\Form;
 
-use Joomla\String\String;
+use Joomla\String\StringHelper;
 
 /**
  * Helper class for the Form package.
@@ -98,7 +98,7 @@ class FormHelper
 		// If type is complex like modal\foo, do uppercase each term
 		if (strpos($type, '\\'))
 		{
-			$class .= '\\' . String::ucfirst($type, '\\');
+			$class .= '\\' . StringHelper::ucfirst($type, '\\');
 		}
 		else
 		{

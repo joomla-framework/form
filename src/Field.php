@@ -8,10 +8,9 @@
 
 namespace Joomla\Form;
 
-
-use Joomla\String\String;
-use Joomla\String\Normalise;
 use Joomla\Language\Text;
+use Joomla\String\Normalise;
+use Joomla\String\StringHelper;
 use SimpleXMLElement;
 
 /**
@@ -265,7 +264,7 @@ abstract class Field
 
 			for(; $i < count($parts); $i++)
 			{
-				$this->type .= '\\' . String::ucfirst($parts[$i]);
+				$this->type .= '\\' . StringHelper::ucfirst($parts[$i]);
 			}
 		}
 	}
