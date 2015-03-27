@@ -48,7 +48,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		include_once 'inspectors.php';
 
 		// Prepare a Text object to be injected into test objects
-		$this->text = new Text(Language::getInstance('en-GB', __DIR__));
+		$this->text = new Text(new Language(__DIR__, 'en-GB'));
 	}
 
 	/**
