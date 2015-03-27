@@ -1,5 +1,11 @@
 # The Form Package [![Build Status](https://travis-ci.org/joomla-framework/form.png?branch=master)](https://travis-ci.org/joomla-framework/form)
 
+[![Latest Stable Version](https://poser.pugx.org/joomla/form/v/stable.svg)](https://packagist.org/packages/joomla/form)
+[![Total Downloads](https://poser.pugx.org/joomla/form/downloads.svg)](https://packagist.org/packages/joomla/form)
+[![Latest Unstable Version](https://poser.pugx.org/joomla/form/v/unstable.svg)](https://packagist.org/packages/joomla/form)
+[![License](https://poser.pugx.org/joomla/form/license.svg)](https://packagist.org/packages/joomla/form)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/joomla-framework/form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/joomla-framework/form/?branch=master)
+
 ## Introduction ##
 
 The Form Package provides an easy interface to create, display, and validate forms.

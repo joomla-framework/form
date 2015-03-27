@@ -504,16 +504,18 @@ class Form
 	 * <input name="foo" /> and <input name="bar" />.  If the form control is set to 'joomla' however, the fields
 	 * would be rendered like: <input name="joomla[foo]" /> and <input name="joomla[bar]" />.
 	 *
+	 * @param   string  $control  The form control string.
+	 *
 	 * @return  Form
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	 public function setFormControl($control)
-	 {
-	 	$this->options['control'] = (string) $control;
+	public function setFormControl($control)
+	{
+		$this->options['control'] = (string) $control;
 
-	 	return $this;
-	 }
+		return $this;
+	}
 
 	/**
 	 * Method to get the form control.
