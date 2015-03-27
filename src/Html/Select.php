@@ -577,6 +577,11 @@ class Select
 				$key = $options['option.key'] === null ? $elementKey : $element[$options['option.key']];
 				$text = $element[$options['option.text']];
 
+				if (isset($element['attr']))
+				{
+					$attr = $element['attr'];
+				}
+
 				if (isset($element[$options['option.attr']]))
 				{
 					$attr = $element[$options['option.attr']];
