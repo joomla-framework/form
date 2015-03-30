@@ -323,6 +323,41 @@ abstract class Field
 
 		return null;
 	}
+	
+	/**
+	 * Method to checks whether the value of certain inaccessible properties has been set or is it null.
+	 *
+	 * @param   string  $name  The property name.
+	 *
+	 * @return  boolean  True if the value is set, false otherwise.
+	 */
+	public function __isset($name)
+	{
+		switch ($name)
+		{
+			case 'description':
+			case 'formControl':
+			case 'hidden':
+			case 'id':
+			case 'multiple':
+			case 'name':
+			case 'required':
+			case 'disabled':
+			case 'readonly':
+			case 'type':
+			case 'validate':
+			case 'value':
+			case 'labelClass':
+			case 'fieldname':
+			case 'group':
+			case 'input':
+			case 'label':
+			case 'title':
+				return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Method to attach a Form object to the field.
