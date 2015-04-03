@@ -333,27 +333,13 @@ abstract class Field
 	 */
 	public function __isset($name)
 	{
-		switch ($name)
+		if ($name == 'input' || $name == 'label') {
+			return true;
+		}
+
+		if ($this->$name !== null)
 		{
-			case 'description':
-			case 'formControl':
-			case 'hidden':
-			case 'id':
-			case 'multiple':
-			case 'name':
-			case 'required':
-			case 'disabled':
-			case 'readonly':
-			case 'type':
-			case 'validate':
-			case 'value':
-			case 'labelClass':
-			case 'fieldname':
-			case 'group':
-			case 'input':
-			case 'label':
-			case 'title':
-				return true;
+			return true;
 		}
 
 		return false;
