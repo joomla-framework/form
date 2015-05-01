@@ -260,9 +260,7 @@ abstract class Field
 				$this->type = '';
 			}
 
-			for($i = 1; $i < count($parts) && $parts[$i] != "Field"; $i++);
-
-			for(; $i < count($parts); $i++)
+			for ($i = array_search('Field', $parts); 0 < $i && $i < count($parts); $i++)
 			{
 				$this->type .= '\\' . StringHelper::ucfirst($parts[$i]);
 			}
