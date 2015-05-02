@@ -2082,15 +2082,16 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		$xml = TestHelper::getvalue($form, 'xml');
 
 		// Test error handling.
-
-		$field = array_pop($xml->xpath('fields/field[@name="boolean"]'));
+		$path = $xml->xpath('fields/field[@name="boolean"]');
+		$field = array_pop($path);
 		$result = TestHelper::invoke($form, 'validateField', $field);
 		$this->assertTrue(
 			$result instanceof \UnexpectedValueException,
 			'Line:' . __LINE__ . ' A failed validation should return an exception.'
 		);
 
-		$field = array_pop($xml->xpath('fields/field[@name="required"]'));
+		$path = $xml->xpath('fields/field[@name="required"]');
+		$field = array_pop($path);
 		$result = TestHelper::invoke($form, 'validateField', $field);
 		$this->assertTrue(
 			$result instanceof \RuntimeException,
@@ -2098,20 +2099,22 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Test general usage.
-
-		$field = array_pop($xml->xpath('fields/field[@name="boolean"]'));
+		$path = $xml->xpath('fields/field[@name="boolean"]');
+		$field = array_pop($path);
 		$this->assertTrue(
 			TestHelper::invoke($form, 'validateField', $field, null, 'true'),
 			'Line:' . __LINE__ . ' A field with a passing validate attribute set should return true.'
 		);
 
-		$field = array_pop($xml->xpath('fields/field[@name="optional"]'));
+		$path = $xml->xpath('fields/field[@name="optional"]');
+		$field = array_pop($path);
 		$this->assertTrue(
 			TestHelper::invoke($form, 'validateField', $field),
 			'Line:' . __LINE__ . ' A field without required set should return true.'
 		);
 
-		$field = array_pop($xml->xpath('fields/field[@name="required"]'));
+		$path = $xml->xpath('fields/field[@name="required"]');
+		$field = array_pop($path);
 		$this->assertTrue(
 			TestHelper::invoke($form, 'validateField', $field, null, 'value'),
 			'Line:' . __LINE__ . ' A required field with a value should return true.'
@@ -2130,7 +2133,8 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		$form->load(DataHelper::$validateFieldDocument);
 		$xml = TestHelper::getvalue($form, 'xml');
 
-		$field = array_pop($xml->xpath('fields/field[@name="missingrule"]'));
+		$path = $xml->xpath('fields/field[@name="missingrule"]');
+		$field = array_pop($path);
 		$result = TestHelper::invoke($form, 'validateField', $field, null, 'value');
 	}
 }

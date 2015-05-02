@@ -135,7 +135,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		// Standard usage.
 
 		$xml = TestHelper::getvalue($form, 'xml');
-		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
+		$path = $xml->xpath('fields/fields[@name="params"]/field[@name="colours"]');
+		$colours = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($colours, 'red', 'params'),
@@ -159,7 +160,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		$field = new JFormFieldInspector($form);
 
 		$xml = TestHelper::getvalue($form, 'xml');
-		$date = array_pop($xml->xpath('fields/field[@name="created_date"]'));
+		$path = $xml->xpath('fields/field[@name="created_date"]');
+		$date = array_pop($path);
 
 		// No form control with group
 		$this->assertTrue(
@@ -209,7 +211,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		// Standard usage.
 
 		$xml = TestHelper::getvalue($form, 'xml');
-		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
+		$path = $xml->xpath('fields/field[@name="title"]');
+		$title = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($title, 'The title'),
@@ -226,8 +229,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Not required
-
-		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
+		$path = $xml->xpath('fields/fields[@name="params"]/field[@name="colours"]');
+		$colours = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($colours, 'id'),
@@ -241,8 +244,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Hidden field
-
-		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
+		$path = $xml->xpath('fields/field[@name="id"]');
+		$id = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($id, 'id'),
@@ -277,7 +280,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		// Standard usage.
 
 		$xml = TestHelper::getvalue($form, 'xml');
-		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
+		$path = $xml->xpath('fields/field[@name="title"]');
+		$title = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($title, 'The title'),
@@ -291,8 +295,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Hidden field
-
-		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
+		$path = $xml->xpath('fields/field[@name="id"]');
+		$id = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($id, 'id'),
@@ -364,7 +368,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		// Standard usage.
 
 		$xml = TestHelper::getvalue($form, 'xml');
-		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
+		$path = $xml->xpath('fields/field[@name="title"]');
+		$title = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($title, 'The title'),
@@ -469,8 +474,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Test hidden field type.
-
-		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
+		$path = $xml->xpath('fields/field[@name="id"]');
+		$id = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($id, 42),
@@ -483,8 +488,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Test hidden attribute.
-
-		$createdDate = array_pop($xml->xpath('fields/field[@name="created_date"]'));
+		$path = $xml->xpath('fields/field[@name="created_date"]');
+		$createdDate = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($createdDate, '0000-00-00 00:00:00'),
@@ -497,8 +502,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Test automatic generated name.
-
-		$spacer = array_pop($xml->xpath('fields/field[@type="spacer"]'));
+		$path = $xml->xpath('fields/field[@type="spacer"]');
+		$spacer = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($spacer, ''),
@@ -512,8 +517,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Test nested groups and forced multiple.
-
-		$comment = array_pop($xml->xpath('fields/fields[@name="params"]/fields[@name="subparams"]/field[@name="comment"]'));
+		$path = $xml->xpath('fields/fields[@name="params"]/fields[@name="subparams"]/field[@name="comment"]');
+		$comment = array_pop($path);
 		$field->forceMultiple = true;
 
 		$this->assertTrue(
