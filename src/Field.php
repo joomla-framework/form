@@ -319,6 +319,27 @@ abstract class Field
 
 		return null;
 	}
+	
+	/**
+	 * Method to checks whether the value of certain inaccessible properties has been set or is it null.
+	 *
+	 * @param   string  $name  The property name.
+	 *
+	 * @return  boolean  True if the value is set, false otherwise.
+	 */
+	public function __isset($name)
+	{
+		if ($name == 'input' || $name == 'label') {
+			return true;
+		}
+
+		if ($this->$name !== null)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Method to attach a Form object to the field.
