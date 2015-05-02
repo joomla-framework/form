@@ -327,23 +327,6 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test an invalid argument for the Joomla\Form\Field::setup method
-	 *
-	 * @covers             ::setup
-	 * @expectedException  \PHPUnit_Framework_Error
-	 */
-	public function testSetupInvalidArgument()
-	{
-		$form = new Form('form1');
-		$field = new JFormFieldInspector($form);
-
-		$this->assertFalse(
-			$field->setup('wrong', 0),
-			'Line:' . __LINE__ . ' If not a form object, setup should return false.'
-		);
-	}
-
-	/**
 	 * Test an invalid element for the Joomla\Form\Field::setup method
 	 *
 	 * @covers  ::setup
