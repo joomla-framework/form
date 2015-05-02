@@ -642,4 +642,24 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' getFieldname should not increment counter if fieldname is given.'
 		);
 	}
+
+	/**
+	 * Tests the Joomla\Form\Field::__isset method
+	 *
+	 * @covers  ::__isset
+	 */
+	public function testMagicIssetMethod()
+	{
+		$form = new Form('form1', array('control' => 'jform'));
+
+		$this->assertTrue(
+			$form->load(DataHelper::$loadFieldDocument),
+			'Line:' . __LINE__ . ' XML string should load successfully.'
+		);
+
+		$field = $form->getField('title');
+
+		$this->assertTrue(isset($field->label));
+		$this->assertFalse(isset($field->text));
+	}
 }

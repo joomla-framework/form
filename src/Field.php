@@ -319,20 +319,25 @@ abstract class Field
 
 		return null;
 	}
-	
+
 	/**
 	 * Method to checks whether the value of certain inaccessible properties has been set or is it null.
 	 *
 	 * @param   string  $name  The property name.
 	 *
 	 * @return  boolean  True if the value is set, false otherwise.
+	 *
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function __isset($name)
 	{
-		if ($name == 'input' || $name == 'label') {
+		// These properties aren't directly accessible, so always return true
+		if ($name == 'input' || $name == 'label')
+		{
 			return true;
 		}
 
+		// Check if a property has an assigned value
 		if ($this->$name !== null)
 		{
 			return true;
