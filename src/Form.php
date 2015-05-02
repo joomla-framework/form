@@ -1430,7 +1430,7 @@ class Form
 			}
 
 			// Make sure something was found.
-			if (!$fields)
+			if (empty($fields))
 			{
 				return false;
 			}
@@ -1459,7 +1459,7 @@ class Form
 			$fields = $this->xml->xpath('//field[@name="' . $name . '"]');
 
 			// Make sure something was found.
-			if (!$fields)
+			if (empty($fields))
 			{
 				return false;
 			}
