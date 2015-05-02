@@ -442,8 +442,8 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Test multiple attribute and form group name.
-
-		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
+		$path = $xml->xpath('fields/fields[@name="params"]/field[@name="colours"]');
+		$colours = array_pop($path);
 
 		$this->assertTrue(
 			$field->setup($colours, 'green', 'params'),
