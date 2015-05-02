@@ -660,6 +660,6 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 		$field = $form->getField('title');
 
 		$this->assertTrue(isset($field->label));
-		$this->assertFalse(isset($field->text));
+		$this->assertFalse(isset($field->group));
 	}
 }
