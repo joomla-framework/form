@@ -1,4 +1,9 @@
-# The Form Package [![Build Status](https://travis-ci.org/joomla-framework/form.png?branch=master)](https://travis-ci.org/joomla-framework/form)
+# The Form Package
+## Travis Status
+1.x branch: [![Build Status](https://travis-ci.org/joomla-framework/form.png?branch=1.x-dev)](https://travis-ci.org/joomla-framework/form)
+
+Development: [![Build Status](https://travis-ci.org/joomla-framework/form.png?branch=master)](https://travis-ci.org/joomla-framework/form)
+
 [![Latest Stable Version](https://poser.pugx.org/joomla/form/v/stable)](https://packagist.org/packages/joomla/form)
 [![Total Downloads](https://poser.pugx.org/joomla/form/downloads)](https://packagist.org/packages/joomla/form)
 [![Latest Unstable Version](https://poser.pugx.org/joomla/form/v/unstable)](https://packagist.org/packages/joomla/form)
