@@ -41,7 +41,21 @@ class TextField extends \Joomla\Form\Field
 		$class = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 		$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
 		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-		$placeholder = $this->element['placeholder'] ? ' placeholder="' . $this->getText()->translate((string) $this->element['placeholder']) . '"' : '';
+
+		// Temporary workaround to make sure the placeholder can be set without coupling to joomla/language
+		$placeholder = '';
+
+		if ($this->element['placeholder'])
+		{
+			try
+			{
+				$placeholder = ' placeholder="' . $this->getText()->translate((string) $this->element['placeholder']) . '"';
+			}
+			catch (\RuntimeException $e)
+			{
+				$placeholder = ' placeholder="' . (string) $this->element['placeholder'] . '"';
+			}
+		}
 
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';

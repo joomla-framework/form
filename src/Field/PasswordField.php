@@ -43,12 +43,24 @@ class PasswordField extends \Joomla\Form\Field
 		$auto		= ((string) $this->element['autocomplete'] == 'off') ? ' autocomplete="off"' : '';
 		$readonly	= ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
 		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-		$placeholder    = $this->element['placeholder'] ? ' placeholder="' . $this->getText()->translate((string) $this->element['placeholder']) . '"' : '';
 
-		$script = '';
+		// Temporary workaround to make sure the placeholder can be set without coupling to joomla/language
+		$placeholder = '';
+
+		if ($this->element['placeholder'])
+		{
+			try
+			{
+				$placeholder = ' placeholder="' . $this->getText()->translate((string) $this->element['placeholder']) . '"';
+			}
+			catch (\RuntimeException $e)
+			{
+				$placeholder = ' placeholder="' . (string) $this->element['placeholder'] . '"';
+			}
+		}
 
 		return '<input type="password" name="' . $this->name . '" id="' . $this->id . '"' .
 			' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-			$auto . $class . $readonly . $disabled . $size . $maxLength . $placeholder . '/>' . $script;
+			$auto . $class . $readonly . $disabled . $size . $maxLength . $placeholder . '/>';
 	}
 }
