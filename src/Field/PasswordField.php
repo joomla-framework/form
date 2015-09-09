@@ -43,11 +43,12 @@ class PasswordField extends \Joomla\Form\Field
 		$auto		= ((string) $this->element['autocomplete'] == 'off') ? ' autocomplete="off"' : '';
 		$readonly	= ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
 		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+		$placeholder    = $this->element['placeholder'] ? ' placeholder="' . $this->getText()->translate((string) $this->element['placeholder']) . '"' : '';
 
 		$script = '';
 
 		return '<input type="password" name="' . $this->name . '" id="' . $this->id . '"' .
 			' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-			$auto . $class . $readonly . $disabled . $size . $maxLength . '/>' . $script;
+			$auto . $class . $readonly . $disabled . $size . $maxLength . $placeholder . '/>' . $script;
 	}
 }
