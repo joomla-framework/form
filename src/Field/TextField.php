@@ -60,7 +60,7 @@ class TextField extends \Joomla\Form\Field
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		//complete the field return string value before returning
+		// Complete the field return string value before returning
 		$return_value = '<input type="' . strtolower($this->type) . '"'
 							. ' name="' . $this->name . '"'
 							. ' id="' . $this->id . '"'
