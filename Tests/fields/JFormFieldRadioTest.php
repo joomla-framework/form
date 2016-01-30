@@ -23,6 +23,11 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
+		$this->markTestSkipped('The Joomla\Form\Field_Radio class is being redeclared during the test run.');
+
+		// The real class cannot be autoloaded
+		include_once __DIR__ . '/../../Field/Radio.php';
+
 		parent::setUp();
 
 		include_once dirname(__DIR__) . '/inspectors.php';

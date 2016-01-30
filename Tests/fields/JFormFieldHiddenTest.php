@@ -23,6 +23,9 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
+		// The real class cannot be autoloaded
+		include_once __DIR__ . '/../../Field/Hidden.php';
+
 		parent::setUp();
 
 		include_once dirname(__DIR__) . '/inspectors.php';
