@@ -176,7 +176,7 @@ In file "CustomField.php" write
 ```php
 namespace Joomla\Form\Field
 
-class CustomField extends \Joomla\Form\Field
+class Field_Custom extends \Joomla\Form\Field
 {
 	// Override this function
 	public function getInput()
@@ -202,7 +202,7 @@ In file "FooField.php" write
 ```php
 namespace Bar\Form\Field
 
-class FooField extends \Joomla\Form\Field
+class Field_Foo extends \Joomla\Form\Field
 {
 	// Override this function
 	public function getInput()
@@ -228,7 +228,7 @@ In file "FooField.php" write
 ```php
 namespace Joomla\Form\Field\Bar
 
-class FooField extends \Joomla\Form\Field
+class Field_Foo extends \Joomla\Form\Field
 {
 	// Override this function
 	public function getInput()
