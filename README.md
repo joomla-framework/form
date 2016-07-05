@@ -9,7 +9,7 @@ The Form Package provides an easy interface to create, display, and validate for
 To use the Form Package in your code include:
 
 ```php
-use namespace Joomla\Form\Form
+use Joomla\Form\Form
 ```
 
 You will now be able to create form objects either programmatically or loading forms from an XML file.
@@ -174,7 +174,7 @@ Example
 In file "CustomField.php" write
 
 ```php
-namespace Joomla\Form\Field
+namespace Joomla\Form
 
 class Field_Custom extends \Joomla\Form\Field
 {
@@ -200,7 +200,7 @@ Example
 In file "FooField.php" write
 
 ```php
-namespace Bar\Form\Field
+namespace Bar\Form
 
 class Field_Foo extends \Joomla\Form\Field
 {
@@ -226,7 +226,7 @@ Example
 In file "FooField.php" write
 
 ```php
-namespace Joomla\Form\Field\Bar
+namespace Joomla\Form\Bar
 
 class Field_Foo extends \Joomla\Form\Field
 {
