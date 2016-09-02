@@ -12,8 +12,8 @@
         "joomla/uri": "~1.0",
         "joomla/filter": "~1.0",
         "joomla/filesystem": "~1.0",
-        "joomla/registry": "~1.0|~2.0@dev",
-        "joomla/utilities": "~1.0"
+        "joomla/registry": "^1.4.5|~2.0@dev",
+        "joomla/utilities": "^1.3.3"
     },
     "require-dev": {
         "joomla/database": "~1.0",
