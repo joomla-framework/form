@@ -141,7 +141,7 @@ class EmailRuleTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array('test@example.com', true),
 			array('test3@localhost', false),
-			array('test3@example.c', false),
+			array('test3@example.c', true),
 			array('test3@example.ca', true),
 			array('test3@example.travel', true),
 		);
