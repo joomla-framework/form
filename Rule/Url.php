@@ -10,7 +10,7 @@ namespace Joomla\Form\Rule;
 
 use Joomla\Form\Form;
 use Joomla\Form\Rule;
-use Joomla\String\String;
+use Joomla\String\StringHelper;
 use Joomla\Uri\UriHelper;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
@@ -82,16 +82,16 @@ class Url extends Rule
 		}
 
 		// For some schemes here must be two slashes.
-		if (($urlScheme == 'http' || $urlScheme == 'https' || $urlScheme == 'ftp' || $urlScheme == 'sftp' || $urlScheme == 'gopher'
-			|| $urlScheme == 'wais' || $urlScheme == 'gopher' || $urlScheme == 'prospero' || $urlScheme == 'telnet' || $urlScheme == 'git')
-			&& ((substr($value, strlen($urlScheme), 3)) !== '://'))
+		$scheme = array('http', 'https', 'ftp', 'ftps', 'gopher', 'wais', 'prospero', 'sftp', 'telnet', 'git');
+
+		if (in_array($urlScheme, $scheme) && substr($value, strlen($urlScheme), 3) !== '://')
 		{
 			return false;
 		}
 
 		// The best we can do for the rest is make sure that the strings are valid UTF-8
 		// and the port is an integer.
-		if (array_key_exists('host', $urlParts) && !String::valid((string) $urlParts['host']))
+		if (array_key_exists('host', $urlParts) && !StringHelper::valid((string) $urlParts['host']))
 		{
 			return false;
 		}
@@ -101,7 +101,7 @@ class Url extends Rule
 			return false;
 		}
 
-		if (array_key_exists('path', $urlParts) && !String::valid((string) $urlParts['path']))
+		if (array_key_exists('path', $urlParts) && !StringHelper::valid((string) $urlParts['path']))
 		{
 			return false;
 		}

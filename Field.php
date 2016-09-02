@@ -9,7 +9,7 @@
 namespace Joomla\Form;
 
 
-use Joomla\String\String;
+use Joomla\String\StringHelper;
 use Joomla\String\Normalise;
 use Joomla\Language\Text;
 use SimpleXMLElement;
@@ -233,11 +233,11 @@ abstract class Field
 
 			if ($parts[0] == 'J')
 			{
-				$this->type = String::ucfirst($parts[count($parts) - 1], '_');
+				$this->type = StringHelper::ucfirst($parts[count($parts) - 1], '_');
 			}
 			else
 			{
-				$this->type = String::ucfirst($parts[0], '_') . String::ucfirst($parts[count($parts) - 1], '_');
+				$this->type = StringHelper::ucfirst($parts[0], '_') . StringHelper::ucfirst($parts[count($parts) - 1], '_');
 			}
 		}
 	}

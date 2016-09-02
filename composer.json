@@ -8,12 +8,12 @@
     "require": {
         "php": "^5.3.10|~7.0",
         "joomla/language": "~1.3",
-        "joomla/string": "~1.0",
+        "joomla/string": "~1.3",
         "joomla/uri": "~1.0",
         "joomla/filter": "~1.0",
         "joomla/filesystem": "~1.0",
-        "joomla/registry": "~1.0",
-        "joomla/utilities": "~1.0"
+        "joomla/registry": "^1.4.5",
+        "joomla/utilities": "^1.3.3"
     },
     "require-dev": {
         "joomla/database": "~1.0",
