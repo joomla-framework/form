@@ -34,8 +34,6 @@ class LanguageFieldTest extends TestDatabase
 	{
 		parent::setUp();
 
-		include_once dirname(__DIR__) . '/inspectors.php';
-
 		// Prepare a Text object to be injected into test objects
 		$this->text = new Text(new Language(dirname(__DIR__), 'en-GB'));
 	}

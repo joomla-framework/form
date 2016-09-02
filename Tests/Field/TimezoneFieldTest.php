@@ -32,8 +32,6 @@ class TimezoneFieldTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		include_once dirname(__DIR__) . '/inspectors.php';
-
 		// Prepare a Text object to be injected into test objects
 		$this->text = new Text(new Language(dirname(__DIR__), 'en-GB'));
 	}
