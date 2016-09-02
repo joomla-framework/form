@@ -25,8 +25,6 @@ class JFormFieldFileTest extends \PHPUnit_Framework_TestCase
 	{
 		// The real class cannot be autoloaded
 		include_once __DIR__ . '/../../Field/File.php';
-
-		include_once dirname(__DIR__) . '/inspectors.php';
 	}
 
 	/**

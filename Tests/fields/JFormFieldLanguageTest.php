@@ -29,8 +29,6 @@ class JFormFieldLanguageTest extends TestDatabase
 		include_once __DIR__ . '/../../Field/Language.php';
 
 		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
 	}
 
 	/**

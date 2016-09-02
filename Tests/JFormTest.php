@@ -44,7 +44,6 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		include_once 'inspectors.php';
 		include_once 'JFormDataHelper.php';
 	}
 
@@ -1956,7 +1955,8 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 
 		// Test error handling.
 
-		$field = array_pop($xml->xpath('fields/field[@name="boolean"]'));
+		$element = $xml->xpath('fields/field[@name="boolean"]');
+		$field = array_pop($element);
 		$result = $form->validateField($field);
 		$this->assertThat(
 			$result instanceof \UnexpectedValueException,
@@ -1964,7 +1964,8 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' A failed validation should return an exception.'
 		);
 
-		$field = array_pop($xml->xpath('fields/field[@name="required"]'));
+		$element = $xml->xpath('fields/field[@name="required"]');
+		$field = array_pop($element);
 		$result = $form->validateField($field);
 		$this->assertThat(
 			$result instanceof \RuntimeException,
@@ -1974,21 +1975,24 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 
 		// Test general usage.
 
-		$field = array_pop($xml->xpath('fields/field[@name="boolean"]'));
+		$element = $xml->xpath('fields/field[@name="boolean"]');
+		$field = array_pop($element);
 		$this->assertThat(
 			$form->validateField($field, null, 'true'),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' A field with a passing validate attribute set should return true.'
 		);
 
-		$field = array_pop($xml->xpath('fields/field[@name="optional"]'));
+		$element = $xml->xpath('fields/field[@name="optional"]');
+		$field = array_pop($element);
 		$this->assertThat(
 			$form->validateField($field),
 			$this->isTrue(),
 			'Line:' . __LINE__ . ' A field without required set should return true.'
 		);
 
-		$field = array_pop($xml->xpath('fields/field[@name="required"]'));
+		$element = $xml->xpath('fields/field[@name="required"]');
+		$field = array_pop($element);
 		$this->assertThat(
 			$form->validateField($field, null, 'value'),
 			$this->isTrue(),
@@ -2013,8 +2017,8 @@ class JFormTest extends \PHPUnit_Framework_TestCase
 		$form = new JFormInspector('form1');
 		$form->load(JFormDataHelper::$validateFieldDocument);
 		$xml = $form->getXML();
-
-		$field = array_pop($xml->xpath('fields/field[@name="missingrule"]'));
+		$element = $xml->xpath('fields/field[@name="missingrule"]');
+		$field = array_pop($element);
 		$result = $form->validateField($field, null, 'value');
 	}
 }

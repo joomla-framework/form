@@ -29,8 +29,6 @@ class JFormFieldTextTest extends \PHPUnit_Framework_TestCase
 		include_once __DIR__ . '/../../Field/Text.php';
 
 		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
 	}
 
 	/**

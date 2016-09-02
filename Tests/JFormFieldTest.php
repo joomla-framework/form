@@ -25,7 +25,6 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		include_once 'inspectors.php';
 		include_once 'JFormDataHelper.php';
 	}
 
@@ -129,7 +128,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		// Standard usage.
 
 		$xml = $form->getXML();
-		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
+		$element = $xml->xpath('fields/fields[@name="params"]/field[@name="colours"]');
+		$colours = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($colours, 'red', 'params'),
@@ -176,8 +176,9 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Standard usage.
 
-		$xml = $form->getXML();
-		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
+		$xml     = $form->getXML();
+		$element = $xml->xpath('fields/field[@name="title"]');
+		$title   = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($title, 'The title'),
@@ -195,8 +196,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 		);
 
 		// Not required
-
-		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
+		$element = $xml->xpath('fields/fields[@name="params"]/field[@name="colours"]');
+		$colours = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($colours, 'id'),
@@ -212,7 +213,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Hidden field
 
-		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
+		$element = $xml->xpath('fields/field[@name="id"]');
+		$id      = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($id, 'id'),
@@ -248,8 +250,9 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Standard usage.
 
-		$xml = $form->getXML();
-		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
+		$xml     = $form->getXML();
+		$element = $xml->xpath('fields/field[@name="title"]');
+		$title   = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($title, 'The title'),
@@ -265,7 +268,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Hidden field
 
-		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
+		$element = $xml->xpath('fields/field[@name="id"]');
+		$id = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($id, 'id'),
@@ -303,27 +307,6 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test an invalid argument for the Joomla\Form\Field::setup method
-	 *
-	 * @covers Joomla\Form\Field::setup
-	 * @expectedException \PHPUnit_Framework_Error
-	 *
-	 * @return void
-	 */
-	public function testSetupInvalidElement()
-	{
-		$form = new JFormInspector('form1');
-		$field = new JFormFieldInspector($form);
-
-		$wrong = 'wrong';
-		$this->assertThat(
-			$field->setup($wrong, 0),
-			$this->isFalse(),
-			'Line:' . __LINE__ . ' If not a form object, setup should return false.'
-		);
-	}
-
-	/**
 	 * Tests the Joomla\Form\Field::setup method
 	 *
 	 * @covers Joomla\Form\Field::setup
@@ -345,8 +328,9 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Standard usage.
 
-		$xml = $form->getXML();
-		$title = array_pop($xml->xpath('fields/field[@name="title"]'));
+		$xml     = $form->getXML();
+		$element = $xml->xpath('fields/field[@name="title"]');
+		$title   = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($title, 'The title'),
@@ -425,7 +409,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Test multiple attribute and form group name.
 
-		$colours = array_pop($xml->xpath('fields/fields[@name="params"]/field[@name="colours"]'));
+		$element = $xml->xpath('fields/fields[@name="params"]/field[@name="colours"]');
+		$colours = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($colours, 'green', 'params'),
@@ -459,7 +444,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Test hidden field type.
 
-		$id = array_pop($xml->xpath('fields/field[@name="id"]'));
+		$element = $xml->xpath('fields/field[@name="id"]');
+		$id = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($id, 42),
@@ -475,7 +461,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Test hidden attribute.
 
-		$createdDate = array_pop($xml->xpath('fields/field[@name="created_date"]'));
+		$element = $xml->xpath('fields/field[@name="created_date"]');
+		$createdDate = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($createdDate, '0000-00-00 00:00:00'),
@@ -491,7 +478,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Test automatic generated name.
 
-		$spacer = array_pop($xml->xpath('fields/field[@type="spacer"]'));
+		$element = $xml->xpath('fields/field[@type="spacer"]');
+		$spacer = array_pop($element);
 
 		$this->assertThat(
 			$field->setup($spacer, ''),
@@ -507,7 +495,8 @@ class JFormFieldTest extends \PHPUnit_Framework_TestCase
 
 		// Test nested groups and forced multiple.
 
-		$comment = array_pop($xml->xpath('fields/fields[@name="params"]/fields[@name="subparams"]/field[@name="comment"]'));
+		$element = $xml->xpath('fields/fields[@name="params"]/fields[@name="subparams"]/field[@name="comment"]');
+		$comment = array_pop($element);
 		$field->forceMultiple = true;
 
 		$this->assertThat(

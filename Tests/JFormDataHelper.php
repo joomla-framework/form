@@ -563,7 +563,7 @@ class JFormDataHelper
 	 *
 	 * @return void
 	 */
-	public function filter($value)
+	public static function filter($value)
 	{
 		return 'method';
 	}

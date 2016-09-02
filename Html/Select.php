@@ -389,8 +389,8 @@ abstract class Select
 		}
 
 		$obj = new \stdClass;
-		$obj->$options['option.key'] = $value;
-		$obj->$options['option.text'] = trim($text) ? $text : $value;
+		$obj->{$options['option.key']} = $value;
+		$obj->{$options['option.text']} = trim($text) ? $text : $value;
 
 		/*
 		 * If a label is provided, save it. If no label is provided and there is
@@ -405,19 +405,19 @@ abstract class Select
 		}
 		elseif ($hasProperty)
 		{
-			$obj->$options['option.label'] = '';
+			$obj->{$options['option.label']} = '';
 		}
 
 		// Set attributes only if there is a property and a value
 		if ($options['attr'] !== null)
 		{
-			$obj->$options['option.attr'] = $options['attr'];
+			$obj->{$options['option.attr']} = $options['attr'];
 		}
 
 		// Set disable only if it has a property and a value
 		if ($options['disable'] !== null)
 		{
-			$obj->$options['option.disable'] = $options['disable'];
+			$obj->{$options['option.disable']} = $options['disable'];
 		}
 
 		return $obj;
@@ -525,25 +525,25 @@ abstract class Select
 			}
 			elseif (is_object($element))
 			{
-				$key = $options['option.key'] === null ? $elementKey : $element->$options['option.key'];
-				$text = $element->$options['option.text'];
+				$key = $options['option.key'] === null ? $elementKey : $element->{$options['option.key']};
+				$text = $element->{$options['option.text']};
 
-				if (isset($element->$options['option.attr']))
+				if (isset($element->{$options['option.attr']}))
 				{
-					$attr = $element->$options['option.attr'];
+					$attr = $element->{$options['option.attr']};
 				}
 
-				if (isset($element->$options['option.id']))
+				if (isset($element->{$options['option.id']}))
 				{
-					$id = $element->$options['option.id'];
+					$id = $element->{$options['option.id']};
 				}
 
-				if (isset($element->$options['option.label']))
+				if (isset($element->{$options['option.label']}))
 				{
-					$label = $element->$options['option.label'];
+					$label = $element->{$options['option.label']};
 				}
 
-				if (isset($element->$options['option.disable']) && $element->$options['option.disable'])
+				if (isset($element->{$options['option.disable']}) && $element->{$options['option.disable']})
 				{
 					$extra .= ' disabled="disabled"';
 				}

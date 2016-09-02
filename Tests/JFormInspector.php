@@ -5,6 +5,7 @@
  */
 
 namespace Joomla\Form\Tests;
+use Joomla\Registry\Registry;
 
 /**
  * JFormInspector class.
@@ -97,7 +98,7 @@ class JFormInspector extends \Joomla\Form\Form
 	 *
 	 * @since   1.0
 	 */
-	public function findGroup($group)
+	public function &findGroup($group)
 	{
 		return parent::findGroup($group);
 	}
@@ -114,7 +115,7 @@ class JFormInspector extends \Joomla\Form\Form
 	 *
 	 * @since   1.0
 	 */
-	public function findFieldsByGroup($group = null, $nested = false)
+	public function &findFieldsByGroup($group = null, $nested = false)
 	{
 		return parent::findFieldsByGroup($group, $nested);
 	}
@@ -128,7 +129,7 @@ class JFormInspector extends \Joomla\Form\Form
 	 *
 	 * @since   1.0
 	 */
-	public function findFieldsByFieldset($name)
+	public function &findFieldsByFieldset($name)
 	{
 		return parent::findFieldsByFieldset($name);
 	}
@@ -160,7 +161,7 @@ class JFormInspector extends \Joomla\Form\Form
 	/**
 	 * Test...
 	 *
-	 * @return  string
+	 * @return  \SimpleXMLElement
 	 *
 	 * @since   1.0
 	 */
@@ -198,100 +199,8 @@ class JFormInspector extends \Joomla\Form\Form
 	 *
 	 * @since   1.0
 	 */
-	public function validateField($element, $group = null, $value = null, $input = null)
+	public function validateField(\SimpleXMLElement $element, $group = null, $value = null, Registry $input = null)
 	{
 		return parent::validateField($element, $group, $value, $input);
-	}
-}
-
-/**
- * JFormFieldInspector class.
- *
- * @since  1.0
- */
-class JFormFieldInspector extends \Joomla\Form\Field
-{
-	/**
-	 * Test...
-	 *
-	 * @param   string  $name  Element name
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function __get($name)
-	{
-		if ($name == 'element')
-		{
-			return $this->element;
-		}
-		else
-		{
-			return parent::__get($name);
-		}
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function getInput()
-	{
-		return null;
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @return  \Joomla\Form\Form
-	 *
-	 * @since   1.0
-	 */
-	public function getForm()
-	{
-		return $this->form;
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @param   string  $fieldId    The field element id.
-	 * @param   string  $fieldName  The field element name.
-	 *
-	 * @return  string  The id to be used for the field input tag.
-	 *
-	 * @since   1.0
-	 */
-	public function getId($fieldId, $fieldName)
-	{
-		return parent::getId($fieldId, $fieldName);
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @return  string
-	 *
-	 * @since   1.0
-	 */
-	public function getLabel()
-	{
-		return parent::getLabel();
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @return  string
-	 *
-	 * @since   1.0
-	 */
-	public function getTitle()
-	{
-		return parent::getTitle();
 	}
 }

@@ -27,8 +27,6 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 		include_once __DIR__ . '/../../Field/Timezone.php';
 
 		parent::setUp();
-
-		include_once dirname(__DIR__) . '/inspectors.php';
 	}
 
 	/**

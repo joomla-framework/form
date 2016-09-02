@@ -31,6 +31,11 @@
             "Joomla\\Form": ""
         }
     },
+    "autoload-dev": {
+        "psr-0": {
+            "Joomla\\Form\\Tests": "Tests"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-1.x-dev": "1.x-dev"
