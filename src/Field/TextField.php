@@ -42,6 +42,7 @@ class TextField extends \Joomla\Form\Field
 		$readonly = ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
 		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 		$autofocus = ((string) $this->element['autofocus'] == 'true') ? ' autofocus' : '';
+		$autocomplete = $this->element['autocomplete'] ? ' autocomplete="' . (string) $this->element['autocomplete'] . '"' : '';
 
 		// Temporary workaround to make sure the placeholder can be set without coupling to joomla/language
 		$placeholder = '';
