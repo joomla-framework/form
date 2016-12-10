@@ -26,7 +26,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		// The real class cannot be autoloaded
-		include_once __DIR__ . '/../../Field/Checkboxes.php';
+		\Joomla\Form\FormHelper::loadFieldClass('checkboxes');
 	}
 
 	/**

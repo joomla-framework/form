@@ -11,6 +11,8 @@ namespace Joomla\Form;
 use Joomla\Language\Text;
 use Joomla\Database\DatabaseDriver;
 
+FormHelper::loadFieldClass('list');
+
 /**
  * Form Field class for the Joomla Framework.
  * Provides a list of available database connections, optionally limiting to

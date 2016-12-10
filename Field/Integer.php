@@ -10,6 +10,8 @@ namespace Joomla\Form;
 
 use Joomla\Form\Html\Select as HtmlSelect;
 
+FormHelper::loadFieldClass('list');
+
 /**
  * Form Field class for the Joomla Framework.
  * Provides a select list of integers with specified first, last and step values.

@@ -13,6 +13,8 @@ use Joomla\Language\Text;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
+FormHelper::loadFieldClass('list');
+
 /**
  * Supports an HTML select list of files
  *

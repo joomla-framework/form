@@ -24,7 +24,7 @@ class JFormFieldTextareaTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		// The real class cannot be autoloaded
-		include_once __DIR__ . '/../../Field/Textarea.php';
+		\Joomla\Form\FormHelper::loadFieldClass('textarea');
 
 		parent::setUp();
 	}

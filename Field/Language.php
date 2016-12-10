@@ -10,6 +10,8 @@ namespace Joomla\Form;
 
 use Joomla\Language\Language;
 
+FormHelper::loadFieldClass('list');
+
 /**
  * Form Field class for the Joomla Framework.
  * Supports a list of installed application languages

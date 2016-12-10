@@ -26,7 +26,7 @@ class JFormFieldTelTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		// The real class cannot be autoloaded
-		include_once __DIR__ . '/../../Field/Tel.php';
+		\Joomla\Form\FormHelper::loadFieldClass('tel');
 
 		parent::setUp();
 	}

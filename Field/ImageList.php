@@ -8,6 +8,8 @@
 
 namespace Joomla\Form;
 
+FormHelper::loadFieldClass('filelist');
+
 /**
  * Supports an HTML select list of image
  *

@@ -8,6 +8,8 @@
 
 namespace Joomla\Form;
 
+FormHelper::loadFieldClass('text');
+
 /**
  * Form Field class for the Joomla Framework.
  * Supports a URL text field

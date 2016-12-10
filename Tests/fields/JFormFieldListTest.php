@@ -23,10 +23,8 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->markTestSkipped('The Joomla\Form\Field_List class is being redeclared during the test run.');
-
 		// The real class cannot be autoloaded
-		include_once __DIR__ . '/../../Field/List.php';
+		\Joomla\Form\FormHelper::loadFieldClass('list');
 
 		parent::setUp();
 	}
