@@ -1630,6 +1630,11 @@ class Form
 		if ($field === false)
 		{
 			$field = FormHelper::loadFieldType('text');
+
+			if ($field === false)
+			{
+				return false;
+			}
 		}
 
 		/*
