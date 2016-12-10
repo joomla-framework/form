@@ -44,7 +44,9 @@ class JFormFieldTextareaTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Textarea($form);
+		/** @var Field_Textarea $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('textarea');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

@@ -7,7 +7,6 @@
 namespace Joomla\Form\Tests;
 
 use Joomla\Test\TestHelper;
-use Joomla\Form\Field_Checkboxes;
 
 /**
  * Test class for JForm.
@@ -365,7 +364,7 @@ class JFormFieldCheckboxesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetOptions()
 	{
-		$formFieldCheckboxes = new Field_Checkboxes;
+		$formFieldCheckboxes = \Joomla\Form\FormHelper::loadFieldType('checkboxes');
 
 		$option1 = new \stdClass;
 		$option1->value = 'yellow';

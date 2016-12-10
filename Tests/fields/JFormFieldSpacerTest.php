@@ -44,7 +44,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Spacer($form);
+		/** @var Field_Spacer $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('spacer');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -74,7 +76,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Spacer($form);
+		/** @var Field_Spacer $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('spacer');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -98,7 +102,9 @@ class JFormFieldSpacerTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Spacer($form);
+		/** @var Field_Spacer $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('spacer');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

@@ -44,7 +44,9 @@ class JFormFieldListTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_List($form);
+		/** @var Field_List $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('list');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

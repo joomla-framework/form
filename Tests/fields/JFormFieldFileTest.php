@@ -42,7 +42,9 @@ class JFormFieldFileTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_File($form);
+		/** @var Field_File $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('file');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

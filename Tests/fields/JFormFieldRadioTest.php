@@ -44,7 +44,9 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Radio($form);
+		/** @var Field_Radio $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('radio');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
@@ -78,7 +80,9 @@ class JFormFieldRadioTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Radio($form);
+		/** @var Field_Radio $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('radio');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

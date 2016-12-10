@@ -44,7 +44,9 @@ class JFormFieldTimezoneTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Timezone($form);
+		/** @var Field_Timezone $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('timezone');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),

@@ -41,7 +41,7 @@ class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputNoValueNoChecked()
 	{
-		$formField = new Field_Checkbox;
+		$formField = \Joomla\Form\FormHelper::loadFieldType('checkbox');
 
 		// Test with no checked element
 		$element = simplexml_load_string(
@@ -67,7 +67,7 @@ class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputValueNoChecked()
 	{
-		$formField = new Field_Checkbox;
+		$formField = \Joomla\Form\FormHelper::loadFieldType('checkbox');
 
 		// Test with no checked element
 		$element = simplexml_load_string(
@@ -93,7 +93,7 @@ class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputNoValueChecked()
 	{
-		$formField = new Field_Checkbox;
+		$formField = \Joomla\Form\FormHelper::loadFieldType('checkbox');
 
 		// Test with checked element
 		$element = simplexml_load_string(
@@ -118,7 +118,7 @@ class JFormFieldCheckboxTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInputDisabled()
 	{
-		$formField = new Field_Checkbox;
+		$formField = \Joomla\Form\FormHelper::loadFieldType('checkbox');
 
 		// Test with checked element
 		$element = simplexml_load_string(

@@ -46,7 +46,9 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Hidden($form);
+		/** @var Field_Hidden $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('hidden');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$form->getLabel('hidden'),
@@ -62,7 +64,9 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Hidden($form);
+		/** @var Field_Hidden $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('hidden');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$form->getLabel('hidden'),
@@ -78,7 +82,9 @@ class JFormFieldHiddenTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Hidden($form);
+		/** @var Field_Hidden $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('hidden');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$form->getLabel('hidden'),

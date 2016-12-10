@@ -48,7 +48,9 @@ class JFormFieldTelTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = new Field_Tel($form);
+		/** @var Field_Tel $field */
+		$field = \Joomla\Form\FormHelper::loadFieldType('tel');
+		$field->setForm($form);
 
 		$this->assertThat(
 			$field->setup($form->getXml()->field, 'value'),
