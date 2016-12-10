@@ -25,7 +25,7 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		// The real class cannot be autoloaded
-		\Joomla\Form\FormHelper::loadFieldClass('databaseconnection');
+		\Joomla\Form\FormHelper::loadFieldClass('databaseConnection');
 
 		parent::setUp();
 	}
@@ -48,7 +48,7 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 		);
 
 		/** @var Field_DatabaseConnection $field */
-		$field = \Joomla\Form\FormHelper::loadFieldType('databaseconnection');
+		$field = \Joomla\Form\FormHelper::loadFieldType('databaseConnection');
 		$field->setForm($form);
 
 		$this->assertThat(
@@ -69,7 +69,7 @@ class JFormFieldDatabaseConnectionTest extends \PHPUnit_Framework_TestCase
 			'Line:' . __LINE__ . ' XML string should load successfully.'
 		);
 
-		$field = \Joomla\Form\FormHelper::loadFieldType('databaseconnection');
+		$field = \Joomla\Form\FormHelper::loadFieldType('databaseConnection');
 		$field->setForm($form);
 
 		$this->assertThat(

@@ -26,7 +26,7 @@ class JFormFieldFolderListTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		// The real class cannot be autoloaded
-		\Joomla\Form\FormHelper::loadFieldClass('folderlist');
+		\Joomla\Form\FormHelper::loadFieldClass('folderList');
 
 		parent::setUp();
 	}
@@ -49,7 +49,7 @@ class JFormFieldFolderListTest extends \PHPUnit_Framework_TestCase
 		);
 
 		/** @var Field_FolderList $field */
-		$field = \Joomla\Form\FormHelper::loadFieldType('folderlist');
+		$field = \Joomla\Form\FormHelper::loadFieldType('folderList');
 		$field->setForm($form);
 
 		$this->assertThat(

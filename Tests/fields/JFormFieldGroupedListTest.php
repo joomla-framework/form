@@ -26,7 +26,7 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		// The real class cannot be autoloaded
-		\Joomla\Form\FormHelper::loadFieldClass('groupedlist');
+		\Joomla\Form\FormHelper::loadFieldClass('groupedList');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class JFormFieldGroupedListTest extends \PHPUnit_Framework_TestCase
 		);
 
 		/** @var Field_GroupedList $field */
-		$field = \Joomla\Form\FormHelper::loadFieldType('groupedlist');
+		$field = \Joomla\Form\FormHelper::loadFieldType('groupedList');
 		$field->setForm($form);
 
 		$this->assertThat(

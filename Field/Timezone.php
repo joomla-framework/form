@@ -10,7 +10,7 @@ namespace Joomla\Form;
 
 use Joomla\Form\Html\Select;
 
-FormHelper::loadFieldClass('groupedlist');
+FormHelper::loadFieldClass('groupedList');
 
 /**
  * Form Field class for the Joomla Framework.
