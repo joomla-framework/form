@@ -30,3 +30,5 @@ if (file_exists($composerAutoload))
 {
 	include_once $composerAutoload;
 }
+
+\Joomla\Form\FormHelper::addFieldPath(JPATH_ROOT . '/Field');
