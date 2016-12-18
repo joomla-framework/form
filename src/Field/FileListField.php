@@ -2,15 +2,18 @@
 /**
  * Part of the Joomla! Framework Form Package
  *
- * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Form\Field;
 
-use Joomla\Form\Html\Select as HtmlSelect;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
+use Joomla\Form\FormHelper;
+use Joomla\Form\Html\Select as HtmlSelect;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * File List Form Field class for the Joomla! Framework.
