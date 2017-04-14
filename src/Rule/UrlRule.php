@@ -67,7 +67,7 @@ class UrlRule extends Rule
 		/*
 		 * This rule is only for full URLs with schemes because parse_url does not parse
 		 * accurately without a scheme.
-		 * @see http://php.net/manual/en/function.parse-url.php
+		 * @link https://secure.php.net/manual/en/function.parse-url.php
 		 */
 		if ($urlParts && !array_key_exists('scheme', $urlParts))
 		{
