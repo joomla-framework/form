@@ -18,9 +18,9 @@ matrix:
       env: RUN_PHPCS="yes" RUN_SCRUTINIZER="yes" PHPUNIT_FLAGS="--coverage-clover .travis/logs/clover.xml"
     - php: 7.0
     - php: 7.1
-    - php: hhvm
+    - php: nightly
   allow_failures:
-    - php: hhvm
+    - php: nightly
 
 before_script:
   - composer self-update
