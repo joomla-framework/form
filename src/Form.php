@@ -1853,7 +1853,7 @@ class Form
 		}
 
 		// Get the field validation rule.
-		if ($type = (string) $element['validate'])
+		if ($type = (string) $element['validate'] && !empty($value))
 		{
 			// Load the Rule object for the field.
 			$rule = FormHelper::loadRuleClass($type);
