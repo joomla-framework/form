@@ -1832,7 +1832,7 @@ class Form
 			// If the field is required and the value is empty return an error message.
 			if (($value === '') || ($value === null))
 			{
-				$translate = $element['translate_default'] && ((string) $translate == 'true' || (string) $translate == '1');
+				$translate = $element['translate_default'] && ((string) $element['translate_default'] == 'true' || (string) $element['translate_default'] == '1');
 
 				if ($element['label'])
 				{
