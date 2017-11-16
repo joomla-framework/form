@@ -16,7 +16,8 @@ use UnexpectedValueException;
  * Form Field class for the Joomla Framework.
  * Provides a grouped list select field.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_GroupedList extends Field
 {

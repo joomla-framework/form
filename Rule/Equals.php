@@ -18,7 +18,8 @@ use InvalidArgumentException;
 /**
  * Form Rule class for the Joomla Framework.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Equals extends Rule
 {

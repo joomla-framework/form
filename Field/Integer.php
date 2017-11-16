@@ -16,7 +16,8 @@ FormHelper::loadFieldClass('list');
  * Form Field class for the Joomla Framework.
  * Provides a select list of integers with specified first, last and step values.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_Integer extends Field_List
 {

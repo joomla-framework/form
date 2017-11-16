@@ -15,7 +15,8 @@ use Joomla\Language\Text;
  * Form Field class for the Joomla Framework.
  * Supports a generic list of options.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_List extends Field
 {

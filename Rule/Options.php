@@ -17,7 +17,8 @@ use SimpleXMLElement;
  * Form Rule class for the Joomla Framework.
  * Requires the value entered be one of the options in a field of type="list"
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Options extends Rule
 {

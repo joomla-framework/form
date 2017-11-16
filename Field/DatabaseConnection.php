@@ -18,8 +18,9 @@ FormHelper::loadFieldClass('list');
  * Provides a list of available database connections, optionally limiting to
  * a given list.
  *
- * @see    Joomla\Database\DatabaseDriver
- * @since  1.0
+ * @see         Joomla\Database\DatabaseDriver
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_DatabaseConnection extends Field_List
 {

@@ -15,8 +15,9 @@ use Joomla\Language\Text;
  * Form Field class for the Joomla Framework.
  * Provides radio button inputs
  *
- * @link   http://www.w3.org/TR/html-markup/command.radio.html#command.radio
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/command.radio.html#command.radio
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_Radio extends Field
 {
