@@ -12,8 +12,9 @@ namespace Joomla\Form;
  * Form Field class for the Joomla Framework.
  * Provides an input field for files
  *
- * @link   http://www.w3.org/TR/html-markup/input.file.html#input.file
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.file.html#input.file
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_File extends Field
 {

@@ -18,7 +18,8 @@ FormHelper::loadFieldClass('list');
 /**
  * Supports an HTML select list of files
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_FileList extends Field_List
 {

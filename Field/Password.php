@@ -12,9 +12,10 @@ namespace Joomla\Form;
  * Form Field class for the Joomla Framework.
  * Text field for passwords
  *
- * @link   http://www.w3.org/TR/html-markup/input.password.html#input.password
- * @note   Two password fields may be validated as matching using JFormRuleEquals
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.password.html#input.password
+ * @note        Two password fields may be validated as matching using JFormRuleEquals
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_Password extends Field
 {

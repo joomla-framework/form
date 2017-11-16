@@ -12,8 +12,9 @@ namespace Joomla\Form;
  * Form Field class for the Joomla Framework.
  * Supports a one line text field.
  *
- * @link   http://www.w3.org/TR/html-markup/input.text.html#input.text
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.text.html#input.text
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_Text extends Field
 {

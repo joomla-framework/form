@@ -14,7 +14,8 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Utility class for creating HTML select lists
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 abstract class Select
 {

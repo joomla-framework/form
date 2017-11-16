@@ -1,5 +1,9 @@
 # The Form Package [![Build Status](https://travis-ci.org/joomla-framework/form.png?branch=master)](https://travis-ci.org/joomla-framework/form)
 
+### Deprecated
+
+The `joomla/form` package has been deprecated.  No further updates are planned.
+
 ## Introduction ##
 
 The Form Package provides an easy interface to create, display, and validate forms.

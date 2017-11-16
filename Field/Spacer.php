@@ -14,7 +14,8 @@ use Joomla\Language\Text;
  * Form Field class for the Joomla Framework.
  * Provides spacer markup to be used in form layouts.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class Field_Spacer extends Field
 {
