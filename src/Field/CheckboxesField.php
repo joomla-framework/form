@@ -13,10 +13,9 @@ use Joomla\Form\Html\Select as HtmlSelect;
 /**
  * Checkboxes Form Field class for the Joomla! Framework.
  *
- * Displays options as a list of check boxes. Multiselect may be forced to be true.
- *
- * @see    \Joomla\Form\Field\CheckboxField
- * @since  1.0
+ * @see         \Joomla\Form\Field\CheckboxField
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class CheckboxesField extends \Joomla\Form\Field
 {

@@ -16,7 +16,8 @@ use Joomla\String\StringHelper;
  * Provides a storage for filesystem's paths where Joomla\Form entities reside and methods for creating those entities.
  * Also stores objects with entities' prototypes for further reusing.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class FormHelper
 {

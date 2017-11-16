@@ -13,8 +13,9 @@ namespace Joomla\Form\Field;
  *
  * Supports a one line text field.
  *
- * @link   http://www.w3.org/TR/html-markup/input.text.html#input.text
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.text.html#input.text
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class TextField extends \Joomla\Form\Field
 {

@@ -13,8 +13,9 @@ namespace Joomla\Form\Field;
  *
  * Provides a hidden field.
  *
- * @link   http://www.w3.org/TR/html-markup/input.hidden.html#input.hidden
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.hidden.html#input.hidden
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class HiddenField extends \Joomla\Form\Field
 {

@@ -15,7 +15,8 @@ use Joomla\Form\Html\Select as HtmlSelect;
  *
  * Provides a grouped list select field.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class GroupedListField extends \Joomla\Form\Field
 {

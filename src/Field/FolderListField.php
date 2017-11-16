@@ -19,7 +19,8 @@ FormHelper::loadFieldClass('list');
  *
  * Supports an HTML select list of folders
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class FolderListField extends ListField
 {

@@ -13,8 +13,9 @@ namespace Joomla\Form\Field;
  *
  * Supports a multi line area for entry of plain text
  *
- * @link   http://www.w3.org/TR/html-markup/textarea.html#textarea
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/textarea.html#textarea
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class TextareaField extends \Joomla\Form\Field
 {

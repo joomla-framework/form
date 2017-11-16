@@ -15,8 +15,9 @@ use stdClass;
  *
  * Provides radio button inputs.
  *
- * @link   http://www.w3.org/TR/html-markup/command.radio.html#command.radio
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/command.radio.html#command.radio
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class RadioField extends \Joomla\Form\Field
 {

@@ -17,7 +17,8 @@ use Joomla\Registry\Registry;
  *
  * Validates that two values are equal.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class EqualsRule extends Rule
 {

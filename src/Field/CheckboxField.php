@@ -13,9 +13,10 @@ namespace Joomla\Form\Field;
  *
  * Single check box field. This is a boolean field with null for false and the specified option for true.
  *
- * @link   http://www.w3.org/TR/html-markup/input.checkbox.html#input.checkbox
- * @see    \Joomla\Form\Field\CheckboxesField
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.checkbox.html#input.checkbox
+ * @see         \Joomla\Form\Field\CheckboxesField
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class CheckboxField extends \Joomla\Form\Field
 {

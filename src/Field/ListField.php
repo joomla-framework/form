@@ -15,7 +15,8 @@ use Joomla\Form\Html\Select as HtmlSelect;
  *
  * Supports a generic list of options.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class ListField extends \Joomla\Form\Field
 {

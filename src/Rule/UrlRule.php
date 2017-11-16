@@ -19,7 +19,8 @@ use Joomla\Registry\Registry;
  *
  * Validates that a field's value is formatted as a valid URL.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class UrlRule extends Rule
 {

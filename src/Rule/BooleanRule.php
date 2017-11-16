@@ -15,7 +15,8 @@ use Joomla\Form\Rule;
  *
  * Validates that a form field matches a boolean value
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class BooleanRule extends Rule
 {

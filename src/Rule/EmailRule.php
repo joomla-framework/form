@@ -17,7 +17,8 @@ use Joomla\Registry\Registry;
  *
  * Validates that a value is in a proper e-mail address format.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class EmailRule extends Rule
 {

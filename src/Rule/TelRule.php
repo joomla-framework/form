@@ -17,7 +17,8 @@ use Joomla\Registry\Registry;
  *
  * Validates that a field's value matches a telephone number pattern.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class TelRule extends Rule
 {

@@ -18,7 +18,8 @@ FormHelper::loadFieldClass('list');
  *
  * Supports a list of installed application languages
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class LanguageField extends ListField
 {

@@ -17,9 +17,10 @@ FormHelper::loadFieldClass('text');
  *
  * Supports an HTML5 URL text field
  *
- * @link   http://www.w3.org/TR/html-markup/input.url.html#input.url
- * @see    \Joomla\Form\Rule\UrlRule for validation of full urls
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.url.html#input.url
+ * @see         \Joomla\Form\Rule\UrlRule for validation of full urls
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class UrlField extends TextField
 {

@@ -17,7 +17,8 @@ use Joomla\Registry\Registry;
  *
  * Validates that a value is a valid hexadecimal color code.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class ColorRule extends Rule
 {

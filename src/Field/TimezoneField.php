@@ -18,7 +18,8 @@ FormHelper::loadFieldClass('groupedList');
  *
  * Supports a grouped list of timezones.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class TimezoneField extends GroupedListField
 {

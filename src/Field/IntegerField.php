@@ -18,7 +18,8 @@ FormHelper::loadFieldClass('list');
  *
  * Provides a select list of integers with specified first, last and step values.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class IntegerField extends ListField
 {

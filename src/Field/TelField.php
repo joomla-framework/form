@@ -17,9 +17,10 @@ FormHelper::loadFieldClass('text');
  *
  * Supports an HTML5 text field for telephone numbers.
  *
- * @link   http://www.w3.org/TR/html-markup/input.tel.html
- * @see    \Joomla\Form\Rule\TelRule for telephone number validation
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.tel.html
+ * @see         \Joomla\Form\Rule\TelRule for telephone number validation
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class TelField extends TextField
 {

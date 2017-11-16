@@ -17,9 +17,10 @@ FormHelper::loadFieldClass('text');
  *
  * Supports an HTML5 text field for e-mail addresses.
  *
- * @link   http://www.w3.org/TR/html-markup/input.email.html#input.email
- * @see    \Joomla\Form\Rule\EmailRule
- * @since  1.0
+ * @link        http://www.w3.org/TR/html-markup/input.email.html#input.email
+ * @see         \Joomla\Form\Rule\EmailRule
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class EmailField extends TextField
 {

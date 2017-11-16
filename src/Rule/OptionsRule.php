@@ -17,7 +17,8 @@ use Joomla\Registry\Registry;
  *
  * Requires the value entered be one of the options in a list field type.
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/form package is deprecated
  */
 class OptionsRule extends Rule
 {

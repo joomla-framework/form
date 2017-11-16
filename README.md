@@ -10,6 +10,10 @@ Development: [![Build Status](https://travis-ci.org/joomla-framework/form.png?br
 [![License](https://poser.pugx.org/joomla/form/license)](https://packagist.org/packages/joomla/form)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/joomla-framework/form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/joomla-framework/form/?branch=master)
 
+### Deprecated
+
+The `joomla/form` package has been deprecated.  No further updates are planned.
+
 ## Introduction ##
 
 The Form Package provides an easy interface to create, display, and validate forms.
