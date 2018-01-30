@@ -4,7 +4,7 @@
     "description": "Joomla Form Package",
     "keywords": ["joomla", "framework", "form"],
     "homepage": "https://github.com/joomla-framework/form",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "require": {
         "php": "~7.0",
         "joomla/language": "~2.0@dev",
